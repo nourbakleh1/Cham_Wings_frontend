@@ -30,5 +30,5 @@
   <h2 align="center"> How to download and run the project </h2> <br /> <br /> 
         <div align="center">  * Download the project from the button above or take a clone of it.</div>  <br />
          <div align="center"> * cd (project-name) </div>  <br />
-         <div align="center"> * npm i (To download all dependency and librarys) </div>  <br />
+         <div align="center"> * npm i (To download all dependency and libraries) </div>  <br />
          <div align="center"> * npm run dev (To run the project) </div> <br /> 
