@@ -3,12 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const initialState={
-    user:null
+    profile:null
 }
 
 
-const authSlice=createSlice({
-    name:"auth",
+const profileSlice=createSlice({
+    name:"profile",
     initialState,
     reducers:{
 
@@ -17,4 +17,4 @@ const authSlice=createSlice({
     
 });
 
-export default authSlice.reducer;
+export default profileSlice.reducer;

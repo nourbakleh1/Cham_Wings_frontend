@@ -1,8 +1,14 @@
-import React from 'react'
-
+import React from 'react';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import { Outlet } from 'react-router-dom';
 const Layouts = () => {
   return (
-    <div>Layouts</div>
+    <div className='container mx-auto'>
+   <Header/>
+   <Outlet/>
+   <Footer/>
+    </div>
   )
 }
 
