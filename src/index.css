@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body{
+    height: 5000px;
+    font-family: "Lato", sans-serif;
+    box-shadow:  -5px 0px 10px 5px #000 inset;
+    z-index: -11;
+    box-sizing: border-box;
+    
+
+}
+::-webkit-scrollbar{
+    background-color: #00529B;
+    border-radius: 10px;
+
+
+}
+::-webkit-scrollbar-thumb{
+    background-color:#AE8A3B;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 4px #fff;
+}
+::-webkit-scrollbar-button{
+    background-color: #fff;
+
+}
+
+
+

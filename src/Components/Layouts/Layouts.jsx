@@ -4,7 +4,7 @@ import Footer from '../Footer/Footer';
 import { Outlet } from 'react-router-dom';
 const Layouts = () => {
   return (
-    <div className='container mx-auto'>
+    <div >
    <Header/>
    <Outlet/>
    <Footer/>

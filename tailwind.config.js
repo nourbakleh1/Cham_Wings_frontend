@@ -1,9 +1,12 @@
+const flowbite = require("flowbite-react/tailwind");
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/flowbite/**/*.js"
+    "./node_modules/flowbite/**/*.js",
+    flowbite.content(),
   ],
   theme: {
     extend: {
@@ -18,7 +21,7 @@ export default {
         primary_color: "#AE8A3B",
         primary_color_1:"#836E42",
         brown_color:"#584F3C",
-        black_color:"#332D20",
+        black_color:"#0c1524",
         secoundary_color:"#00529B",
         secoundary_color_1:"#134571",
         gray_color:"#abb8c3",
@@ -30,7 +33,8 @@ export default {
   },
   
   plugins: [
-      require('flowbite/plugin')
+      require('flowbite/plugin'),
+      flowbite.plugin(),
   ]
 }
 
