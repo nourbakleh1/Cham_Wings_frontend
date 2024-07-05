@@ -12,48 +12,48 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faEnvelope, faX } from "@fortawesome/free-solid-svg-icons";
 import Headings from "../Headings/Headings";
-import logo from "../../../public/assets/images/chamwings.png"; // Adjust the path to where your image is located
+import logo from "/assets/images/chamwings.png"; // Adjust the path to where your image is located
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="flex items-center justify-center border-b-2 border-neutral-200 p-6 dark:border-white/10 lg:justify-between">
+      <div className="flex items-center justify-center border-b-2 border-neutral-200  p-6 dark:border-white/10">
         <div className="me-12 hidden lg:block">
           <span>Get connected with us on social networks:</span>
         </div>
-        <div className="flex justify-center">
+        <div className="flex gap-5 justify-center flex-wrap md:flex-nowrap">
           <a
             href="https://www.facebook.com/chamwingsairlines.sy?mibextid=2JQ9oc"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faFacebookF} className="h-4 w-4" />
           </a>
           <a
             href="https://x.com/ChamWings"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faX} className="h-4 w-4" />
           </a>
           <a
             href="https://www.youtube.com/channel/UCWgYrSAezmEt2UYCer4PHFg"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faYoutube} className="h-4 w-4" />
           </a>
           <a
             href="https://www.instagram.com/chamwingsairlines.official/?igshid=OGQ5ZDc2ODk2ZA%3D%3D"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faInstagram} className="h-4 w-4" />
           </a>
           <a
             href="https://www.linkedin.com/company/chamwings-airlines/"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faLinkedinIn} className="h-4 w-4" />
           </a>
@@ -61,28 +61,28 @@ const Footer = () => {
           <a
             href="https://t.me/Cham_Wings_Airlines"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faTelegram} className="h-4 w-4" />
           </a>
           <a
             href="https://www.whatsapp.com/channel/0029VaF2CRKKLaHnyVfoIo2j"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faWhatsapp} className="h-4 w-4" />
           </a>
           <a
             href="https://www.threads.net/@chamwingsairlines.official"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faThreads} className="h-4 w-4" />
           </a>
           <a
             href="https://www.tiktok.com/@chamwingsairlines?_t=8mTQMBwB66U&_r=1"
             target="_blank"
-            className="me-6 hover:text-primary_color focus:text-primary_color focus:outline-none"
+            className=" hover:text-primary_color focus:text-primary_color focus:outline-none"
           >
             <FontAwesomeIcon icon={faTiktok} className="h-4 w-4" />
           </a>
