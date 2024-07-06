@@ -12,7 +12,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faHome, faEnvelope, faX } from "@fortawesome/free-solid-svg-icons";
 import Headings from "../Headings/Headings";
-import logo from "../../../public/assets/images/chamwings.png"; // Adjust the path to where your image is located
+import logo from "/assets/images/chamwings.png";
 
 const Footer = () => {
   return (
