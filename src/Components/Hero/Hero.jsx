@@ -5,7 +5,7 @@ import React from 'react';
 
 const Hero = () => {
   return (
-
+<div className='bg-black_color'>
 <div className="h-[150px] sm:h-[350px] xl:h-[500px] 2xl:h-[600px]">
 
       <Carousel pauseOnHover slideInterval={5000}>
@@ -18,7 +18,7 @@ const Hero = () => {
         
       </Carousel>
     </div>
-
+</div>
   )
 }
 

@@ -4,8 +4,6 @@
 body{
     height: 5000px;
     font-family: "Lato", sans-serif;
-    box-shadow:  -5px 0px 10px 5px #000 inset;
-    z-index: -11;
     box-sizing: border-box;
     
 

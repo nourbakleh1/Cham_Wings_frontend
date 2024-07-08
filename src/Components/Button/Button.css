@@ -1,0 +1,48 @@
+.btn-style{
+    position: relative;
+    padding:10px;
+    color: #fff;
+    overflow: hidden;
+    border-radius: 15px;
+}
+.btn-style::before{
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: 0;
+    width: 10px;
+    height: 250%;
+    transform: rotate(-50deg);
+    background-color: #00529B;
+    animation: Wave 5s ease 1s infinite;
+    
+}
+
+@keyframes Wave {
+    0%{
+        top: -65px;
+        right: 0;
+    }
+    
+    100%{
+        filter: blur(40px);
+        top: 15px;
+        right: 139px;
+    }
+    
+}
+
+
+
+.btn-style::after{
+    content: "";
+    position: absolute;
+    top: -100px;
+    right: 0;
+    width: 10px;
+    height: 250%;
+    transform: rotate(-50deg);
+    background-color: #AE8A3B;
+    animation: Wave 5.2s ease 1s infinite;
+    
+}
