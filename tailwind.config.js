@@ -17,25 +17,23 @@ export default {
         xl: "1200px",
         "2xl": "1400px",
       },
-  colors: {
+      colors: {
         primary_color: "#AE8A3B",
-        primary_color_1:"#836E42",
-        brown_color:"#584F3C",
-        black_color:"#0c1524",
-        secoundary_color:"#00529B",
-        secoundary_color_1:"#134571",
-        gray_color:"#abb8c3",
-        white_color:"#ffffff",
-        red_color:"#cf2e2e",
-        green_color:"#00d084"
+        primary_color_1: "#836E42",
+        brown_color: "#584F3C",
+        black_color: "#0c1524",
+        secoundary_color: "#00529B",
+        secoundary_color_1: "#134571",
+        gray_color: "#abb8c3",
+        white_color: "#ffffff",
+        red_color: "#cf2e2e",
+        green_color: "#00d084",
+      },
+      backgroundImage: {
+        "register-image": "url('/assets/images/Airline.jpg')",
       },
     },
   },
-  
-  plugins: [
-      require('flowbite/plugin'),
-      flowbite.plugin(),
-  ]
-}
 
-
+  plugins: [require("flowbite/plugin"), flowbite.plugin()],
+};
