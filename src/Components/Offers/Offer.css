@@ -1,0 +1,38 @@
+
+.imageOffer{
+transition: all .5s;
+transform: scale(1);
+
+
+}
+ .parent-img{
+    overflow: hidden;
+}
+.parent-offer:hover .imageOffer{
+    transform: scale(1.2) rotate(5deg);
+    filter: brightness(77%);
+}
+
+
+.parent-offer{
+    position: relative;
+    overflow: hidden;
+}
+.parent-offer::after{
+    content: "";
+    position: absolute;
+    bottom: -20%;
+    left:-10%;
+    transform:scale(0);
+    background: rgba(0, 0, 0, 0.083);
+    height: 100px;
+    width: 100px;
+    transition: all 1.3s;
+    border-radius: 100%;
+    
+}
+.parent-offer:hover::after{
+    transform: scale(15);
+    border-radius: 100%;
+
+}
