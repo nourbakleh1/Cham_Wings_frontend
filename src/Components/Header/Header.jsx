@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import './Header.css';
 const Header = () => {
   const [display,setDispaly]=useState(false);
-  const headerRef=useRef();
   
 const handelNav=()=>{
   document.getElementById("navbar-user").classList.toggle("hidden");
@@ -13,17 +12,18 @@ useLayoutEffect(()=>{
   window.addEventListener("scroll",()=>{
 
     if(window.scrollY > 100){
-      headerRef.current.style.background = "#0c1524";
+      document.getElementById("nav").classList.add("handel_nav");
+
   
     }else{
-      headerRef.current.style.background = "transparent";
+      document.getElementById("nav").classList.remove("handel_nav");
     }
   })
  
 },[]);
     
   return (
-    <nav className="md:bg-transparent  border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 md:px-[70px] z-[1000] " id="nav" ref={headerRef}>
+    <nav className=" md:bg-transparent  border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 md:px-[70px] z-[1000] " id="nav">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="/assets/images/logo_wings.png" className="h-8 sm:h-[34px]  lg:h-[54px] 2xl:h-[64px]" alt="Flowbite Logo" />
