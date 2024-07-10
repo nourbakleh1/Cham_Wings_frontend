@@ -1,0 +1,27 @@
+.go_up{
+    animation: Up 1s ease 1s infinite normal ;
+    transition: all .5s;
+    box-shadow: 2px 2px 4px 5px #00529B;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: white;
+    transition: all .5s;
+}
+@keyframes Up {
+        0%{
+            transform: translateY(0px);
+        }
+        50%{
+            transform: translateY(10px);
+        }
+        80%{
+            transform: translateY(0px);
+        }
+        100%{
+            transform: translateY(15px);
+        }
+}
+.go_up:hover{
+    box-shadow:-2px -2px 4px 5px #AE8A3B;
+    color:#00529B
+}

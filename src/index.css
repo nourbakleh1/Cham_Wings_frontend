@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 body{
-    height: 5000px;
+    /* height: 5000px; */
     font-family: "Lato", sans-serif;
     box-sizing: border-box;
     
-
 }
+html {
+    scroll-behavior: smooth;
+  }
 ::-webkit-scrollbar{
     background-color: #00529B;
     border-radius: 10px;
@@ -23,6 +25,9 @@ body{
     background-color: #fff;
 
 }
-
+::selection{
+    background-color: #AE8A3B;
+    color: #00529B;
+}
 
 
