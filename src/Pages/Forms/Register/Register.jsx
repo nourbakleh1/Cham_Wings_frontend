@@ -1,396 +1,283 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  updateField,
-  resetForm,
-} from "../../../Redux/ApiSlices/registerFormSlice.js";
-import { useFormik } from "formik";
-import validationSchema from "./validationSchema.js";
-import countryCodes from "./countryCodes";
-import countries from "./countries";
+import React, { useState, useEffect } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { CountryDropdown } from "react-country-region-selector";
+import { validationSchema } from "./validationSchema";
+import "./style.css";
 
-const Register = () => {
-  const dispatch = useDispatch();
-  const registerForm = useSelector((state) => state.register);
+const RegisterPage = () => {
+  const [formStatus, setFormStatus] = useState("");
 
-  const formik = useFormik({
-    initialValues: {
-      title: registerForm.title || "",
-      firstName: registerForm.firstName || "",
-      lastName: registerForm.lastName || "",
-      email: registerForm.email || "",
-      password: "",
-      confirmPassword: "",
-      dob: registerForm.dob || "",
-      country: registerForm.country || "",
-      // language: registerForm.language || "",
-      countryCode: registerForm.countryCode || "",
-      mobile: registerForm.mobile || "",
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      // Handle form submission , dispatch action / API call
-      console.log("Submitting form:", values);
-      dispatch(resetForm());
-    },
-  });
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/register",
+        values
+      );
+      setFormStatus("Registration successful!");
+      resetForm();
+    } catch (error) {
+      console.error("Registration error:", error);
+      setFormStatus("Registration failed. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-24 px-2 sm:px-4 lg:px-8 bg-register-image">
-      <div className="max-w-4xl w-full space-y-8">
-        <div className="bg-white px-4 sm:p-8 rounded-lg shadow-xl border-primary_color border-2 min-h-[600px]">
-          <div className="sm:block hidden bg-primary_color border-primary_color border-2 py-4 rounded-t-lg">
-            <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white">
-              Join Cham Wings
-            </h2>
-          </div>
-          <form className="mt-4 py-8 space-y-6" onSubmit={formik.handleSubmit}>
-            <div className="rounded-md shadow-sm space-y-4">
-              <div className="flex flex-col sm:flex-row sm:space-x-4">
-                <div className="w-full sm:w-1/4">
-                  <label
-                    htmlFor="title"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+    <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
+      <div className="lg:w-1/2 bg-primary_color py-32 px-6 md:px-24 flex flex-col justify-center">
+        <h1 className="md:text-3xl xs:text-2xl font-bold text-white mb-6 text-center">
+          Join Cham Wings
+        </h1>
+        <Formik
+          initialValues={{
+            title: "",
+            first_name: "",
+            last_name: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            date_of_birth: "",
+            country: "",
+            country_code: "",
+            mobile: "",
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting, errors, touched, setFieldValue, values }) => (
+            <Form className="space-y-4">
+              <div className="flex flex-col md:flex-row md:space-x-4 lg:flex-row lg:space-x-4">
+                <div className="w-full md:w-1/3">
+                  <label htmlFor="title" className="text-white">
                     Title
                   </label>
-                  <select
-                    name="title"
+                  <Field
+                    as="select"
                     id="title"
-                    value={formik.values.title}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.title && formik.errors.title
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
+                    name="title"
+                    className={`input-field shadow-md rounded-md ${
+                      errors.title && touched.title
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`}
                   >
-                    <option value="">Titles</option>
-                    <option value="Miss">Miss</option>
-                    <option value="Mr">Mr</option>
-                    <option value="Mrs">Mrs</option>
-                    <option value="Ms">Ms</option>
-                  </select>
-                  {formik.touched.title && formik.errors.title && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.title}
-                    </p>
-                  )}
+                    <option value="">Select</option>
+                    <option value="Miss">Miss.</option>
+                    <option value="Mr">Mr.</option>
+                    <option value="Mrs">Mrs.</option>
+                    <option value="Ms">Ms.</option>
+                  </Field>
+                  <ErrorMessage
+                    name="title"
+                    component="div"
+                    className="text-red-500"
+                  />
                 </div>
-                <div className="w-full sm:w-1/2">
-                  <label
-                    htmlFor="firstName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                <div className="w-full md:w-1/3">
+                  <label htmlFor="first_name" className="text-white">
                     First Name
                   </label>
-                  <input
+                  <Field
                     type="text"
-                    name="firstName"
-                    id="firstName"
-                    autoComplete="given-name"
-                    value={formik.values.firstName}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.firstName && formik.errors.firstName
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                    placeholder="First Name"
+                    id="first_name"
+                    name="first_name"
+                    className={`input-field shadow-md rounded-md ${
+                      errors.first_name && touched.first_name
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`}
                   />
-                  {formik.touched.firstName && formik.errors.firstName && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.firstName}
-                    </p>
-                  )}
+                  <ErrorMessage
+                    name="first_name"
+                    component="div"
+                    className="text-red-500"
+                  />
                 </div>
-                <div className="w-full sm:w-1/2">
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                <div className="w-full md:w-1/3">
+                  <label htmlFor="last_name" className="text-white">
                     Last Name
                   </label>
-                  <input
+                  <Field
                     type="text"
-                    name="lastName"
-                    id="lastName"
-                    autoComplete="family-name"
-                    value={formik.values.lastName}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.lastName && formik.errors.lastName
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                    placeholder="Last Name"
+                    id="last_name"
+                    name="last_name"
+                    className={`input-field shadow-md rounded-md ${
+                      errors.last_name && touched.last_name
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`}
                   />
-                  {formik.touched.lastName && formik.errors.lastName && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.lastName}
-                    </p>
-                  )}
+                  <ErrorMessage
+                    name="last_name"
+                    component="div"
+                    className="text-red-500"
+                  />
                 </div>
               </div>
-              <p className="text-black text-xs mb-4">
-                Your name must be entered in English as it appears on your
-                passport.
-              </p>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700"
-                >
+              <div className="w-full">
+                <label htmlFor="email" className="text-white">
                   Email
                 </label>
-                <input
+                <Field
                   type="email"
-                  name="email"
                   id="email"
-                  autoComplete="email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className={
-                    formik.touched.email && formik.errors.email
-                      ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                      : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                  }
-                  placeholder="Email@example.com"
+                  name="email"
+                  className={`input-field shadow-md rounded-md ${
+                    errors.email && touched.email ? "unfamiliar-animation" : ""
+                  }`}
                 />
-                {formik.touched.email && formik.errors.email && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {formik.errors.email}
-                  </p>
-                )}
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-red-500"
+                />
               </div>
-              <div className="flex flex-col sm:flex-row sm:space-x-4">
-                <div className="w-full sm:w-1/2">
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+              <div className="flex flex-col md:flex-row md:space-x-4">
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="password" className="text-white">
                     Password
                   </label>
-                  <input
+                  <Field
                     type="password"
-                    name="password"
                     id="password"
-                    autoComplete="new-password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.password && formik.errors.password
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                    placeholder="Password"
+                    name="password"
+                    className={`input-field shadow-md rounded-md ${
+                      errors.password && touched.password
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`}
                   />
-                  {formik.touched.password && formik.errors.password && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.password}
-                    </p>
-                  )}
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500"
+                  />
                 </div>
-                <div className="w-full sm:w-1/2">
-                  <label
-                    htmlFor="confirmPassword"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="confirmPassword" className="text-white">
                     Confirm Password
                   </label>
-                  <input
+                  <Field
                     type="password"
-                    name="confirmPassword"
                     id="confirmPassword"
-                    autoComplete="new-password"
-                    value={formik.values.confirmPassword}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.confirmPassword &&
-                      formik.errors.confirmPassword
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                    placeholder="Confirm Password"
+                    name="confirmPassword"
+                    className={`input-field shadow-md rounded-md ${
+                      errors.confirmPassword && touched.confirmPassword
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`}
                   />
-                  {formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword && (
-                      <p className="text-red-500 text-xs mt-1">
-                        {formik.errors.confirmPassword}
-                      </p>
-                    )}
+                  <ErrorMessage
+                    name="confirmPassword"
+                    component="div"
+                    className="text-red-500"
+                  />
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:space-x-4">
-                <div className="w-full sm:w-1/2">
-                  <label
-                    htmlFor="dob"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+              <div className="flex flex-col md:flex-row md:space-x-4">
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="date_of_birth" className="text-white">
                     Date of Birth
                   </label>
-                  <input
+                  <Field
                     type="date"
-                    name="dob"
-                    id="dob"
-                    value={formik.values.dob}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.dob && formik.errors.dob
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
+                    id="date_of_birth"
+                    name="date_of_birth"
+                    className={`input-field shadow-md rounded-md ${
+                      errors.date_of_birth && touched.date_of_birth
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`}
                   />
-                  {formik.touched.dob && formik.errors.dob && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.dob}
-                    </p>
-                  )}
+                  <ErrorMessage
+                    name="date_of_birth"
+                    component="div"
+                    className="text-red-500"
+                  />
                 </div>
-                <div className="w-full sm:w-1/2">
-                  <label
-                    htmlFor="country"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Country/Territory of Residence
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="country" className="text-white">
+                    Country of Residence
                   </label>
-                  <select
+                  
+                    <CountryDropdown
+                      id="country"
+                      name="country"
+                      value={values.country}
+                      onChange={(val) => setFieldValue("country", val)}
+                      className={`input-field shadow-md rounded-md ${
+                        errors.country && touched.country
+                          ? "unfamiliar-animation"
+                          : ""
+                      }`}
+                    />
+
+                  <ErrorMessage
                     name="country"
-                    id="country"
-                    value={formik.values.country}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.country && formik.errors.country
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                  >
-                    <option value="">Select Country</option>
-                    {countries.map((country) => (
-                      <option key={country} value={country}>
-                        {country}
-                      </option>
-                    ))}
-                  </select>
-                  {formik.touched.country && formik.errors.country && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.country}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row sm:space-x-4">
-                {/* <div className="w-full sm:w-1/4">
-                  <label
-                    htmlFor="language"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Preferred Language
-                  </label>
-                  <select
-                    name="language"
-                    id="language"
-                    value={formik.values.language}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.language && formik.errors.language
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                  >
-                    <option value="">Preferred Language</option>
-                    <option value="English">English</option>
-                    <option value="Arabic">عربي</option>
-                  </select>
-                  {formik.touched.language && formik.errors.language && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.language}
-                    </p>
-                  )}
-                </div> */}
-                <div className="w-full sm:w-1/3">
-                  <label
-                    htmlFor="countryCode"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Country Code
-                  </label>
-                  <select
-                    name="countryCode"
-                    id="countryCode"
-                    value={formik.values.countryCode}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.countryCode && formik.errors.countryCode
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                  >
-                    <option value="">Code</option>
-                    {countryCodes.map((code) => (
-                      <option key={code.code} value={code.code}>
-                        {code.name} ({code.code})
-                      </option>
-                    ))}
-                  </select>
-                  {formik.touched.countryCode && formik.errors.countryCode && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.countryCode}
-                    </p>
-                  )}
-                </div>
-                <div className="w-full sm:w-2/3">
-                  <label
-                    htmlFor="mobile"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Mobile Number
-                  </label>
-                  <input
-                    type="text"
-                    name="mobile"
-                    id="mobile"
-                    value={formik.values.mobile}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={
-                      formik.touched.mobile && formik.errors.mobile
-                        ? "mt-1 block w-full px-3 py-4 border border-red-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                        : "mt-1 block w-full px-3 py-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-primary_color focus:border-primary_color sm:text-sm"
-                    }
-                    placeholder="Mobile Number"
+                    component="div"
+                    className="text-red-500"
                   />
-                  {formik.touched.mobile && formik.errors.mobile && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {formik.errors.mobile}
-                    </p>
-                  )}
                 </div>
               </div>
-            </div>
-            <div>
+              <div className="w-full">
+                <label htmlFor="mobile" className="text-white">
+                  Mobile
+                </label>
+                <Field
+                  as={PhoneInput}
+                  country={values.country_code || "sy"}
+                  value={values.mobile}
+                  onChange={(value) => setFieldValue("mobile", value)}
+                  inputProps={{
+                    name: "mobile",
+                    id: "mobile",
+                    required: true,
+                    className: `input-field shadow-md rounded-md ${
+                      errors.mobile && touched.mobile
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`,
+                    style: { paddingLeft: "46px" },
+                    placeholder: "",
+                  }}
+                />
+                <ErrorMessage
+                  name="mobile"
+                  component="div"
+                  className="text-red-500"
+                />
+              </div>
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary_color hover:bg-primary_color_1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary_color_1"
+                className={`w-full lg:w-full xl:w-auto bg-primary_color hover:bg-primary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
+                  isSubmitting
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:shadow-lg"
+                }`}
+                disabled={isSubmitting}
               >
                 Create An Account
               </button>
-            </div>
-          </form>
+            </Form>
+          )}
+        </Formik>
+        {formStatus && <div className="text-white mt-4">{formStatus}</div>}
+        <div className="mt-4 text-white">
+          You already have an account?{" "}
+          <Link to="/login" className="text-blue-700 underline">
+            Login
+          </Link>
         </div>
       </div>
+
+      <div className="lg:w-1/2 justify-center items-center hidden sm:block bg-center bg-register-image bg-no-repeat bg-gray-300"></div>
     </div>
   );
 };
 
-export default Register;
+export default RegisterPage;

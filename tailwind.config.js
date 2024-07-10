@@ -11,6 +11,7 @@ export default {
   theme: {
     extend: {
       screens: {
+        xs: "230px",
         sm: "576px",
         md: "768px",
         lg: "992px",
@@ -30,7 +31,8 @@ export default {
         green_color: "#00d084",
       },
       backgroundImage: {
-        "register-image": "url('/assets/images/Airline.jpg')",
+        "register-image": "url('/assets/images/register.svg')",
+        "login-image": "url('/assets/images/login.svg')",
       },
     },
   },
