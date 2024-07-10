@@ -1,8 +1,12 @@
-import React, {   useLayoutEffect, useRef, useState } from 'react';
+import React, {   useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.css';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Header = () => {
   const [display,setDispaly]=useState(false);
+
+  const user=null
   
 const handelNav=()=>{
   document.getElementById("navbar-user").classList.toggle("hidden");
@@ -23,12 +27,14 @@ useLayoutEffect(()=>{
 },[]);
     
   return (
-    <nav className=" md:bg-transparent  border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 md:px-[70px] z-[1000] " id="nav">
+    <nav  className="md:bg-transparent  border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 md:px-[70px] z-[1000] " id="nav">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
       <img src="/assets/images/logo_wings.png" className="h-8 sm:h-[34px]  lg:h-[54px] 2xl:h-[64px]" alt="Flowbite Logo" />
   </Link>
-  <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+  {
+    user ?
+    <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
       <button onClick={()=>{setDispaly(!display)}} type="button" className="flex relative text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button"
        aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <span className="sr-only">Open user menu</span>
@@ -57,14 +63,21 @@ useLayoutEffect(()=>{
       </div>
       }
       
-      <button onClick={handelNav} data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white_color rounded-lg md:hidden hover:bg-black_color focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
+      
+  </div>:
+  <div className='md:order-2 flex flex-col justify-center items-center gap-1 cursor-pointer'>
+  <FontAwesomeIcon icon={faRightToBracket} className='text-[20px] cursor-pointer lg:text-[30px] text-white_color shadow-2xl rounded-xl bg-[#AE8A3B]'/>
+  <span className='text-white hidden sm:inline sm:text-[12px] lg:text-[15px] bg-[#0000006a]'>Sign In</span>
+  </div>
+  }
+  
+  
+  <button onClick={handelNav} data-collapse-toggle="navbar-user" type="button" className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white_color rounded-lg md:hidden hover:bg-black_color focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
         <span className="sr-only">Open main menu</span>
         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
         </svg>
     </button>
-  </div>
-  
     <div className="items-center  hidden justify-between w-full md:flex md:w-auto md:order-1" id="navbar-user">
     <ul className="ul flex  flex-col md:font-normal  2xl:font-bold text-[12px] lg:text-[15px] md:bg-[#0000006a] p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-4 lg:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
       <li>
