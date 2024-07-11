@@ -7,7 +7,7 @@ const Our_responsibilty = () => {
         <section className='pt-5 md:pt-[50px] bg-off_white'>
         <Headings element={"h1"}>our responsibilty</Headings>
         <div  className='resposibilty h-[500px] overflow-hidden bg-fixed flex justify-center items-center '>
-        <div data-wow-offset="550" className='wow tada max-w-[700px] z-40 flex flex-col gap-5 px-3 sm:px-0'>
+        <div data-wow-offset="550" className='wow tada max-w-[700px] z-40 flex flex-col gap-5 px-3 '>
         <Headings element={"p"} color_P='#fff'>
             Cham Wings Airlines is looking forward
              to working on the development of the Syrian

@@ -66,9 +66,13 @@ useLayoutEffect(()=>{
       
   </div>:
   <div className='md:order-2 flex flex-col justify-center items-center gap-1 cursor-pointer'>
+  
+  <Link to="login">
   <FontAwesomeIcon icon={faRightToBracket} className='text-[20px] cursor-pointer lg:text-[30px] text-white_color shadow-2xl rounded-xl bg-[#AE8A3B]'/>
+  </Link>
   <span className='text-white hidden sm:inline sm:text-[12px] lg:text-[15px] bg-[#0000006a]'>Sign In</span>
   </div>
+
   }
   
   
