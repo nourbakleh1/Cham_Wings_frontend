@@ -43,8 +43,9 @@
     transform: rotate(0deg);
 
 }
-.active{
-    background-color: aqua;
+.active.a{
+    background-color: white;
+    color:#AE8A3B;
 }
 
 .handel_nav{
