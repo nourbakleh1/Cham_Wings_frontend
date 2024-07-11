@@ -66,9 +66,13 @@ useLayoutEffect(()=>{
       
   </div>:
   <div className='md:order-2 flex flex-col justify-center items-center gap-1 cursor-pointer'>
+  
+  <Link to="login">
   <FontAwesomeIcon icon={faRightToBracket} className='text-[20px] cursor-pointer lg:text-[30px] text-white_color shadow-2xl rounded-xl bg-[#AE8A3B]'/>
+  </Link>
   <span className='text-white hidden sm:inline sm:text-[12px] lg:text-[15px] bg-[#0000006a]'>Sign In</span>
   </div>
+
   }
   
   
@@ -90,7 +94,7 @@ useLayoutEffect(()=>{
         <NavLink onClick={handelNav} to="travel" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">TRAVEL CONDITION</NavLink>
       </li>
       <li>
-        <NavLink onClick={handelNav} to="about" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">ABOUT</NavLink>
+        <NavLink onClick={handelNav} to="about-us" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">ABOUT</NavLink>
       </li>
       <li>
         <NavLink onClick={handelNav} to="contact" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">CONTACT</NavLink>

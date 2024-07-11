@@ -31,6 +31,8 @@ const App = () => {
                     <Route index element={<Home />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/v" element={<Verify_email/>}/>
+
                     <Route path="/about-us" element={<AboutUs />} />
 
 
@@ -38,7 +40,6 @@ const App = () => {
 
                     </Route>
                     <Route path="/*" element={<Error_page/>}/>
-                    <Route path="/v" element={<Verify_email/>}/>
 
             </Routes>
 

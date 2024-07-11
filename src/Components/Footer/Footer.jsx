@@ -91,7 +91,7 @@ const Footer = () => {
 
       <div className="mx-6 py-10 text-center md:text-left">
         <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-          <div data-wow-offset="170" className="wow fadeInDownBig">
+          <div data-wow-offset="100" className="wow fadeInDownBig">
             <h6 className="mb-4 flex items-center pb-8 justify-center font-semibold uppercase md:justify-start">
               <span className="me-3">
                 <img src={logo} alt="Logo" className="h-10 w-10" />
@@ -104,7 +104,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div data-wow-offset="170" className="wow fadeInDownBig">
+          <div data-wow-offset="100" className="wow fadeInDownBig">
             <h6 className="mb-4 flex justify-center border-b-2 border-primary_color pb-2 font-semibold uppercase md:justify-start">
               Frequently visited pages
             </h6>
@@ -130,7 +130,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div data-wow-offset="170" className="wow fadeInDownBig">
+          <div data-wow-offset="100" className="wow fadeInDownBig">
             <h6 className="mb-4 flex justify-center border-b-2 border-primary_color pb-2 font-semibold uppercase md:justify-start">
               Useful links
             </h6>
@@ -151,7 +151,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div data-wow-offset="170" className="wow fadeInDownBig">
+          <div data-wow-offset="100" className="wow fadeInDownBig">
             <h6 className="mb-4 flex justify-center border-b-2 border-primary_color pb-2 font-semibold uppercase md:justify-start">
               Contact
             </h6>

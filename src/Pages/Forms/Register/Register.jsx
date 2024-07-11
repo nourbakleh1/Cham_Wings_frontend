@@ -66,7 +66,7 @@ const RegisterPage = () => {
                         : ""
                     }`}
                   >
-                    <option value="">Select</option>
+                    <option disabled>Select</option>
                     <option value="Miss">Miss.</option>
                     <option value="Mr">Mr.</option>
                     <option value="Mrs">Mrs.</option>
