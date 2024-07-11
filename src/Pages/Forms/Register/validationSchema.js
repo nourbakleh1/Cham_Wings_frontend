@@ -22,7 +22,7 @@ export const validationSchema = Yup.object().shape({
   date_of_birth: Yup.date()
     .required("Date of Birth is required")
     .max(new Date(), "Date of Birth cannot be in the future"),
-  country: Yup.string().required("Country/Territory of Residence is required"),
+  country: Yup.string().required("Country of Residence is required"),
   country_code: Yup.string().required("Country Code is required"),
   mobile: Yup.string()
     .matches(/^[0-9]+$/, "Mobile number must contain only digits")

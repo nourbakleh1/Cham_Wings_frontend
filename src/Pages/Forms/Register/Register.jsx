@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { CountryDropdown } from "react-country-region-selector";
+import ReactFlagsSelect from "react-flags-select";
 import { validationSchema } from "./validationSchema";
 import "./style.css";
 
@@ -204,18 +204,19 @@ const RegisterPage = () => {
                   <label htmlFor="country" className="text-white">
                     Country of Residence
                   </label>
-                  
-                    <CountryDropdown
-                      id="country"
-                      name="country"
-                      value={values.country}
-                      onChange={(val) => setFieldValue("country", val)}
-                      className={`input-field shadow-md rounded-md ${
-                        errors.country && touched.country
-                          ? "unfamiliar-animation"
-                          : ""
-                      }`}
-                    />
+
+                  <ReactFlagsSelect
+                    id="country"
+                    name="country"
+                    selected={values.country}
+                    onSelect={(code) => setFieldValue("country", code)}
+                    searchable
+                    selectButtonClassName={`custom-select-button ${
+                      errors.country && touched.country
+                        ? "unfamiliar-animation"
+                        : ""
+                    }`}
+                  />
 
                   <ErrorMessage
                     name="country"
