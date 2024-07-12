@@ -43,7 +43,7 @@
     transform: rotate(0deg);
 
 }
-.active{
+.active.a{
     background-color: white;
     color:#AE8A3B;
 }
