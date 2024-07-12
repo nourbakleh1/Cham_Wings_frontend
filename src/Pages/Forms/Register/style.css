@@ -44,3 +44,51 @@
     transform: translateX(0);
   }
 }
+
+/* customStyles.css */
+.custom-select-button {
+  background: white !important; /* Sets background to white */
+  border: 1px solid #ccc; /* Adds a border */
+  border-radius: 4px; /* Rounds the corners */
+  padding: 8px; /* Adds padding */
+  cursor: pointer; /* Ensures the cursor is a pointer */
+}
+
+.custom-select-button img {
+  display: none; /* Hides the flag image */
+}
+
+.custom-menu {
+  background: white; /* Sets the dropdown background to white */
+  border: 1px solid #ccc; /* Adds a border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow */
+}
+
+
+/* Style for the dropdown */
+.react-flags-select__options {
+  background: white; /* Sets the background color */
+  border: 1px solid #ccc; /* Sets the border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow */
+}
+
+/* Add any other custom styles as needed */
+
+.unfamiliar-animation {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}

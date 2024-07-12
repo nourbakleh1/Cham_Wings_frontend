@@ -10,6 +10,11 @@ import Register from "./Pages/Forms/Register/Register";
 import Login from './Pages/Forms/Login/Login';
 import AboutUs from './Pages/AboutUs/AboutUs';
 import Employee from './Pages/Employee/Employee';
+import Mission from './Pages/AboutUs/Mission';
+import OurFleet from './Pages/AboutUs/OurFleet';
+import OurCompany from './Pages/AboutUs/OurCompany';
+import OurResponsibility from './Pages/AboutUs/OurResponsibility';
+import ChairMan from './Pages/AboutUs/ChairMan';
 
 const App = () => {
   const ref=useRef(null);
@@ -35,6 +40,11 @@ const App = () => {
                     <Route path="/v" element={<Verify_email/>}/>
 
                     <Route path="/about-us" element={<AboutUs />} />
+                    <Route path="/our-mission" element={<Mission />} />
+                    <Route path="/our-fleet" element={<OurFleet />} />
+                    <Route path="/our-company" element={<OurCompany />} />
+                    <Route path="/our-responsibility" element={<OurResponsibility />} />
+                    <Route path="/ceos-letter" element={<ChairMan />} />
 
 
                     <Route path="employee" element={<Employee/>} >
