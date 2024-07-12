@@ -1,7 +1,6 @@
 import React from "react";
 import Card from "../../Components/Card/Card";
 import Headings from "../../Components/Headings/Headings";
-import "./style.css";
 
 const cardsData = [
   {
