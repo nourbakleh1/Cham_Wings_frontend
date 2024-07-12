@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
+import { NavLink } from "react-router-dom";
 
 const Card = ({ imageUrl, alternateImages, title, link }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -25,7 +26,7 @@ const Card = ({ imageUrl, alternateImages, title, link }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <a href={link}>
+      <NavLink to={link}>
         <div className="image-container relative">
           <img
             className="absolute w-full h-full pt-6 pb-2 transition duration-300 transform hover:scale-105"
@@ -33,7 +34,7 @@ const Card = ({ imageUrl, alternateImages, title, link }) => {
             alt={title}
           />
         </div>
-      </a>
+      </NavLink>
       <div className="pb-6 pt-6 bg-white text-center">
         <h3 className=" text-secoundary_color inline-block">
           {title}

@@ -7,7 +7,7 @@ import { faPlane } from '@fortawesome/free-solid-svg-icons';
 const Offer_item = ({offer}) => {
   return (
     <>
-        <section data-wow-offset="450" className='wow flipInX parent-offer p-5 basis-[500px] bg-white_color z-10 rounded-lg hover:shadow-2xl hover:shadow-[#00529B] transition-all delay-200 shadow-lg shadow-[#836E42]'>
+        <section data-wow-offset="450" className='wow flipInX parent-offer p-5 basis-[450px] bg-white_color z-10 rounded-lg hover:shadow-2xl hover:shadow-[#00529B] transition-all delay-200 shadow-lg shadow-[#836E42]'>
         <div className='parent-img'>
         <img className='imageOffer h-[200px] mx-auto max-w-full  md:h-[300px] z-10' src={offer?.image} />
 

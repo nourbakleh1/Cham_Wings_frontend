@@ -9,6 +9,7 @@ import Go_up from './Components/Go_up/Go_up';
 import Register from "./Pages/Forms/Register/Register";
 import Login from './Pages/Forms/Login/Login';
 import AboutUs from './Pages/AboutUs/AboutUs';
+import Employee from './Pages/Employee/Employee';
 import Mission from './Pages/AboutUs/Mission';
 import OurFleet from './Pages/AboutUs/OurFleet';
 import OurCompany from './Pages/AboutUs/OurCompany';
@@ -46,7 +47,9 @@ const App = () => {
                     <Route path="/ceos-letter" element={<ChairMan />} />
 
 
-
+                    <Route path="employee" element={<Employee/>} >
+                            
+                    </Route>
 
                     </Route>
                     <Route path="/*" element={<Error_page/>}/>
