@@ -16,7 +16,7 @@ import logo from "/assets/images/chamwings.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white relative z-[50]">
       <div className="flex items-center justify-center border-b-2 border-neutral-200  p-6 dark:border-white/10">
         <div className="me-12 hidden lg:block">
           <span>Get connected with us on social networks:</span>

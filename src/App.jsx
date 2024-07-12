@@ -9,6 +9,7 @@ import Go_up from './Components/Go_up/Go_up';
 import Register from "./Pages/Forms/Register/Register";
 import Login from './Pages/Forms/Login/Login';
 import AboutUs from './Pages/AboutUs/AboutUs';
+import Employee from './Pages/Employee/Employee';
 
 const App = () => {
   const ref=useRef(null);
@@ -36,7 +37,9 @@ const App = () => {
                     <Route path="/about-us" element={<AboutUs />} />
 
 
-
+                    <Route path="employee" element={<Employee/>} >
+                            
+                    </Route>
 
                     </Route>
                     <Route path="/*" element={<Error_page/>}/>
