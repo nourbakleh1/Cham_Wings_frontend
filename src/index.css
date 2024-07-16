@@ -11,18 +11,19 @@ html {
     scroll-behavior: smooth;
   }
 ::-webkit-scrollbar{
-    background-color: #00529B;
-    border-radius: 10px;
+    background-color: #e8e8e8;
 
 
 }
 ::-webkit-scrollbar-thumb{
-    background-color:#AE8A3B;
-    border-radius: 10px;
-    box-shadow: 0 0 5px 4px #fff;
+    background-color:#00529B;
+    border:0.1px solid #AE8A3B;
+    box-shadow: -8px -3px 30px -8px rgb(255,255,255);
+    -webkit-box-shadow: -8px -3px 30px -8px rgb(255,255,255);
+    -moz-box-shadow: -8px -3px 30px -8px rgb(255,255,255);
 }
 ::-webkit-scrollbar-button{
-    background-color: #fff;
+    background-color: #777;
 
 }
 ::selection{

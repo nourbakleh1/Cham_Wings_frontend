@@ -1,5 +1,5 @@
 .resposibilty{
-    background-image: url(/assets//images/responsibilty.jpg);
+    background-image: url(/assets//images/responsibilty.webp);
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -13,5 +13,5 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: #0000007d;
 }

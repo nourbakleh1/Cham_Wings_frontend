@@ -1,8 +1,9 @@
 import React, {   useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import './Header.css';
-import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+import { faRightToBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Separator from '../Separator/Separator';
 const Header = () => {
   const [display,setDispaly]=useState(false);
 
@@ -12,25 +13,13 @@ const handelNav=()=>{
   document.getElementById("navbar-user").classList.toggle("hidden");
 }
 
-useLayoutEffect(()=>{
-  window.addEventListener("scroll",()=>{
 
-    if(window.scrollY > 100){
-      document.getElementById("nav").classList.add("handel_nav");
-
-  
-    }else{
-      document.getElementById("nav").classList.remove("handel_nav");
-    }
-  })
- 
-},[]);
     
   return (
-    <nav  className="md:bg-transparent  border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 md:px-[70px] z-[1000] " id="nav">
+    <nav  className="bg-[#0c1524]  border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0 md:px-[40px] z-[1000] " id="nav">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="/assets/images/logo_wings.png" className="h-8 sm:h-[34px]  lg:h-[54px] 2xl:h-[64px]" alt="Flowbite Logo" />
+      <img src="/assets/images/logo_wings.png" className="h-8 sm:h-[34px]  lg:h-[38px] 2xl:h-[45px]" alt="Flowbite Logo" />
   </Link>
   {
     user ?
@@ -65,12 +54,17 @@ useLayoutEffect(()=>{
       
       
   </div>:
-  <div className='md:order-2 flex flex-col justify-center items-center gap-1 cursor-pointer'>
+  <div className='md:order-2   justify-center items-center gap-1 cursor-pointer hidden md:flex'>
   
   <Link to="login">
-  <FontAwesomeIcon icon={faRightToBracket} className='text-[20px] cursor-pointer lg:text-[30px] text-white_color shadow-2xl rounded-xl bg-[#AE8A3B]'/>
+  <FontAwesomeIcon icon={faUser} className='text-[10px] cursor-pointer hidden lg:block lg:text-[15px] text-white_color shadow-2xl rounded-xl hover:text-primary_color'/>
   </Link>
-  <span className='text-white hidden sm:inline sm:text-[12px] lg:text-[15px] bg-[#0000006a]'>Sign In</span>
+
+  <div className='text-white text-[11px] lg:text-[16px]'>
+    <Link to="login" className='p-1 hover:text-primary_color '>log in</Link>|
+    <Link to={"register"} className='p-1 hover:text-primary_color '>register</Link>
+
+  </div>
   </div>
 
   }
@@ -82,27 +76,34 @@ useLayoutEffect(()=>{
             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
         </svg>
     </button>
-    <div className="items-center  hidden justify-between w-full md:flex md:w-auto md:order-1" id="navbar-user">
-    <ul className="ul flex  flex-col md:font-normal  2xl:font-bold text-[11px] md:text-[9px]  lg:text-[10px] xl:text-[15px] md:bg-[#0000006a] p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-4 lg:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+    <div className="items-center  hidden justify-between w-full md:flex  md:w-auto md:order-1" id="navbar-user">
+    <ul className="ul flex  flex-col md:font-normal  2xl:font-bold text-[11px] md:text-[9px] bg-white_color md:bg-[#0c1524]  lg:text-[10px] xl:text-[12px]  p-4 md:p-0 mt-4 border border-gray-100 md:space-x-4 lg:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
       <li>
-        <NavLink onClick={handelNav} end to="our-services" className="block test md:text-white_color   py-2 px-1  rounded md:bg-transparent  md:p-0 md:dark:text-blue-500 a" aria-current="page">OUR SERVICES</NavLink>
+        <NavLink onClick={handelNav} end to="our-services" className="block  md:text-white_color text-white_color  py-2 px-1  rounded md:bg-transparent md:dark:hover:text-blue-500  md:p-0  a" aria-current="page">OUR SERVICES</NavLink>
       </li>
       <li>
-        <NavLink onClick={handelNav} to="offers" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">OFFERS</NavLink>
+        <NavLink onClick={handelNav} to="offers" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">OFFERS</NavLink>
       </li>
       <li>
-        <NavLink onClick={handelNav} to="travel" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">TRAVEL CONDITION</NavLink>
+        <NavLink onClick={handelNav} to="travel" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">TRAVEL CONDITION</NavLink>
       </li>
       <li>
-        <NavLink onClick={handelNav} to="about-us" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">ABOUT</NavLink>
+        <NavLink onClick={handelNav} to="about-us" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">ABOUT</NavLink>
       </li>
       <li>
-        <NavLink onClick={handelNav} to="contact" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">CONTACT</NavLink>
+        <NavLink onClick={handelNav} to="contact" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">CONTACT</NavLink>
       </li>
       <li>
-        <NavLink onClick={handelNav} to="employee" className="block test py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">EMP-DASHBOARD</NavLink>
+        <NavLink onClick={handelNav} to="employee" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">EMP-DASHBOARD</NavLink>
       </li>
     </ul>
+    
+    <div className='text-white  p-3 flex flex-col md:hidden  dark:bg-gray-800 border-t-4 border-solid border-primary_color'>
+    <Link onClick={handelNav} to="login" className='p-2 hover:text-primary_color'>log in</Link>
+    <Link onClick={handelNav} to={"register"} className='p-2 hover:text-primary_color'>register</Link>
+
+  </div>
+    
   </div>
   
   
