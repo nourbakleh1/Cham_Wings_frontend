@@ -97,7 +97,7 @@ const Login = () => {
         {formStatus && <div className="text-red-600 mt-4">{formStatus}</div>}
         <div className="mt-4 pt-4 text-white">
           Don't have an account?{" "}
-          <Link to="register" className="text-blue-700 underline">
+          <Link to="/register" className="text-blue-700 underline">
             Register now
           </Link>
         </div>
