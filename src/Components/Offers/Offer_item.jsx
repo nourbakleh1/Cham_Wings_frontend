@@ -2,28 +2,55 @@ import React from 'react'
 import Headings from '../Headings/Headings';
 import "./Offer.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlane } from '@fortawesome/free-solid-svg-icons';
+import {faPlane } from '@fortawesome/free-solid-svg-icons';
+import Button from '../Button/Button';
 
 const Offer_item = ({offer}) => {
   return (
     <>
-        <section data-wow-offset="450" className='wow flipInX parent-offer p-5 basis-[450px] bg-white_color z-10 rounded-lg hover:shadow-2xl hover:shadow-[#00529B] transition-all delay-200 shadow-lg shadow-[#836E42]'>
-        <div className='parent-img'>
-        <img className='imageOffer h-[200px] mx-auto max-w-full  md:h-[300px] z-10' src={offer?.image} />
-
-        </div>
-            <div className='p-3 flex justify-start gap-2 items-center z-10'>
-            <FontAwesomeIcon icon={faPlane} className='text-secoundary_color text-[22px]' />
-            <Headings element={"h3"} color='#AE8A3B'>{offer?.destination}
+        <section  className=' overflow-hidden basis-[450px] bg-white_color z-10 rounded-2xl hover:shadow-2xl transition-all delay-200 shadow-lg shadow-[#e8e8e8]'>
+        <div className='parent-img relative'>
+        <img className='imageOffer h-full mx-auto w-full  z-10' src={offer?.image}/>
+         <div className='absolute bottom-0 left-0 p-5 flex flex-col sm:flex-row justify-between items-center w-full'>
+        <div >
+          <div className='flex justify-start gap-2 items-center z-10'>
+            <FontAwesomeIcon icon={faPlane} className='text-white text-[15px]'/>
+            <Headings element={"h3"} color='#fff'>{offer?.destination}
             </Headings>
             </div>
-            <div className='flex float-end items-center z-10'>
-            <Headings element={"p"}>from</Headings>
+            <div className='flex text-white gap-1 text-[12px] sm:text-[14px]'>
+              <p>{offer?.departure_date} - </p>
+              <p>{offer?.return_date}</p>
+            </div>
+            
+          </div>
+          <div className='flex justify-center items-center z-10 text-white text-[12px] sm:text-[14px]'>
+          <p>{offer?.type} from</p>
             <div className='text-right font-extrabold text-[15px] md:text-[25px] p-2'>{offer?.price}</div>
             </div>
+            <div className='show-btn absolute bottom-0 left-0  w-full flex justify-center items-center'>
+            <Button color={"#836E42"} padding='5px'>discover</Button>
+
+            </div>
+
+            </div>
+            
+        </div>
+          
         </section>
     </>
   )
 }
 
 export default Offer_item;
+
+
+
+
+// offer_id:6,
+// image: '/assets/images/Offers-images/offer-6.webp',
+// departure_date:"14 Aug 2024",
+// return_date:"11 Sep 2024",
+// type:"Economy",
+// destination:"munich",
+// price:"122$"

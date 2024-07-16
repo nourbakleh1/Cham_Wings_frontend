@@ -16,8 +16,8 @@ const Offer_list = ({offers}) => {
         </div>
         
     </div>
-    <div data-wow-offset="250" className='wow swing flex justify-center mb-5'>
-    <Button color={"#000"}>more offers</Button>
+    <div  className='flex justify-center mb-5'>
+    <Button text="#000">more offers</Button>
     </div>
     </>
   )

@@ -5,34 +5,25 @@ transform: scale(1);
 
 
 }
- .parent-img{
-    overflow: hidden;
-}
-.parent-offer:hover .imageOffer{
+
+.parent-img:hover .imageOffer{
     transform: scale(1.2) rotate(5deg);
-    filter: brightness(77%);
-}
+     filter: brightness(60%); 
+} 
 
 
-.parent-offer{
-    position: relative;
-    overflow: hidden;
+.show-btn{
+    transform: translateY(100px);
+    transition: all .5s;
 }
-.parent-offer::after{
-    content: "";
-    position: absolute;
-    bottom: -20%;
-    left:-10%;
-    transform:scale(0);
-    background: rgba(0, 0, 0, 0.083);
-    height: 100px;
-    width: 100px;
-    transition: all 1.3s;
-    border-radius: 100%;
+
+.parent-img:hover .show-btn{
+    transform: translateY(-10px);
+
+}
+@media (max-width:576px) {
+    .parent-img:hover .show-btn{
+        transform: translateY(-50px);
     
-}
-.parent-offer:hover::after{
-    transform: scale(15);
-    border-radius: 100%;
-
+    }
 }

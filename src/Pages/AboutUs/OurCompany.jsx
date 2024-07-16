@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImageHeader from "../../Components/HeaderWithImage/ImageHeader";
 
 const OurCompany = () => {
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[]);
   return (
-    <div className="bg-secoundary_color ">
+    <div className="bg-secoundary_color mt-[70px]">
       <ImageHeader
         color="secoundary_color"
         title="OUR COMPANY"
-        image="/assets/images/AboutUs/airport1.jpg"
+        image="/assets/images/AboutUs/airport1.webp"
       />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 ">
         <div className="bg-white p-4 lg:p-8 rounded-xl shadow-md border-t-4 border-4 border-primary_color">

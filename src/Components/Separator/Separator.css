@@ -40,42 +40,7 @@
 }
 
 
-  /****************************3**********************************/
-  .container {
-    position: relative;
-    background: #2c3e50;
-    height: 50vh;
-  }
   
-  .waves {
-    position: absolute;
-    height: 71px;
-    width: 100%;
-    background: #2c3e50;
-    bottom: 0;
-  }
-  
-  .waves::before, .waves::after {
-    content: "";
-    display: block;
-    position: absolute;
-    border-radius: 50% 100%;
-  }
-  
-  .waves::before {
-    width: 55%;
-    height: 100%;
-    background-color: #2c3e50;
-    right: -1.5%;
-    top: 40%;
-  }
-  .waves::after {
-    width: 55%;
-    height: 109%;
-    background-color: #fff;
-    left: -1.5%;
-    top: 60%;
-  }
   /****************************4**********************************/
   .curved {
     position: relative;

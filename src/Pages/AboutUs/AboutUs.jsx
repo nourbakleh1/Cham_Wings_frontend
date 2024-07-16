@@ -1,47 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../../Components/Card/Card";
 import Headings from "../../Components/Headings/Headings";
+
 
 const cardsData = [
   {
     imageUrl: "assets/images/AboutUs/company.svg",
     alternateImages: ["assets/images/AboutUs/company1.svg"],
     title: "OUR COMPANY",
-    link: "/our-company",
+    link: "/about-us/our-company",
   },
   {
     imageUrl: "assets/images/AboutUs/misson.svg",
     alternateImages: ["assets/images/AboutUs/misson1.svg"],
     title: "OUR MISSION",
-    link: "/our-mission",
+    link: "/about-us/our-mission",
   },
   {
     imageUrl: "assets/images/AboutUs/fleet.svg",
     alternateImages: ["assets/images/AboutUs/fleet1.svg"],
     title: "OUR FLEET",
-    link: "/our-fleet",
+    link: "/about-us/our-fleet",
   },
   {
     imageUrl: "assets/images/AboutUs/service.svg",
     alternateImages: ["assets/images/AboutUs/service1.svg"],
     title: "OUR SERVICES",
-    link: "/our-services",
+    link: "/about-us/our-services",
   },
   {
     imageUrl: "assets/images/AboutUs/responsibilty.svg",
     alternateImages: ["assets/images/AboutUs/responsibilty1.svg"],
     title: "OUR RESPONSIBILITY",
-    link: "/our-responsibility",
+    link: "/about-us/our-responsibility",
   },
   {
     imageUrl: "assets/images/AboutUs/letter.svg",
     alternateImages: ["assets/images/AboutUs/letter1.svg"],
     title: "CHAIRMAN'S LETTER",
-    link: "/ceos-letter",
+    link: "/about-us/ceos-letter",
   },
 ];
 
+
 const AboutUs = () => {
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[]);
   return (
     <div className="bg-secondary_color min-h-screen xs:py-16 md:py-24 bg-secoundary_color">
       <div className="flex justify-center items-center w-full xs:py-12 md:py-8 px-4">
