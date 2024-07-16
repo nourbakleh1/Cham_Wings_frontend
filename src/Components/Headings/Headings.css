@@ -1,21 +1,23 @@
 .style{
     position: relative;
     color: #AE8A3B;
-    border-radius: 10px;
+    transform: skewX(5deg);
 }
 .style span{
     position: absolute;
     top:0;
     left: 0;
     height: 100%;
-    width: 35%;
+    width: 50%;
     mix-blend-mode: difference;
     transition: all .5s;
-    border-radius: 10px;
-    
+    border-radius: 5px;
+    background: #e8e8e8;
+    transform: skewX(5deg);
+
 }
 .style:hover span{
-    left: calc(100% - 35%);
+    left: calc(100% - 50%);
 }
 
 
