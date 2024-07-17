@@ -24,6 +24,8 @@ import Reservation from './Pages/Employee/Components/Reservation';
 import Admin from './Pages/Admin/Admin';
 import Manage_employees from './Pages/Admin/Components/Manage_employees';
 import Manage_permissions from './Pages/Admin/Components/Manage_permissions';
+import Layouts_dashboard from './Components/Layouts/Layouts_dashboard';
+import Layouts_admin_dash from './Components/Layouts/Layouts_admin_dash';
 
 const App = () => {
   const ref=useRef(null);
@@ -58,10 +60,14 @@ const App = () => {
                     <Route path="ceos-letter" element={<ChairMan />}/>
                     </Route>
 
-                  {/* employee page nested route */}
 
-                    <Route path="employee" >
-                    <Route index element={<Employee/>}/>
+                    </Route>
+                    <Route path='/dashboard' element={<Layouts_dashboard/>}>
+
+
+                     {/* employee page nested route */}
+                     
+                    <Route path="employee" element={<Employee/>}>
                     <Route path="manage-offers" element={<Manage_Offer/>}/>
                     <Route path="reservation" element={<Reservation/>}/>
                     <Route path="manage-flights" element={<Manage_flights/>}/>
@@ -70,15 +76,19 @@ const App = () => {
                     <Route path="visa-information" element={<Visa_information/>}/>
                     </Route>
 
-                     {/* admin page nested route */}
+                    </Route>
 
-                    <Route path="admin">
-                    <Route index element={<Admin/>}/>
-                    <Route path='manage-employees' element={<Manage_employees/>}/>
+                    <Route path="/admin_dashboard" element={<Layouts_admin_dash/>}>
+
+                       {/* admin page nested route */}
+
+                     
+                    <Route path='admin' element={<Admin/>}>
+                     <Route path='manage-employees' element={<Manage_employees/>}/>
                     <Route path='manage-permissions' element={<Manage_permissions/>}/>
                     </Route>
-
                     </Route>
+
                     <Route path="/*" element={<Error_page/>}/>
 
             </Routes>

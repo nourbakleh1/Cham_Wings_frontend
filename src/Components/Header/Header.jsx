@@ -94,7 +94,7 @@ const handelNav=()=>{
         <NavLink onClick={handelNav} to="contact" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">CONTACT</NavLink>
       </li>
       <li>
-        <NavLink onClick={handelNav} to="employee" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">EMP-DASHBOARD</NavLink>
+        <NavLink onClick={handelNav} to="/dashboard/employee" className="block  py-2 px-1 md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">EMP-DASHBOARD</NavLink>
       </li>
     </ul>
     
