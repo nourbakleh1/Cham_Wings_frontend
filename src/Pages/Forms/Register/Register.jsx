@@ -75,7 +75,7 @@ const RegisterPage = () => {
                   <ErrorMessage
                     name="title"
                     component="div"
-                    className="text-red-500"
+                    className="text-blue-900 font-semibold mt-1"
                   />
                 </div>
                 <div className="w-full md:w-1/3">
@@ -95,7 +95,7 @@ const RegisterPage = () => {
                   <ErrorMessage
                     name="first_name"
                     component="div"
-                    className="text-red-500"
+                    className="text-blue-900 font-semibold mt-1"
                   />
                 </div>
                 <div className="w-full md:w-1/3">
@@ -115,7 +115,7 @@ const RegisterPage = () => {
                   <ErrorMessage
                     name="last_name"
                     component="div"
-                    className="text-red-500"
+                    className="text-blue-900 font-semibold mt-1"
                   />
                 </div>
               </div>
@@ -134,7 +134,7 @@ const RegisterPage = () => {
                 <ErrorMessage
                   name="email"
                   component="div"
-                  className="text-red-500"
+                  className="text-blue-900 font-semibold mt-1"
                 />
               </div>
               <div className="flex flex-col md:flex-row md:space-x-4">
@@ -155,7 +155,7 @@ const RegisterPage = () => {
                   <ErrorMessage
                     name="password"
                     component="div"
-                    className="text-red-500"
+                    className="text-blue-900 font-semibold mt-1"
                   />
                 </div>
                 <div className="w-full md:w-1/2">
@@ -175,7 +175,7 @@ const RegisterPage = () => {
                   <ErrorMessage
                     name="confirmPassword"
                     component="div"
-                    className="text-red-500"
+                    className="text-blue-900 font-semibold mt-1"
                   />
                 </div>
               </div>
@@ -197,7 +197,7 @@ const RegisterPage = () => {
                   <ErrorMessage
                     name="date_of_birth"
                     component="div"
-                    className="text-red-500"
+                    className="text-blue-900 font-semibold mt-1"
                   />
                 </div>
                 <div className="w-full md:w-1/2">
@@ -221,7 +221,7 @@ const RegisterPage = () => {
                   <ErrorMessage
                     name="country"
                     component="div"
-                    className="text-red-500"
+                    className="text-blue-900 font-semibold mt-1"
                   />
                 </div>
               </div>
@@ -250,7 +250,7 @@ const RegisterPage = () => {
                 <ErrorMessage
                   name="mobile"
                   component="div"
-                  className="text-red-500"
+                  className="text-blue-900 font-semibold mt-1"
                 />
               </div>
               <button
