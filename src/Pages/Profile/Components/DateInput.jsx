@@ -1,6 +1,5 @@
 import React from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const DateInput = ({ label, selected, onChange, disabled, type, minDate, error }) => {
   const today = new Date();
