@@ -7,7 +7,7 @@ const Hero = ({img}) => {
 
       
         <img className='bg-cover object-cover h-full w-full' src={img} alt="..." />
-        <dev className='absolute top-0 left-0 w-full h-full bg-[#0000007d] '></dev>
+        <div className='absolute top-0 left-0 w-full h-full bg-[#0000007d] '></div>
       
     </div>
 

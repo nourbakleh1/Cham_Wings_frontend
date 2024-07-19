@@ -1,4 +1,4 @@
-import { faBox, faChartPie, faChevronLeft, faCircleInfo, faFilePen, faGears, faInfo, faListCheck, faMessage, faNewspaper, faPeopleRoof, faPlane, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faChartPie, faChevronLeft, faCircleInfo, faFilePen, faGears, faInfo, faListCheck, faMessage, faNewspaper, faPeopleRoof, faPersonWalkingArrowLoopLeft, faPlane, faRightFromBracket, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react'
 import { NavLink } from 'react-router-dom';
@@ -34,23 +34,35 @@ const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
    <div className="h-full px-1 sm:px-3 py-4 w-[190px] sm:w-[256px]  overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul className="space-y-2 font-medium">
          <li>
-            <NavLink end to="/admin" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink end to="/admin_dashboard/admin" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faChartPie} />
                <span className="ms-3 text-[11px] md:text-[14px]">Dashboard</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/admin/manage-employees" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/admin_dashboard/admin/manage-employees" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faPeopleRoof} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage employees</span>
             </NavLink>
          </li>
          
          <li>
-            <NavLink to="/admin/manage-permissions" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/admin_dashboard/admin/manage-permissions" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faGears} />
                
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage permissions</span>
+            </NavLink>
+         </li>
+         <li>
+            <NavLink to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faPersonWalkingArrowLoopLeft} />
+               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">return to the home page</span>
+            </NavLink>
+         </li>
+         <li>
+            <NavLink to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faRightFromBracket} />
+               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">sign out</span>
             </NavLink>
          </li>
          
