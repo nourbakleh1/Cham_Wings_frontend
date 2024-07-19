@@ -24,6 +24,7 @@ import Reservation from './Pages/Employee/Components/Reservation';
 import Admin from './Pages/Admin/Admin';
 import Manage_employees from './Pages/Admin/Components/Manage_employees';
 import Manage_permissions from './Pages/Admin/Components/Manage_permissions';
+import ProfilePage from './Pages/Profile/ProfilePage';
 
 const App = () => {
   const ref=useRef(null);
@@ -77,6 +78,8 @@ const App = () => {
                     <Route path='manage-employees' element={<Manage_employees/>}/>
                     <Route path='manage-permissions' element={<Manage_permissions/>}/>
                     </Route>
+
+                    <Route path="profile" element={<ProfilePage />} />
 
                     </Route>
                     <Route path="/*" element={<Error_page/>}/>
