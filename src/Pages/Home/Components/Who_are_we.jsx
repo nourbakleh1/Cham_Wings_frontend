@@ -20,13 +20,14 @@ const Who_are_we = () => {
      <Headings element={"h2"} color='#00529B'>Fly Beyond The Limits</Headings>
      <Headings element={"p"} color_P='#000'>16 Years in The Sky Flying Together</Headings>
     </div>
-    <div  className='md:grow-[1] basis-[100%]  md:basis-[300px] bg-secoundary_color_1 p-3 rounded-lg hover:bg-primary_color_1 hover:p-4 transition-all delay-150'>
-     {/* <iframe className='h-[200px] sm:h-[250px] lg:h-[350px]'  width="100%" 
-      src="https://www.youtube.com/embed/mxF3A0zOzbk" title="Let's fly together!"
-       allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerPolicy="strict-origin-when-cross-origin" 
-      allowFullScreen={true}>
-     </iframe> */}
+    <div  className='md:grow-[1] basis-[100%] text-center  md:basis-[300px] bg-secoundary_color_1 p-2 rounded-lg hover:bg-primary_color_1 hover:p-3 transition-all delay-150'>
+      <Headings element={"p"} color_P='#fff'>Cham Wings Airline</Headings>
+     <video className='xl:h-[370px]' width="100%" controls>
+     <source src="/assets/videos/Let_s_fly_together!(360p).mp4" type="video/mp4"/>
+     <source src="movie.ogg" type="video/ogg"/>
+     Your browser does not support the video tag.
+     </video>
+     
     </div>
     </section>
   )
