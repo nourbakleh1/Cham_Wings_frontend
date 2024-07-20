@@ -51,6 +51,9 @@ const App = () => {
                     <Route path="login" element={<Login />} />
                     <Route path="verify" element={<Verify_email/>}/>
 
+                    <Route path="profile" element={<ProfilePage />} />
+
+
                   {/* about page nested route */}
                     <Route path="about-us">
                     <Route index element={<AboutUs />} />
@@ -78,7 +81,6 @@ const App = () => {
                     </Route>
                     </Route>
 
-                    <Route path="profile" element={<ProfilePage />} />
                     <Route path="/admin_dashboard" element={<Layouts_admin_dash/>}>
 
                        {/* admin page nested route */}
