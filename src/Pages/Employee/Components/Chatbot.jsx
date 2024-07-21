@@ -13,7 +13,7 @@ const Chatbot = () => {
     </button>
 
     {openChat && 
-    <div className='bg-off_white h-[500px] w-[200px] sm:w-[400px] fixed bottom-[10.5%] right-[5%] z-[9999]'>
+    <div className='bg-off_white h-[500px] w-full sm:w-[400px] fixed bottom-[10.5%] right-0 sm:right-[5%] z-[9999]'>
     <h2 className='bg-secoundary_color_1 text-white py-1 text-[18px] text-center '>
     Cham wings
     </h2>
@@ -31,7 +31,7 @@ const Chatbot = () => {
       
     </div>
 
-    <div id="" className='absolute  bottom-0 left-0 sm:w-[400px] w-full   focus:outline-none border-[2px] border-primary_color border-solid'>
+    <div  className='absolute  bottom-0 left-0 sm:w-[400px] w-full   focus:outline-none border-[2px] border-primary_color border-solid'>
       <textarea  style={{height:"auto"}} className='border-0 bg-off_white focus:bg-off_white  w-full pr-[35px] overflow-hidden outline-none ' placeholder='message'></textarea>
       <button className='absolute bg-primary_color rounded-full cursor-pointer right-0 top-[50%] translate-y-[-50%]'>
       <FontAwesomeIcon icon={faLocationArrow} className='text-white  text-[25px] w-[35px] border-transparent rotate-45'/>
