@@ -27,6 +27,7 @@ import Manage_permissions from './Pages/Admin/Components/Manage_permissions';
 import Layouts_dashboard from './Components/Layouts/Layouts_dashboard';
 import Layouts_admin_dash from './Components/Layouts/Layouts_admin_dash';
 import ProfilePage from './Pages/Profile/ProfilePage';
+import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
 
 const App = () => {
   const ref=useRef(null);
@@ -102,7 +103,6 @@ const App = () => {
       <div id='go_up' className='hidden' onClick={()=>window.scrollTo(0,0)}>
       <Go_up />
       </div>
-      
     </div>
   );
 };
