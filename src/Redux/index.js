@@ -3,11 +3,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authSlice from "./ApiSlices/authSlice";
 import profileSlice from "./ApiSlices/profileSlice";
-<<<<<<< HEAD
 import flightSlice from "./ApiSlices/flightSlice";
-=======
 import statisticsSlice from "./ApiSlices/statisticsSlice";
->>>>>>> 8c806fddeffabaaf0124b5123f25171581a03e71
 
 const persistAuthConfig = {
   key: "auth",
@@ -20,11 +17,8 @@ const persistedAuthReducer = persistReducer(persistAuthConfig, authSlice);
 const rootReducer = combineReducers({
   auth: persistedAuthReducer,
   profile: profileSlice,
-<<<<<<< HEAD
   flights: flightSlice,
-=======
   statistics:statisticsSlice,
->>>>>>> 8c806fddeffabaaf0124b5123f25171581a03e71
 });
 
 export const store = configureStore({
