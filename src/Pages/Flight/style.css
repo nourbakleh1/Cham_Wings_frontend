@@ -1,0 +1,161 @@
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 640px) {
+  .fixed {
+    position: absolute;
+  }
+}
+
+.btn-economy {
+  background-color: #1d7e5b;
+  color: white;
+}
+
+.btn-economy:hover {
+  background-color: #0f6e4f;
+}
+
+.btn-business {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-business:hover {
+  background-color: #2563eb;
+}
+
+/* Position toast notifications at the top center */
+.toast-container {
+  position: fixed;
+  top: 20px; /* Position at the top of the screen */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 90%; /* Adjust width to be responsive */
+  max-width: 600px; /* Set a maximum width */
+  z-index: 9999;
+}
+
+.toast-message {
+  font-size: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  word-wrap: break-word; /* Ensure text wraps */
+}
+
+.toast-success {
+  background-color: #28a745; /* Green for success */
+}
+
+.toast-error {
+  background-color: #dc3545; /* Red for error */
+}
+
+.toast-message svg {
+  margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .toast-container {
+    width: 95%;
+  }
+}
+
+@media (max-width: 768px) {
+  .toast-container {
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .toast-container {
+    width: 95%;
+    top: 10px; /* Adjust for smaller screens */
+  }
+}
+
+@media (max-width: 230px) {
+  .toast-container {
+    width: 90%; /* Adjust width to fit very small screens */
+    left: 5%; /* Center alignment on very small screens */
+    transform: none;
+  }
+
+  .toast-message {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+.fare-conditions {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fare-conditions h1 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.fare-conditions p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes plane-move {
+  0%, 100% {
+    transform: translate(-30px, 30px) rotate(45deg);
+  }
+  50% {
+    transform: translate(30px, -30px) rotate(45deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-dash {
+  animation: dash 3s linear infinite;
+}
+
+.animate-plane {
+  animation: plane-move 4s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
