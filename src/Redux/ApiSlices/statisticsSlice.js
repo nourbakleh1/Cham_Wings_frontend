@@ -5,8 +5,10 @@ import { publicRequest } from "../../lib/publicRequest";
 export const getStatistics=createAsyncThunk("statistics/getStatistics",async(_,ThunkApi)=>{
         const {rejectWithValue}=ThunkApi;
     try{
-        const statistics=await publicRequest.get('/api/run-segmentation');
-        return statistics.data;
+        const statistics=await publicRequest.get('/api/segmentation-results');
+        const x= await JSON.parse(statistics.data);
+        console.log(x)
+        return x;
     }
     catch(error){
         return rejectWithValue(error.message);
