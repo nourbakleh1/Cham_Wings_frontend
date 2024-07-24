@@ -5,6 +5,7 @@ import Separator from '../../Components/Separator/Separator'
 import Offer_list from '../../Components/Offers/Offer_list'
 import {offers} from "../../dummy_data.js"
 import Our_responsibilty from './Components/Our_responsibilty.jsx'
+import Search_flight from './Components/Search_flight.jsx'
 
 
 
@@ -14,8 +15,9 @@ const Home = () => {
     window.scrollTo(0,0);
   },[]);
   return (
-    <div>
-      <Hero img={"/assets/images/Hero_images/hero-2.webp"}/>
+    <div className='relative'>
+      <Hero img={"/assets/images/Hero_images/ChamWingsAirlines1.webp"}/>
+      <Search_flight/>
       <Who_are_we/>
       <Separator type={"spikes"} Background_color={"#e8e8e8"}/>
       <Offer_list offers={offers}/>

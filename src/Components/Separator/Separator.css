@@ -1,21 +1,19 @@
-.triangle {
-    position: relative;
-    background: #2c3e50;
-    height: 50px;
-  }
-  
-  .triangle::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 52px 52px 52px;
-    border-color:#134571 transparent transparent transparent;
-    left: 50%;
-    transform: translateX(-50%);
-  }
+.curved1 {
+  position: relative;
+  background: white;
+  height: 20vh;
+}
+
+.curved1::after {
+  content: '';
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #e8e8e8e8;
+  height: 60%;
+}
   /****************************2**********************************/
 .spikes {
   position: relative;
