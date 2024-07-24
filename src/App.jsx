@@ -27,7 +27,11 @@ import Manage_permissions from './Pages/Admin/Components/Manage_permissions';
 import Layouts_dashboard from './Components/Layouts/Layouts_dashboard';
 import Layouts_admin_dash from './Components/Layouts/Layouts_admin_dash';
 import ProfilePage from './Pages/Profile/ProfilePage';
+<<<<<<< HEAD
 import FlightList from './Pages/Flight/FlightList';
+=======
+import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
+>>>>>>> 8c806fddeffabaaf0124b5123f25171581a03e71
 
 const App = () => {
   const ref=useRef(null);
@@ -104,7 +108,6 @@ const App = () => {
       <div id='go_up' className='hidden' onClick={()=>window.scrollTo(0,0)}>
       <Go_up />
       </div>
-      
     </div>
   );
 };

@@ -1,16 +1,15 @@
-import { faLocationArrow, faRectangleXmark, faRobot } from '@fortawesome/free-solid-svg-icons'
+import { faComments, faLocationArrow, faMessage, faRectangleXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import Headings from '../../../Components/Headings/Headings';
 
-const Chatbot = () => {
+const Chatbot_user = () => {
     const [openChat,setOpenChat]=useState(false);
   return (
     <>
-    <button onClick={()=>setOpenChat(!openChat)}>
-    {openChat ?<FontAwesomeIcon icon={faRectangleXmark} className='text-[40x] h-[30px] sm:h-[40px] text-secoundary_color cursor-pointer fixed bg-transparent bottom-[5%] right-[5%] z-[555]'/>
-     :<FontAwesomeIcon icon={faRobot} className='text-[40px] h-[30px] sm:h-[40px] text-primary_color cursor-pointer fixed bg-transparent bottom-[5%] right-[5%] z-[555]'/>}
-    </button>
+    <div onClick={()=>setOpenChat(!openChat)}>
+    {openChat ?<FontAwesomeIcon icon={faRectangleXmark} className='text-[40x] h-[30px] bg-white p-1 sm:h-[40px] rounded-xl text-secoundary_color cursor-pointer fixed bg-transparent bottom-[4%] right-[5%] z-[555]'/>
+     :<FontAwesomeIcon icon={faComments} className='text-[40px] h-[30px] p-1 text-white rounded-lg sm:h-[40px] bg-primary_color cursor-pointer fixed  bottom-[5%] right-[1%] z-[555]'/>}
+    </div>
 
     {openChat && 
     <div className='bg-off_white h-[500px] w-full sm:w-[400px] fixed bottom-[10.5%] right-0 sm:right-[5%] z-[9999]'>
@@ -43,4 +42,4 @@ const Chatbot = () => {
   )
 }
 
-export default Chatbot
+export default Chatbot_user

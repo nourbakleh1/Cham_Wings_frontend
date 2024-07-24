@@ -54,3 +54,32 @@ export const offers=[
         price:"122$"
     }
 ]
+export const airport=[
+    {
+        airport_code:"DAM",
+        airport_name:"damascus international airport",
+        city:"damascus",
+        country:"syria"
+    },
+    {
+        airport_code:"EBL",
+        airport_name:"erbil international airport",
+        city:"damascus",
+        country:"syria"
+    },{
+        airport_code:"SHJ",
+        airport_name:"sharjah international airport",
+        city:"damascus",
+        country:"syria"
+    },{
+        airport_code:"AUH",
+        airport_name:"abu Dhabi international airport",
+        city:"damascus",
+        country:"syria"
+    },{
+        airport_code:"KWI",
+        airport_name:"kuwait international airport",
+        city:"damascus",
+        country:"syria"
+    },
+]

@@ -1,5 +1,4 @@
 import React, { useEffect} from 'react'
-import Chatbot from './Chatbot'
 
 const View_history = () => {
     useEffect(()=>{
@@ -8,7 +7,6 @@ const View_history = () => {
   return (
     <div>
     <div className='h-[1500px] bg-gradient-to-t bg-gray_color'>
-    <Chatbot/>
     </div>
     </div>
   )
