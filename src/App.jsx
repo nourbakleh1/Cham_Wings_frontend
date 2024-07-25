@@ -30,6 +30,7 @@ import ProfilePage from './Pages/Profile/ProfilePage';
 import FlightList from './Pages/Flight/FlightList';
 import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
 
+
 const App = () => {
   const ref=useRef(null);
 
@@ -69,19 +70,19 @@ const App = () => {
 
 
                     </Route>
-                    <Route path='/dashboard' element={<Layouts_dashboard/>}>
+                    <Route path='/dashboard/employee' element={<Layouts_dashboard/>}>
 
 
                      {/* employee page nested route */}
                      
-                    <Route path="employee" element={<Employee/>}>
+                    <Route index element={<Employee/>}/>
                     <Route path="manage-offers" element={<Manage_Offer/>}/>
                     <Route path="reservation" element={<Reservation/>}/>
                     <Route path="manage-flights" element={<Manage_flights/>}/>
                     <Route path="answer-questions" element={<Answer_Questions/>}/>
                     <Route path="view-history" element={<View_history/>}/>
                     <Route path="visa-information" element={<Visa_information/>}/>
-                    </Route>
+                    
                     </Route>
 
                     <Route path="/admin_dashboard" element={<Layouts_admin_dash/>}>

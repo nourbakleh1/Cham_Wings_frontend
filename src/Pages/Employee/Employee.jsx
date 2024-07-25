@@ -318,36 +318,36 @@ const Employee = () => {
       </div>
    </div>
         </div> */}
-        <div className='flex justify-evenly items-center flex-wrap gap-5'>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+        <div className='flex justify-evenly items-center flex-wrap gap-[40px] sm:gap-5'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <PieChart chartData={chartData} />
 
           </div>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <LineChart chartData={chartData1}/>
 
           </div>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <BarChart chartData={chartData2}/>
 
           </div>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <PolarAreaChart chartData={chartData3}/>
 
           </div>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <DoughnutCharts chartData={chartData4}/>
 
           </div>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <RadarChart chartData={chartData5}/>
 
           </div>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <RadarChart chartData={chartData6}/>
 
           </div>
-          <div className='basis-[200px] sm:basis-[250px] md:basis-[400px]'>
+          <div className='w-[210px] sm:w-[300px] md:w-[350px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <RadarChart chartData={chartData7}/>
 
           </div>

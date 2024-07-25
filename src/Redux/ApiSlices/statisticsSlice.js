@@ -7,7 +7,6 @@ export const getStatistics=createAsyncThunk("statistics/getStatistics",async(_,T
     try{
         const statistics=await publicRequest.get('/api/segmentation-results');
         const x= await JSON.parse(statistics.data);
-        console.log(x)
         return x;
     }
     catch(error){
