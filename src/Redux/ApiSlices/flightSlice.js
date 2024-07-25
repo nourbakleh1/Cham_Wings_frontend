@@ -5,7 +5,7 @@ export const fetchFlights = createAsyncThunk(
   "flights/fetchFlights",
   async () => {
     // actual API
-    // const response = await axios.get('https://localhost:3000/flights');
+    // const response = await axios.get('/api/flights');
     // return response.data;
 
     // Simulate API call delay
@@ -27,7 +27,7 @@ export const sendSelectedFlights = createAsyncThunk(
       );
 
       // actual API
-      // const response = await axios.post('/http://localhost:3000/available-flights', selectedFlights);
+      // const response = await axios.post('/api/available-flights', selectedFlights);
 
       return response.data;
     } catch (error) {
