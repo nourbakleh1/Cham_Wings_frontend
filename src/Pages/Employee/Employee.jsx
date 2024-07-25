@@ -18,7 +18,7 @@ const Employee = () => {
     const dispatch=useDispatch();
     const {statistics,isLoading,error}=useSelector((state)=>state.statistics);
     const [chartData, setChartData] = useState({
-      labels: statistics?.results?.clusters.map((el)=>{return el.size}), 
+      labels: statistics?.results?.clusters.map((el)=>{return el.size}),
       datasets: [
         {
           label: "passengers number",
@@ -26,13 +26,14 @@ const Employee = () => {
             return el.size
           }),
           backgroundColor: [
-            "rgba(75,192,192,1)",
+            "#00529B",
             "&quot;#ecf0f1",
             "#50AF95",
             "#f3ba2f",
             "#2a71d0"
           ],
-          borderColor: "#fff",
+          borderColor: "#777",
+
           borderWidth: 1
         }
       ]
@@ -47,14 +48,14 @@ const Employee = () => {
             return el.avg_age
           }),
           backgroundColor: [
-            "rgba(75,192,192,1)",
+            "#00529B",
             "&quot;#ecf0f1",
             "#50AF95",
             "#f3ba2f",
             "#2a71d0"
           ],
-          borderColor: "#777",
-          borderWidth: 1
+          borderColor: "#00529B",
+          borderWidth: 2
         }
       ]
     });
@@ -68,7 +69,7 @@ const Employee = () => {
             return el.avg_ticket_price
           }),
           backgroundColor: [
-            "rgba(75,192,192,1)",
+            "#00529B",
             "&quot;#ecf0f1",
             "#50AF95",
             "#f3ba2f",
@@ -89,7 +90,7 @@ const Employee = () => {
             return el.avg_reservations
           }),
           backgroundColor: [
-            "rgba(75,192,192,1)",
+            "#00529B",
             "&quot;#ecf0f1",
             "#50AF95",
             "#f3ba2f",
@@ -110,7 +111,7 @@ const Employee = () => {
             return el.avg_total_flights
           }),
           backgroundColor: [
-            "rgba(75,192,192,1)",
+            "#00529B",
             "&quot;#ecf0f1",
             "#50AF95",
             "#f3ba2f",
@@ -135,7 +136,7 @@ const Employee = () => {
               return el.count
              })  ,
           backgroundColor: [
-            "rgba(75,192,192,1)",
+            "#00529B",
             "&quot;#ecf0f1",
             "#50AF95",
             "#f3ba2f",
@@ -157,11 +158,13 @@ const Employee = () => {
               return el.count
              })  ,
           backgroundColor: [
-            "rgba(75,192,192,1)",
+            "#000",
             "&quot;#ecf0f1",
-            "#50AF95",
             "#f3ba2f",
-            "#2a71d0"
+            "#00529B",
+            "#50AF95",
+            "#2a71d0",
+
           ],
           borderColor: "#777",
           borderWidth: 1
@@ -179,9 +182,9 @@ const Employee = () => {
               return el.count
              })  ,
           backgroundColor: [
-            "rgba(75,192,192,1)",
-            "&quot;#ecf0f1",
             "#50AF95",
+            "#00529B",
+            "&quot;#ecf0f1",
             "#f3ba2f",
             "#2a71d0"
           ],
