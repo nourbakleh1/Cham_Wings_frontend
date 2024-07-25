@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getStatistics} from '../../Redux/ApiSlices/statisticsSlice';
 import Chart from "chart.js/auto";
@@ -17,7 +17,8 @@ Chart.register(CategoryScale);
 const Employee = () => {
     const dispatch=useDispatch();
     const {statistics,isLoading,error}=useSelector((state)=>state.statistics);
-    const [chartData, setChartData] = useState({
+    
+    const chartData ={
       labels: statistics?.results?.clusters.map((el)=>{return el.size}),
       datasets: [
         {
@@ -37,9 +38,10 @@ const Employee = () => {
           borderWidth: 1
         }
       ]
-    });
+    };
 
-    const [chartData1, setChartData1] = useState({
+   
+    const chartData1 = {
       labels: statistics?.results?.clusters.map((el)=>{return el.avg_age}), 
       datasets: [
         {
@@ -58,9 +60,9 @@ const Employee = () => {
           borderWidth: 2
         }
       ]
-    });
+    };
 
-    const [chartData2, setChartData2] = useState({
+    const chartData2 ={
       labels: statistics?.results?.clusters.map((el)=>{return el.avg_ticket_price}), 
       datasets: [
         {
@@ -79,9 +81,9 @@ const Employee = () => {
           borderWidth: 1
         }
       ]
-    });
+    };
 
-    const [chartData3, setChartData3] = useState({
+    const chartData3 = {
       labels: statistics?.results?.clusters.map((el)=>{return el.avg_reservations}), 
       datasets: [
         {
@@ -100,32 +102,32 @@ const Employee = () => {
           borderWidth: 1
         }
       ]
-    });
+    };
 
-    const [chartData4, setChartData4] = useState({
-      labels: statistics?.results?.clusters.map((el)=>{return el.avg_total_flights}), 
-      datasets: [
-        {
-          label: "Average total flights",
-          data: statistics?.results?.clusters?.map((el)=>{
-            return el.avg_total_flights
-          }),
-          backgroundColor: [
-            "#00529B",
-            "&quot;#ecf0f1",
-            "#50AF95",
-            "#f3ba2f",
-            "#2a71d0"
-          ],
-          borderColor: "#777",
-          borderWidth: 1
-        }
-      ]
-    });
   
-
+const chartData4 = {
+  labels: statistics?.results?.clusters.map((el)=>{return el.avg_total_flights}), 
+  datasets: [
+    {
+      label: "Average total flights",
+      data: statistics?.results?.clusters?.map((el)=>{
+        return el.avg_total_flights
+      }),
+      backgroundColor: [
+        "#00529B",
+        "&quot;#ecf0f1",
+        "#50AF95",
+        "#f3ba2f",
+        "#2a71d0"
+      ],
+      borderColor: "#777",
+      borderWidth: 1
+    }
+  ]
+};
     
-    const [chartData5, setChartData5] = useState({
+
+    const chartData5= {
       labels: statistics?.results?.clusters[0]?.top_countries?.map((el)=>{
         return el.country
       }), 
@@ -146,8 +148,8 @@ const Employee = () => {
           borderWidth: 1
         }
       ]
-    });
-    const [chartData6, setChartData6] = useState({
+    };
+    const chartData6 = {
       labels: statistics?.results?.clusters[1]?.top_countries?.map((el)=>{
         return el.country
       }), 
@@ -170,8 +172,10 @@ const Employee = () => {
           borderWidth: 1
         }
       ]
-    });
-    const [chartData7, setChartData7] = useState({
+    };
+
+
+    const chartData7 = {
       labels: statistics?.results?.clusters[2]?.top_countries?.map((el)=>{
         return el.country
       }), 
@@ -192,12 +196,13 @@ const Employee = () => {
           borderWidth: 1
         }
       ]
-    });
-
-    useEffect(()=>{
+    };
+    useLayoutEffect(()=>{
       window.scrollTo(0,0);
       dispatch(getStatistics());
-    },[]);
+      
+
+    },[dispatch]);
     
     
       if(isLoading){
