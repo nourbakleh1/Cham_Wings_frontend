@@ -28,7 +28,7 @@ import Layouts_dashboard from './Components/Layouts/Layouts_dashboard';
 import Layouts_admin_dash from './Components/Layouts/Layouts_admin_dash';
 import ProfilePage from './Pages/Profile/ProfilePage';
 import FlightList from './Pages/Flight/FlightList';
-import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
+import Chatbot_user from './Components/Chatbot_user/Chatbot_user'; 
 
 
 const App = () => {

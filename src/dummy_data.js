@@ -83,3 +83,19 @@ export const airport=[
         country:"syria"
     },
 ]
+export const  Book_PDF=[
+    {
+    id:1,
+    name:"policy",
+   },
+   {
+    id:2,
+    name:"policy2",
+},{
+    id:3,
+    name:"policy3",
+},{
+    id:4,
+    name:"policy4",
+}
+]

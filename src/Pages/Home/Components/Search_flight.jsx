@@ -13,30 +13,44 @@ const Search_flight = () => {
 
   return (
     <form>
-    <section className='h-[600px] sm:h-[360px] xl:h-[250px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1150px] bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px] '>
+    <section className='h-[670px] sm:h-[420px] xl:h-[250px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1150px] bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px] '>
         <div className='border-solid border-b-2 border-primary_color flex justify-center items-center' >
         <FontAwesomeIcon icon={faPlane} className='text-secoundary_color px-3 text-[20px]'/>
             <span className='font-bold'>Flights</span>
         </div>
-        <div className='p-2 flex justify-evenly items-center gap-5 flex-col sm:flex-row ml-0 xl:ml-[58px]'>
-            
-            <select name="roundtrip" className='bg-off_white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' onChange={()=>setDisplayReturn(!displayReturn)}>
+            <div className='flex justify-evenly items-center w-full mb-[20px] flex-col sm:flex-row'>
+            <div className='flex flex-col md:flex-row items-center'>
+                <span className='text-[12px] text-primary_color_1  pr-2'>Trip type</span>
+                <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' onChange={()=>setDisplayReturn(!displayReturn)}>
                 <option value="0">round trip</option>
                 <option value="1">one way</option>
             </select>
+            </div>
+           
+
+            <div className='flex flex-col md:flex-row items-center'>
+            <span className='text-[12px] text-primary_color_1  pr-2'>Include my infomation</span>
+            <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' onChange={()=>setDisplayReturn(!displayReturn)}>
+                <option value="0">yes</option>
+                <option value="1">no</option>
+            </select>
+
+            </div>
+            </div>
             
-            <div className='flex justify-between items-center gap-5 p-3 bg-white flex-col sm:flex-row'>
+            <div className='flex justify-evenly items-center gap-5 p-3 flex-col sm:flex-row'>
             
             <div>
             <span className='text-[12px] text-primary_color_1 _color pr-2'>class</span>
-            <select className='bg-off_white text-secoundary_color w-[150px] p-2 sm:w-[100px] lg:w-[150px] text-[12px] font-bold' >
+            <select className='bg-white text-secoundary_color w-[150px] p-2 sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2' >
                     <option value="economy">economy class</option>
                     <option value="business">business class</option>
                 </select>
             </div>
             <div>
             <span className='text-[12px] text-primary_color_1  pr-2'>adults</span>
-            <select className='bg-off_white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold'>
+            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2'>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -51,7 +65,7 @@ const Search_flight = () => {
             </div>
                 <div>
             <span className='text-[12px] text-primary_color_1  pr-2'>infants</span>
-            <select className='bg-off_white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold'>
+            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2'>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -66,14 +80,13 @@ const Search_flight = () => {
             </div>
             
 
-        </div>
         <div className='flex justify-evenly items-center gap-5 flex-col lg:flex-row p-2'>
         <div className='flex justify-center gap-4 items-center flex-col sm:flex-row'>
 
         
         <div className='flex items-center'>
             <FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>
-            <select name="departure_airport" className='bg-white text-secoundary_color w-[180px] py-2 sm:w-[100px] lg:w-[200px] text-[12px] font-bold'>
+            <select name="departure_airport" className='bg-white text-secoundary_color w-[180px] py-2 sm:w-[100px] lg:w-[200px] text-[12px] font-bold border-primary_color border-solid border-b-2'>
                 <option value="" disabled>from</option>
                     {
                         airport?.map((el)=>{
@@ -85,7 +98,7 @@ const Search_flight = () => {
             <FontAwesomeIcon icon={faArrowRightArrowLeft} className='text-primary_color_1'/>
             <div className='flex items-center'>
             <FontAwesomeIcon icon={faPlaneArrival} className='px-2 text-[20px] text-secoundary_color' />
-            <select name="arrival_airport" className='bg-white text-secoundary_color w-[180px] py-2 sm:w-[100px] text-[12px] lg:w-[200px] xl font-bold'>
+            <select name="arrival_airport" className='bg-white text-secoundary_color w-[180px] py-2 sm:w-[100px] text-[12px] lg:w-[200px] xl font-bold border-primary_color border-solid border-b-2'>
                 <option value=""  disabled>to</option>
                 {
                         airport?.map((el)=>{
