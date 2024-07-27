@@ -1,0 +1,47 @@
+.head_plan{
+    clip-path: ellipse(50% 97% at 50% 98%);
+    background-color: #777;
+    position: absolute;
+
+    top:-16%;
+    left: 0;
+    
+}
+
+.wings_right{
+    clip-path: polygon(8% 25%, 92% 81%, 97% 91%, 19% 74%, 0 75%, 0 20%);
+
+    position: absolute;
+    top: 33%;
+    right: -249%;
+    width:500px;
+    height: 400px;
+    background-color: #777;
+
+}
+.wings_left{
+    clip-path: polygon(8% 25%, 92% 81%, 97% 91%, 19% 74%, 0 75%, 0 20%);
+
+    position: absolute;
+    top: 33%;
+    right: 99%;
+    width:500px;
+    height: 400px;
+    background-color: #777;
+
+    transform: rotateY(180deg);
+}
+.tail{
+    clip-path: polygon(49% 0, 95% 0, 51% 100%, 5% 0);
+
+    position: absolute;
+    bottom: -12%;
+    left: 0;
+    background-color: #777;
+    width:200px;
+    height: 200px;
+
+}
+.radios{
+    border-radius: 0 0 100px 100px;
+}
