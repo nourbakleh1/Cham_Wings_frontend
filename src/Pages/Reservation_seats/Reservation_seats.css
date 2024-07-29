@@ -1,47 +1,108 @@
 .head_plan{
     clip-path: ellipse(50% 97% at 50% 98%);
-    background-color: #777;
+    background-color: #e8e8e8;
     position: absolute;
-
-    top:-16%;
+    border-bottom: 3px solid #00529B;
+    top:-200px;
     left: 0;
     
 }
 
 .wings_right{
-    clip-path: polygon(8% 25%, 92% 81%, 97% 91%, 19% 74%, 0 75%, 0 20%);
-
+    clip-path: polygon(0 0, 99% 79%, 100% 91%, 0 59%);
     position: absolute;
-    top: 33%;
-    right: -249%;
-    width:500px;
-    height: 400px;
-    background-color: #777;
+    top: 20%;
+    right: -600px;
+    width:600px;
+    height: 600px;
+    background-color: #e8e8e8e8;
 
 }
 .wings_left{
-    clip-path: polygon(8% 25%, 92% 81%, 97% 91%, 19% 74%, 0 75%, 0 20%);
-
+    clip-path: polygon(0 0, 99% 79%, 100% 91%, 0 59%);
     position: absolute;
-    top: 33%;
-    right: 99%;
-    width:500px;
-    height: 400px;
-    background-color: #777;
-
+    top: 20%;
+    right: 100%;
+    width:600px;
+    height: 600px;
+    background-color: #e8e8e8e8;
     transform: rotateY(180deg);
+    
+}
+@media (max-width : 1400px) {
+    .wings_right{
+        right: -500px;
+        width:500px;
+        height: 650px;
+    }
+    .wings_left{
+        width:500px;
+    height: 650px;
+    }
 }
 .tail{
-    clip-path: polygon(49% 0, 95% 0, 51% 100%, 5% 0);
+    clip-path: polygon(25% 0, 49% 99%, 76% 0);
 
     position: absolute;
-    bottom: -12%;
+    bottom: -7%;
     left: 0;
-    background-color: #777;
+    background-color: #e8e8e8e8;
     width:200px;
-    height: 200px;
+    height: 100px;
+    z-index: -1;
 
 }
 .radios{
-    border-radius: 0 0 100px 100px;
+    border-radius: 0 0 200px 200px;
+
+
+}
+
+.tail_right{
+    clip-path: polygon(0 0, 100% 65%, 100% 75%, 0 63%);
+    position: absolute;
+    left: 142px;
+    background-color: #e8e8e8e8;
+    width:200px;
+    height: 250px;
+    transform: rotate(5deg);
+    bottom: -10%;
+    left:131px;
+    z-index: -1;
+
+
+
+}
+
+.tail_left{
+    clip-path: polygon(0 0, 100% 65%, 100% 75%, 0 63%);
+    position: absolute;
+    bottom: -10%;
+    left: -131px;
+    background-color: #e8e8e8e8;
+    width:200px;
+    height: 250px;
+    transform: rotateZ(-5deg) rotateY(180deg); 
+    z-index: -1;
+}
+
+ .seat:checked + label .icon{
+    color: #00529B;
+}
+
+.number_seat{
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0 51%, 0% 0%);
+    background-color: #00529B;
+    color: white;
+    height: 30px;
+    width: fit-content;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 0;
+    margin: 10px 0;
+    padding-right: 50px;
+
+
 }
