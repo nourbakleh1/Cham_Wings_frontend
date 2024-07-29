@@ -81,7 +81,7 @@ const Reservation_seats = () => {
 
       </div>
       </div>
-      <section className='h-screen mt-[240px] md:mt-[-100px] mb-[600px] '>
+      <section className='h-screen mt-[240px] md:mt-[-100px] mb-[650px] '>
     
     <div className='flex justify-center w-full gap-1 sm:gap-5 px-2 sm:px-0'>
     <div className='flex flex-col z-20   justify-evenly items-center h-[1122px] text-secoundary_color bg-[#e8e8e8e8]'>
@@ -139,7 +139,7 @@ const Reservation_seats = () => {
      
       <div className='wings_right hidden xl:block'></div>
       <div className='wings_left hidden xl:block'></div>
-      <div className='tail'></div>
+      <div className='tail hidden sm:block'></div>
       <div className='tail_right hidden sm:block'></div>
       <div className='tail_left hidden sm:block'></div>
     </div>
