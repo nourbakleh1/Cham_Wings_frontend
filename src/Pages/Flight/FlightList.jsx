@@ -245,7 +245,7 @@ const FlightList = () => {
 
   return (
     <div
-      className={`full-width-container py-32 mx-4 sm:mx-8 lg:mx-32 ${animationClass}`}
+      className={`full-width-container md:py-28 xs:py-20 mx-4 sm:mx-8 lg:mx-32 ${animationClass}`}
     >
       <ToastContainer
         className="toast-container"
@@ -264,14 +264,14 @@ const FlightList = () => {
         draggable
         pauseOnHover
       />
-      <div className="flight-date-section mb-8">
-        <div className="date-box mb-8">
+      <div className="flight-date-section md:mb-8 xs:mb-2 flex flex-col md:gap-8 sm:gap-2 sm:flex-row">
+        <div className="date-box flex-1 shadow-lg border-gray-300 border-t-2">
           <h4 className="text-xl font-semibold text-gray-800 flex items-center">
             <FaPlaneDeparture className="text-blue-600 mr-2" size={24} />
             Departure Airport
           </h4>
           <div className="date-filter mt-4">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap md:gap-2 xs:gap-2 overflow-x-auto whitespace-nowrap">
               {getUniqueDates(outboundFlights).map((date, index) => (
                 <div
                   key={index}
@@ -289,13 +289,13 @@ const FlightList = () => {
           </div>
         </div>
         {inboundFlights.length > 0 && (
-          <div className="date-box mb-8">
+          <div className="date-box flex-1 shadow-lg border-gray-300 border-t-2">
             <h4 className="text-xl font-semibold text-gray-800 flex items-center">
               <FaPlaneArrival className="text-green-600 mr-2" size={24} />
               Arrival Airport
             </h4>
             <div className="date-filter mt-4">
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 overflow-x-auto whitespace-nowrap">
                 {getUniqueDates(inboundFlights).map((date, index) => (
                   <div
                     key={index}

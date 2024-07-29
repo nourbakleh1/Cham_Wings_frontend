@@ -22,7 +22,7 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     {
       name: "Economy",
       color: "green",
-      price: `USD ${flight.economyPrice}`,
+      price: `SYR ${flight.economyPrice}`,
       weight: flight.economyWeight,
       meal: `Meal x${flight.economyMeals}`,
       cabinBaggage: flight.economyCabinBaggage,
@@ -32,7 +32,7 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     {
       name: "Business",
       color: "blue",
-      price: `USD ${flight.businessPrice}`,
+      price: `SYR ${flight.businessPrice}`,
       weight: flight.businessWeight,
       meal: `Meal x${flight.businessMeals}`,
       cabinBaggage: flight.businessCabinBaggage,
@@ -44,12 +44,12 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
   return (
     <div
       className={`bg-white border-2 rounded-lg shadow-md mb-4 my-8 ${
-        isSelected ? "border-blue-500 bg-blue-500" : "border-gray-200"
+        isSelected ? "border-blue-500 bg-blue-500" : "border-gray-400"
       }`}
     >
       <div className="flex flex-col lg:flex-row">
         {/* Left section */}
-        <div className="p-4 border-b lg:border-b-0 lg:border-r border-gray-200 lg:w-2/5">
+        <div className="p-4 border-b lg:border-b-0 lg:border-r border-gray-400 lg:w-2/5">
           <div className="flex justify-between items-center mb-2">
             <span className="font-bold text-lg">{flight.number}</span>
             <div>
@@ -89,20 +89,20 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
             {classTypes.map((classType) => (
               <div
                 key={classType.name}
-                className="relative border-b sm:border-b-0 sm:border-r last:border-r-0 border-gray-200"
+                className="relative border-b sm:border-b-0 sm:border-r last:border-r-0 border-gray-400"
               >
                 <button
                   onClick={() =>
                     handleClassSelect(classType.name.toLowerCase())
                   }
-                  className="w-full h-full p-4 text-left hover:bg-gray-50 focus:outline-none"
+                  className="w-full h-full p-4 text-left hover:bg-gray-100"
                 >
                   <div
                     className={`font-semibold text-${classType.color}-700 border-t-${classType.color}-800`}
                   >
                     {classType.name}
                   </div>
-                  <div className="text-sm text-gray-500">from USD</div>
+                  <div className="text-sm text-gray-500">from SYR</div>
                   <div className="font-bold text-lg">{classType.price}</div>
                   {classType.name === "Economy" && (
                     <div className="text-xs text-red-600">Lowest price</div>
