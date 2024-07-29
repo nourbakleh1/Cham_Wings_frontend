@@ -30,6 +30,9 @@ import ProfilePage from './Pages/Profile/ProfilePage';
 import FlightList from './Pages/Flight/FlightList';
 import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
 import ContactUs from './Pages/ContactUs/ContactUs';
+import Chatbot_user from './Components/Chatbot_user/Chatbot_user'; 
+import Reservation_seats from './Pages/Reservation_seats/Reservation_seats';
+
 
 const App = () => {
   const ref=useRef(null);
@@ -57,6 +60,14 @@ const App = () => {
                     <Route path="profile" element={<ProfilePage />} />
                     <Route path="flight" element={<FlightList />} />
                     <Route path="contact-us" element={<ContactUs />} />
+
+
+                    <Route path="reservation_seats" element={<Reservation_seats />} />
+                    
+
+
+                    <Route path="reservation_seats" element={<Reservation_seats />} />
+                    
 
 
                   {/* about page nested route */}
