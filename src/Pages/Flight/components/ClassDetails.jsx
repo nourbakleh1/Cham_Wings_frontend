@@ -6,9 +6,9 @@ import {
   FaUtensils,
   FaMedal,
 } from "react-icons/fa";
-import ".././style.css"
+import "../style.css";
 
-const ClassDetails = ({ classType, expandedClass, onSelect }) => {
+const ClassDetails = ({ classType, expandedClass, onSelect, isSelected }) => {
   if (!expandedClass) return null;
 
   const classInfo = classType.find(
@@ -32,14 +32,7 @@ const ClassDetails = ({ classType, expandedClass, onSelect }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {Object.entries(classInfo).map(([key, value]) => {
           if (["name", "color", "price"].includes(key)) return null;
-          let Icon = iconMap[key] || FaCheck;
-
-          if (
-            classInfo.name === "Economy" &&
-            (key === "changeFee" || key === "refundFee")
-          ) {
-            Icon = FaLock;
-          }
+          const Icon = iconMap[key] || FaCheck;
 
           return (
             <div
