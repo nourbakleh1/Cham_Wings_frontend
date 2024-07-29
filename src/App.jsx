@@ -29,7 +29,7 @@ import Layouts_admin_dash from './Components/Layouts/Layouts_admin_dash';
 import ProfilePage from './Pages/Profile/ProfilePage';
 import FlightList from './Pages/Flight/FlightList';
 import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
-
+import ContactUs from './Pages/ContactUs/ContactUs';
 
 const App = () => {
   const ref=useRef(null);
@@ -56,6 +56,7 @@ const App = () => {
 
                     <Route path="profile" element={<ProfilePage />} />
                     <Route path="flight" element={<FlightList />} />
+                    <Route path="contact-us" element={<ContactUs />} />
 
 
                   {/* about page nested route */}
