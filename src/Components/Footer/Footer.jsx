@@ -114,7 +114,7 @@ const Footer = () => {
               </a>
             </p>
             <p className="mb-4">
-              <a href="contact" className="hover:text-primary_color">
+              <a href="contact-us" className="hover:text-primary_color">
                 Contact
               </a>
             </p>
