@@ -54,10 +54,9 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
          }
          if(rej?.response?.status == 422)
          return toast.error(rej?.response?.data?.message)
-         else{
-         return toast.error("Please enter another file")
-
-         }
+        if(rej?.response?.status == 500){
+         return toast.error(rej?.response?.data?.error)
+        }
       })
     }
 
@@ -92,16 +91,42 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
             </NavLink>
          </li>
          <li>
-               <p className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+         <NavLink end to="/dashboard/employee/chatbot_emp" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <FontAwesomeIcon icon={faWrench} />
-
+                   
                   <span className="flex-1  ms-3 text-left rtl:text-right whitespace-nowrap  text-[11px] md:text-[14px]">Emp chatBot files</span>
                   <svg onClick={()=>setOpenpdf(!openpdf)}  className="mr-2 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                   </svg>
                   <FontAwesomeIcon icon={faPlus} onClick={()=>{setOpen(!open);dispatch(getpdfs())}}/>
-                  </p>
-                  <Modal open={open} setOpen={setOpen}>
+                  </NavLink>
+                  
+                  
+                      
+                  
+         {openpdf &&
+            <ul id="dropdown-example" className="p-2 space-y-2">
+            {Pdf_file_sorted?.map((el)=>{
+               return (
+                  <div key={el.id}>
+                  <li className='flex gap-3 sm:gap-0 justify-center sm:justify-evenly items-center text-[11px] md:text-[14px] border-primary_color/40 border-b-2 border-solid' >
+                  <FontAwesomeIcon icon={faFilePdf} className='text-off_white'/>
+
+                     <span  className="flex items-center text-[12px] w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{el.filename.slice(0,20)}</span>
+                     <FontAwesomeIcon icon={faMinus} className='text-off_white cursor-pointer' onClick={()=>{ setOpen1(!open1);setId(el.id)}} />
+
+                  </li>
+                 
+                  </div>
+
+               )
+            })}
+           
+                 
+            </ul>}
+            
+         </li>
+         <Modal open={open} setOpen={setOpen}>
         <div className=" flex items-center justify-center py-0 px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
 	
 	<div className="sm:max-w-lg w-full p-1 rounded-xl z-10">
@@ -139,31 +164,8 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
 	            </div>
             </div>
         </Modal>
-        
-                  
-                      
-                  
-         {openpdf &&
-            <ul id="dropdown-example" className="p-2 space-y-2">
-            {Pdf_file_sorted?.map((el)=>{
-               return (
-                  <div key={el.id}>
-                  <li className='flex gap-3 sm:gap-0 justify-center sm:justify-evenly items-center text-[11px] md:text-[14px] border-primary_color/40 border-b-2 border-solid' >
-                  <FontAwesomeIcon icon={faFilePdf} className='text-off_white'/>
 
-                     <span  className="flex items-center text-[12px] w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{el.filename.slice(0,20)}</span>
-                     <FontAwesomeIcon icon={faMinus} className='text-off_white cursor-pointer' onClick={()=>{ setOpen1(!open1);setId(el.id)}} />
-
-                  </li>
-                 
-                  </div>
-
-               )
-            })}
-           
-                 
-            </ul>}
-            <Modal open={open1} setOpen={setOpen1}>
+        <Modal open={open1} setOpen={setOpen1}>
             <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
             <div className='flex flex-col justify-center items-center gap-6'>
 
@@ -177,7 +179,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
 
             </div>
            </Modal>
-         </li>
+        
          <li>
             <NavLink to="/dashboard/employee/manage-offers" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faListCheck} />

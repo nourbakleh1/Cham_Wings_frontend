@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Header from '../Header/Header'
 import { Outlet } from 'react-router-dom'
 import Sidbar from '../Sidbar/Sidbar'
-import Chatbot from '../../Pages/Employee/Components/Chatbot'
 
 const Layouts_dashboard = () => {
     const [displaySidebar,setDisplaySidebar]=useState(false);
@@ -10,7 +9,6 @@ const Layouts_dashboard = () => {
     <div>
         <Header/>
         <Sidbar displaySidebar={displaySidebar} setDisplaySidebar={setDisplaySidebar}/>
-        <Chatbot/>
         <Outlet/>
     </div>
   )
