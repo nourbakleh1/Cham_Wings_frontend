@@ -29,10 +29,10 @@ const Search_flight = () => {
            
 
             <div className='flex flex-col md:flex-row items-center'>
-            <span className='text-[12px] text-primary_color_1  pr-2'>Include my infomation</span>
+            <span className='text-[12px] text-primary_color_1  pr-2'>Select booking preference</span>
             <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' onChange={()=>setDisplayReturn(!displayReturn)}>
-                <option value="0">yes</option>
-                <option value="1">no</option>
+                <option value="0">For me and companions</option>
+                <option value="1">For others only</option>
             </select>
 
             </div>
