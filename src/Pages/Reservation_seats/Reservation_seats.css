@@ -89,7 +89,9 @@
  .seat:checked + label .icon{
     color: #00529B;
 }
-
+.seat2:checked + label .icon2{
+    color: #00529B;
+}
 .number_seat{
     clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0 51%, 0% 0%);
     background-color: #00529B;

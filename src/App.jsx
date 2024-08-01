@@ -31,6 +31,7 @@ import FlightList from './Pages/Flight/FlightList';
 import ContactUs from './Pages/ContactUs/ContactUs';
 import Chatbot_user from './Components/Chatbot_user/Chatbot_user'; 
 import Reservation_seats from './Pages/Reservation_seats/Reservation_seats';
+import { ToastContainer } from 'react-toastify';
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
   return (
     <div>
       <Router>
+      <ToastContainer theme="colored" position="top-center"/>
              <Routes>
                     <Route path="/" element={<Layouts />}>
                     <Route index element={<Home />} />
