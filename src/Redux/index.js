@@ -5,6 +5,7 @@ import authSlice from "./ApiSlices/authSlice";
 import profileSlice from "./ApiSlices/profileSlice";
 import flightSlice from "./ApiSlices/flightSlice";
 import statisticsSlice from "./ApiSlices/statisticsSlice";
+import chatbotSlice from "./ApiSlices/chatbotSlice";
 
 const persistAuthConfig = {
   key: "auth",
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   profile: profileSlice,
   flights: flightSlice,
   statistics:statisticsSlice,
+  chatbot:chatbotSlice,
 });
 
 export const store = configureStore({
