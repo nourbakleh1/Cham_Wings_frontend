@@ -54,6 +54,10 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
          }
          if(rej?.response?.status == 422)
          return toast.error(rej?.response?.data?.message)
+         else{
+         return toast.error("Please enter another file")
+
+         }
       })
     }
 
@@ -129,7 +133,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
                            
                     <div className='my-5 w-full flex justify-center p-4  rounded-full tracking-wide font-semibold  transition ease-in duration-300 '>
                         
-                   {isLoading ?Loading:<input type='submit'  className='cursor-pointer bg-black text-primary_color rounded-xl px-2' color={"#000"}/>} 
+                   {isLoading ?Loading:<Button onClick={handelPDF} color={"#000"}>upload</Button>} 
                     </div>
                </form>
 	            </div>
