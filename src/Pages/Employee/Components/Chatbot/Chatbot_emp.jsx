@@ -4,7 +4,6 @@ import { faCode, faCompass, faLocationArrow, faPenToSquare, faPlaneUp } from '@f
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "../Chatbot/components/Sidbar_Chat.css"
 import "animate.css"
-import Typewriter from "typewriter-effect";
 import { ReactTyped } from "react-typed";
 
 const Chatbot_emp = () => {
