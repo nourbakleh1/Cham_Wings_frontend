@@ -8,7 +8,6 @@ export const getpdfs=createAsyncThunk("chatbot/getpdfs",async(_,ThunkApi)=>{
     try{
        const pdf=await publicRequest.get("/api/pdfs");
 
-       console.log(pdf.data)
        return pdf.data;
 
     }
@@ -40,7 +39,6 @@ export const uploadPdf=createAsyncThunk("chatbot/uploadPdf",async(formdata,Thunk
 });
 export const deletePdf=createAsyncThunk("chatbot/UploadPdf",async(id,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
-
     try{
          const {data}=await publicRequest.delete(`/api/pdfs/${id}`);
        return {data,id};
@@ -50,7 +48,17 @@ export const deletePdf=createAsyncThunk("chatbot/UploadPdf",async(id,ThunkApi)=>
         return rejectWithValue(error.message);
     }
 });
-
+export const SendAndReceive=createAsyncThunk("chatbot/SendAndReceive",async(data,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+    try{
+       const {data}=  await  publicRequest.post('/chat',data);
+       return data
+    }
+    catch(error)
+    {
+        return rejectWithValue(error.message);
+    }
+})
 
 const initialState={
     Pdf_file:[],
@@ -102,6 +110,17 @@ const chatbotSlice=createSlice({
                 });
             }).
             addCase(deletePdf.rejected,(state,action)=>{
+                state.isLoading = false;
+                state.error=action.payload;
+            })
+            .addCase(SendAndReceive.pending,(state)=>{
+                state.isLoading = true;
+            }).
+            addCase(SendAndReceive.fulfilled,(state,action)=>{
+                state.isLoading = false;
+                
+            }).
+            addCase(SendAndReceive.rejected,(state,action)=>{
                 state.isLoading = false;
                 state.error=action.payload;
             })
