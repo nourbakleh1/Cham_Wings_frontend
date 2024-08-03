@@ -207,7 +207,7 @@ const chartData4 = {
     
       if(isLoading){
         return (
-          <div className='flex justify-center items-center h-screen w-full bg-off_white sm:w-[calc(100%-256px)] ml-0 sm:ml-auto'>
+          <div className='flex justify-center items-center h-screen w-full bg-off_white md:w-[calc(100%-256px)] ml-0 sm:ml-auto'>
           <div className='p-[100px] flex'>
           <Loading/>
           </div>
