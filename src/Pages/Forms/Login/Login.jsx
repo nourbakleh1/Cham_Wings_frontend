@@ -10,7 +10,7 @@ const Login = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post("http://localhost:3000/login", values);
+      const response = await axios.post("http://localhost:8000/login", values);
       setFormStatus("Login successful!");
       // Handle navigation or state update after successful login
     } catch (error) {
@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <div className="h-dvh md:w-full lg:w-1/2 min-h-screen bg-primary_color py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
+      <div className="h-dvh md:w-full lg:w-1/2 bg-primary_color py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
         <h1 className="xs:text-2xl md:text-3xl font-bold text-white md:mb-6 sm:mb-6 xs:pb-4 md:pb-0">
           Login to Cham Wings
         </h1>
@@ -96,9 +96,9 @@ const Login = () => {
         </Formik>
         {formStatus && <div className="text-red-600 mt-4">{formStatus}</div>}
         <div className="mt-4 pt-4 text-white">
-          Did you forgot your password?{" "}
-          <Link to="/forgot_password" className="text-white/90 font-bold text-[15px] p-1 shadow-md shadow-secoundary_color">
-            Forgot password
+          Don't have an account?{" "}
+          <Link to="/register" className="text-blue-700 underline">
+            Register now
           </Link>
         </div>
       </div>
