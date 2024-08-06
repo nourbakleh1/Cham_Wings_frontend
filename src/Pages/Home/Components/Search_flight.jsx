@@ -7,9 +7,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Search_flight = () => {
-    const [displayReturn,setDisplayReturn]=useState(true);
+    const [displayReturn,setDisplayReturn]=useState("");
     const [startDate, setStartDate] = useState(new Date());
     const [startDate_return, setStartDate_return] = useState(new Date());
+
+    const [bookingPreference,setBookingPreference]=useState("");
 
   return (
     <form>
@@ -21,18 +23,21 @@ const Search_flight = () => {
             <div className='flex justify-evenly items-center w-full mb-[20px] flex-col sm:flex-row'>
             <div className='flex flex-col md:flex-row items-center'>
                 <span className='text-[12px] text-primary_color_1  pr-2'>Trip type</span>
-                <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' onChange={()=>setDisplayReturn(!displayReturn)}>
-                <option value="0">round trip</option>
-                <option value="1">one way</option>
+                <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' value={displayReturn} onChange={(e)=>setDisplayReturn(e.target.value)}>
+                <option value="0">one way</option>
+                <option value="1">round trip</option>
+
             </select>
             </div>
            
 
             <div className='flex flex-col md:flex-row items-center'>
             <span className='text-[12px] text-primary_color_1  pr-2'>Select booking preference</span>
-            <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' onChange={()=>setDisplayReturn(!displayReturn)}>
-                <option value="0">For me and companions</option>
-                <option value="1">For others only</option>
+            <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' value={bookingPreference} onChange={(e)=>setBookingPreference(e.target.value)}>
+                <option value="a">For me and companions</option>
+                <option value="b">For me</option>
+                <option value="c">For others only</option>
+
             </select>
 
             </div>
@@ -49,7 +54,7 @@ const Search_flight = () => {
             </div>
             <div>
             <span className='text-[12px] text-primary_color_1  pr-2'>adults</span>
-            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2'>
+            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2' disabled={bookingPreference == "b"}>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -65,7 +70,7 @@ const Search_flight = () => {
             </div>
                 <div>
             <span className='text-[12px] text-primary_color_1  pr-2'>infants</span>
-            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2'>
+            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2' disabled={bookingPreference == "b"}>
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -124,7 +129,7 @@ const Search_flight = () => {
                  />
                 
            {
-            displayReturn &&
+            displayReturn =="1" ?
             <DatePicker
             className={`mt-1 block w-full border-b-2 outline-none bg-white z-[1000000000000] border-primary_color focus:border-indigo-500 focus:ring-0 sm:text-sm p-1 bg-transparent`}
             selected={startDate_return} 
@@ -133,7 +138,7 @@ const Search_flight = () => {
             placeholderText="arrival_time"
             minDate={startDate}
             maxDate={`${startDate.getFullYear()+1}-${startDate.getMonth()}-${startDate.getDate()}`}
-                 />
+                 />:null
            } 
             </div>
             <Button color={"#AE8A3B"} padding='5px'>Search</Button>

@@ -32,7 +32,7 @@ import ContactUs from './Pages/ContactUs/ContactUs';
 import Chatbot_user from './Components/Chatbot_user/Chatbot_user'; 
 import Reservation_seats from './Pages/Reservation_seats/Reservation_seats';
 import { ToastContainer } from 'react-toastify';
-import Chatbot_emp from './Pages/Employee/Components/Chatbot_emp';
+import Chatbot_emp from './Pages/Employee/Components/Chatbot/Chatbot_emp';
 import Companions from './Pages/Companions/Companions';
 
 
