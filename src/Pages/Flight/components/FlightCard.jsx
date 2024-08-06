@@ -22,7 +22,7 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     {
       name: "Economy",
       color: "green",
-      price: `SYR ${flight.economyPrice}`,
+      price: `SYP ${flight.economyPrice}`,
       weight: flight.economyWeight,
       meal: `Meal x${flight.economyMeals}`,
       cabinBaggage: flight.economyCabinBaggage,
@@ -32,7 +32,7 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     {
       name: "Business",
       color: "blue",
-      price: `SYR ${flight.businessPrice}`,
+      price: `SYP ${flight.businessPrice}`,
       weight: flight.businessWeight,
       meal: `Meal x${flight.businessMeals}`,
       cabinBaggage: flight.businessCabinBaggage,
@@ -102,7 +102,7 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
                   >
                     {classType.name}
                   </div>
-                  <div className="text-sm text-gray-500">from SYR</div>
+                  <div className="text-sm text-gray-500">from SYP</div>
                   <div className="font-bold text-lg">{classType.price}</div>
                   {classType.name === "Economy" && (
                     <div className="text-xs text-red-600">Lowest price</div>
