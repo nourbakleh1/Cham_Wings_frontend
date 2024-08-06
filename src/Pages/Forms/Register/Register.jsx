@@ -11,13 +11,14 @@ import "./style.css";
 const RegisterPage = () => {
   const [formStatus, setFormStatus] = useState("");
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit =  (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/register",
-        values
-      );
-      setFormStatus("Registration successful!");
+      // const response = await axios.post(
+      //   "http://localhost:3000/register",
+      //   values
+      // );
+      // setFormStatus("Registration successful!");
+      console.log(values)
       resetForm();
     } catch (error) {
       console.error("Registration error:", error);
@@ -27,9 +28,15 @@ const RegisterPage = () => {
     }
   };
 
+  
+
+  
+
+
+
   return (
     <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
-      <div className="lg:w-1/2 bg-primary_color py-32 px-6 md:px-24 flex flex-col justify-center">
+      <div className="lg:w-1/2 bg-primary_color min-h-screen py-32 px-6 md:px-24 flex flex-col justify-center">
         <h1 className="md:text-3xl xs:text-2xl font-bold text-white mb-6 text-center">
           Join Cham Wings
         </h1>
@@ -270,7 +277,7 @@ const RegisterPage = () => {
         {formStatus && <div className="text-white mt-4">{formStatus}</div>}
         <div className="mt-4 text-white">
           You already have an account?{" "}
-          <Link to="/login" className="text-blue-700 underline">
+          <Link to="/login" className="text-white/90 font-bold text-[15px] p-1 shadow-md shadow-secoundary_color ">
             Login
           </Link>
         </div>

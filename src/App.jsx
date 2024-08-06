@@ -33,6 +33,8 @@ import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
 import Reservation_seats from './Pages/Reservation_seats/Reservation_seats';
 import { ToastContainer } from 'react-toastify';
 import Chatbot_emp from './Pages/Employee/Components/Chatbot/Chatbot_emp';
+import Forgot_password from './Pages/Reset_Password/Forgot_password';
+import Reset_password from './Pages/Reset_Password/Reset_password';
 
 
 const App = () => {
@@ -57,7 +59,14 @@ const App = () => {
                     <Route index element={<Home />} />
                     <Route path="register" element={<Register />} />
                     <Route path="login" element={<Login />} />
-                    <Route path="verify" element={<Verify_email/>}/>
+                    <Route path="verify-email/:email" element={<Verify_email/>}/>
+
+                    <Route path="forgot_password" element={<Forgot_password/>}/>
+                    <Route path="reset_password" element={<Reset_password/>}/>
+
+
+
+
 
                     <Route path="profile" element={<ProfilePage />} />
                     <Route path="flight" element={<FlightList />} />
