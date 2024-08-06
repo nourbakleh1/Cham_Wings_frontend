@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCircleQuestion, faMessage, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Headings from '../../../../../Components/Headings/Headings';
 
-const Sidbar_Chat = () => {
+const Sidbar_Chat = ({setOldchat,setSearch,setResult}) => {
     const [showSidbar,setShowSidbar]=useState(true);
 
     const handel_sideWidth=()=>{
@@ -21,8 +21,8 @@ const Sidbar_Chat = () => {
         <FontAwesomeIcon icon={faXmark} className='text-[20px]  text-white_color  hover:text-secoundary_color'/>
     }
     </div>
-    <div>
-        <FontAwesomeIcon icon={faPlus} className='text-[20px] bg-secoundary_color_1/50 p-2 rounded-2xl text-white_color hover:text-primary_color'/>
+    <div className='cursor-pointer'>
+        <FontAwesomeIcon icon={faPlus} className='text-[20px] bg-secoundary_color_1/50 p-2 rounded-2xl text-white_color hover:text-primary_color' onClick={()=>{setOldchat([]);setSearch(""),setResult("")}}/>
         {!showSidbar && <p className=' p-2 text-primary_color text-[14px]'>
             New chat
         </p> }

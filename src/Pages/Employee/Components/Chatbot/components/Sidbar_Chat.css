@@ -10,6 +10,8 @@
 textarea::-webkit-scrollbar{
     width: 0px;
 }
+
+
 .animate__myself{
     animation: change 1s ease-in-out  1 ;
 }
@@ -38,7 +40,7 @@ textarea::-webkit-scrollbar{
     border-radius: 4px;
     border: none;
     background-color: #e8e8e8;
-    background: linear-gradient(to right,#00539be9,#bead87dd,#00539be4);
+    background: linear-gradient(to right,#AE8A3B,#00529B,#AE8A3B,#00529B);
     background-size: 800px 50px;
     height: 18px;
     animation: load 2s ease-in-out  infinite ;
@@ -71,4 +73,26 @@ textarea::-webkit-scrollbar{
 }
 .result::-webkit-scrollbar{
     display: none;
+}
+
+.shad{
+    background: linear-gradient(to left,#e8e8e89d,#00529B,#00529B,#e8e8e89d),#e8e8e89d;
+    -webkit-background-clip:text;  
+    -webkit-text-fill-color: transparent;
+    animation: changeColor 20s  ease-in-out 3;
+}
+.shad1{
+    background: linear-gradient(to left,#e8e8e89d,#e8e8e89d,#AE8A3B,#AE8A3B,#e8e8e89d,#e8e8e89d);
+    -webkit-background-clip:text;  
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes changeColor {
+    from{
+        background-position: -800px;
+    }
+    to{
+        background-position:  800px;
+
+    }
 }
