@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <div className="h-dvh md:w-full lg:w-1/2 bg-primary_color py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
+      <div className="h-dvh md:w-full lg:w-1/2 bg-secoundary_color py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
         <h1 className="xs:text-2xl md:text-3xl font-bold text-white md:mb-6 sm:mb-6 xs:pb-4 md:pb-0">
           Login to Cham Wings
         </h1>
@@ -54,7 +54,7 @@ const Login = () => {
                   <ErrorMessage
                     name="email"
                     component="div"
-                    className="text-blue-900 font-semibold mt-1"
+                    className="text-red-500 font-semibold mt-1"
                   />
                 </div>
               </div>
@@ -76,13 +76,13 @@ const Login = () => {
                   <ErrorMessage
                     name="password"
                     component="div"
-                    className="text-blue-900 font-semibold mt-1"
+                    className="text-red-500 font-semibold mt-1"
                   />
                 </div>
               </div>
               <button
                 type="submit"
-                className={`w-full md:w-1/3 bg-primary_color hover:bg-primary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
+                className={`w-full md:w-1/3 bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
                   isSubmitting
                     ? "opacity-50 cursor-not-allowed"
                     : "hover:shadow-lg"
@@ -97,7 +97,7 @@ const Login = () => {
         {formStatus && <div className="text-red-600 mt-4">{formStatus}</div>}
         <div className="mt-4 pt-4 text-white">
           Don't have an account?{" "}
-          <Link to="/register" className="text-blue-700 underline">
+          <Link to="/register" className="text-white underline">
             Register now
           </Link>
         </div>

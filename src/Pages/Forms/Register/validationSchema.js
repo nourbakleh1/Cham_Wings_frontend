@@ -10,7 +10,8 @@ export const validate = (values) => {
   if (!values.password) errors.password = "Passwords is Required";
   if (values.password !== values.confirmPassword)
     errors.confirmPassword = "Passwords must match";
-  if (!values.date_of_birth) errors.date_of_birth = "Required";
+  if (!values.confirmPassword) errors.confirmPassword = "Confirm Passwords is Required";
+  if (!values.date_of_birth) errors.date_of_birth = "Date of birth is Required";
   if (!values.country) errors.country = "Country is Required";
   if (!values.mobile) errors.mobile = "Mobile is Required";
   return errors;

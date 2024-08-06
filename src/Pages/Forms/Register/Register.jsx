@@ -94,7 +94,7 @@ const RegisterPage = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
-      <div className="lg:w-1/2 bg-primary_color py-32 px-6 md:px-24 flex flex-col justify-center">
+      <div className="lg:w-1/2 bg-secoundary_color py-32 px-6 md:px-24 flex flex-col justify-center">
         <h1 className="md:text-3xl xs:text-2xl font-bold text-white mb-6 text-center">
           Join Cham Wings
         </h1>
@@ -123,7 +123,7 @@ const RegisterPage = () => {
                 <option value="Ms">Ms.</option>
               </select>
               {errors.title && (
-                <div className="text-blue-900 font-semibold mt-1">
+                <div className="text-red-500 font-semibold mt-1">
                   {errors.title}
                 </div>
               )}
@@ -143,7 +143,7 @@ const RegisterPage = () => {
                 }`}
               />
               {errors.first_name && (
-                <div className="text-blue-900 font-semibold mt-1">
+                <div className="text-red-500 font-semibold mt-1">
                   {errors.first_name}
                 </div>
               )}
@@ -163,7 +163,7 @@ const RegisterPage = () => {
                 }`}
               />
               {errors.last_name && (
-                <div className="text-blue-900 font-semibold mt-1">
+                <div className="text-red-500 font-semibold mt-1">
                   {errors.last_name}
                 </div>
               )}
@@ -184,7 +184,7 @@ const RegisterPage = () => {
               }`}
             />
             {errors.email && (
-              <div className="text-blue-900 font-semibold mt-1">
+              <div className="text-red-500 font-semibold mt-1">
                 {errors.email}
               </div>
             )}
@@ -205,7 +205,7 @@ const RegisterPage = () => {
                 }`}
               />
               {errors.password && (
-                <div className="text-blue-900 font-semibold mt-1">
+                <div className="text-red-500 font-semibold mt-1">
                   {errors.password}
                 </div>
               )}
@@ -225,7 +225,7 @@ const RegisterPage = () => {
                 }`}
               />
               {errors.confirmPassword && (
-                <div className="text-blue-900 font-semibold mt-1">
+                <div className="text-red-500 font-semibold mt-1">
                   {errors.confirmPassword}
                 </div>
               )}
@@ -247,7 +247,7 @@ const RegisterPage = () => {
                 }`}
               />
               {errors.date_of_birth && (
-                <div className="text-blue-900 font-semibold mt-1">
+                <div className="text-red-500 font-semibold mt-1">
                   {errors.date_of_birth}
                 </div>
               )}
@@ -267,7 +267,7 @@ const RegisterPage = () => {
                 }`}
               />
               {errors.country && (
-                <div className="text-blue-900 font-semibold mt-1">
+                <div className="text-red-500 font-semibold mt-1">
                   {errors.country}
                 </div>
               )}
@@ -293,14 +293,14 @@ const RegisterPage = () => {
               }}
             />
             {errors.mobile && (
-              <div className="text-blue-900 font-semibold mt-1">
+              <div className="text-red-500 font-semibold mt-1">
                 {errors.mobile}
               </div>
             )}
           </div>
           <button
             type="submit"
-            className={`w-full lg:w-full xl:w-auto bg-primary_color hover:bg-primary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
+            className={`w-full lg:w-full xl:w-auto bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
               isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:shadow-lg"
             }`}
             disabled={isSubmitting}
@@ -319,7 +319,7 @@ const RegisterPage = () => {
         )}
         <div className="mt-4 text-white">
           You already have an account?{" "}
-          <Link to="/login" className="text-blue-700 underline">
+          <Link to="/login" className="text-white underline">
             Login
           </Link>
         </div>
