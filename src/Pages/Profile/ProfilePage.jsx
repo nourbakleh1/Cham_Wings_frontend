@@ -4,9 +4,9 @@ import {
   fetchProfile,
   updateProfile,
 } from "../../Redux/features/profile/profileSlice.js";
-import TextInput from "./Components/TextInput";
-import DateInput from "./Components/DateInput";
-import PhoneInputComponent from "./Components/PhoneInputComponent";
+import TextInput from "../../Components/Fields/TextInput.jsx";
+import DateInput from "../../Components/Fields/DateInput.jsx";
+import PhoneInputComponent from "../../Components/Fields/PhoneInputComponent.jsx";
 import ReactFlagsSelect from "react-flags-select";
 import { validateProfileForm } from "./validation";
 
@@ -157,7 +157,7 @@ const ProfilePage = () => {
             <h2 className="text-2xl font-semibold mb-4 pb-8">
               Personal Information
             </h2>
-            <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <TextInput
                 label="First Name"
                 name="firstName"
@@ -299,7 +299,7 @@ const ProfilePage = () => {
             <h2 className="text-2xl font-semibold mb-4 pb-8">
               Security Information
             </h2>
-            <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <TextInput
                 label="Email"
                 name="email"
@@ -334,7 +334,7 @@ const ProfilePage = () => {
             <h2 className="text-2xl font-semibold mb-4 pb-8">
               Passport Information
             </h2>
-            <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               <TextInput
                 label="Passport Number"
                 name="passportNumber"

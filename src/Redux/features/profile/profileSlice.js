@@ -10,7 +10,7 @@ const initialState = {
 export const fetchProfile = createAsyncThunk(
   "profile/fetchProfile",
   async () => {
-    const response = await axios.get("/http://localhost:3000/profile");
+    const response = await axios.get("/http://localhost:8000/profile");
     return response.data;
   }
 );
@@ -18,14 +18,18 @@ export const fetchProfile = createAsyncThunk(
 export const updateProfile = createAsyncThunk(
   "profile/updateProfile",
   async (profile) => {
-    const response = await axios.put("/http://localhost:3000/profile", profile);
+    const response = await axios.put("/http://localhost:8000/profile", profile);
     return response.data;
   }
 );
 
 const profileSlice = createSlice({
   name: "profile",
-  initialState,
+  initialState: {
+    profile: null,
+    status: "idle",
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
