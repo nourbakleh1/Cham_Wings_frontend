@@ -33,6 +33,7 @@ import Chatbot_user from './Components/Chatbot_user/Chatbot_user';
 import Reservation_seats from './Pages/Reservation_seats/Reservation_seats';
 import { ToastContainer } from 'react-toastify';
 import Chatbot_emp from './Pages/Employee/Components/Chatbot_emp';
+import Companions from './Pages/Companions/Companions';
 
 
 const App = () => {
@@ -62,9 +63,7 @@ const App = () => {
                     <Route path="profile" element={<ProfilePage />} />
                     <Route path="flight" element={<FlightList />} />
                     <Route path="contact-us" element={<ContactUs />} />
-
-
-                    <Route path="reservation_seats" element={<Reservation_seats />} />
+                    <Route path="reservation" element={<Companions />} />
                     
 
 
