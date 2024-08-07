@@ -35,11 +35,13 @@ import { ToastContainer } from 'react-toastify';
 import Chatbot_emp from './Pages/Employee/Components/Chatbot/Chatbot_emp';
 import Forgot_password from './Pages/Reset_Password/Forgot_password';
 import Reset_password from './Pages/Reset_Password/Reset_password';
+import { useSelector } from 'react-redux';
+import Verify_email_pass from './Pages/Verify-email/Verify_email_pass';
 
 
 const App = () => {
   const ref=useRef(null);
-
+ 
   useEffect(()=>{
     window.addEventListener("scroll",()=>{
       if(window.scrollY > 700){
@@ -50,6 +52,9 @@ const App = () => {
       }
     })
   },[]);
+
+  
+
   return (
     <div>
       <Router>
@@ -60,6 +65,7 @@ const App = () => {
                     <Route path="register" element={<Register />} />
                     <Route path="login" element={<Login />} />
                     <Route path="verify-email/:email" element={<Verify_email/>}/>
+                    <Route path="verify-email_pass/:email" element={<Verify_email_pass/>}/>
 
                     <Route path="forgot_password" element={<Forgot_password/>}/>
                     <Route path="reset_password" element={<Reset_password/>}/>
