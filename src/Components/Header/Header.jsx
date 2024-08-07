@@ -1,18 +1,30 @@
 import React, {   useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import './Header.css';
 import { faRightToBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Separator from '../Separator/Separator';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../Redux/ApiSlices/authSlice';
+import { toast } from 'react-toastify';
 const Header = () => {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
   const [display,setDispaly]=useState(false);
+  const {user}=useSelector((state)=>state.auth);
 
-  const user=null
   
 const handelNav=()=>{
   document.getElementById("navbar-user").classList.toggle("hidden");
 }
-
+ const handelLogout=()=>{
+    dispatch(logout()).unwrap().then((res)=>{
+      navigate("/",{replace:true});
+      return toast.success(res.data)
+    }).catch((rej)=>{
+      return toast.error(rej?.response.data.errors);
+    })
+ }
 
     
   return (
@@ -46,7 +58,7 @@ const handelNav=()=>{
             <a href="#" onClick={()=>{setDispaly(!display)}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
           </li>
           <li>
-            <a href="#" onClick={()=>{setDispaly(!display)}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+            <a href="#" onClick={()=>{setDispaly(!display),handelLogout()}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
           </li>
         </ul>
       </div>
