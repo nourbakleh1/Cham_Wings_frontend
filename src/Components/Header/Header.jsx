@@ -22,7 +22,7 @@ const handelNav=()=>{
       navigate("/",{replace:true});
       return toast.success(res.data)
     }).catch((rej)=>{
-      return toast.error(rej?.response.data.errors);
+      return toast.error(rej?.response?.data?.errors);
     })
  }
 
@@ -58,7 +58,7 @@ const handelNav=()=>{
             <a href="#" onClick={()=>{setDispaly(!display)}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
           </li>
           <li>
-            <a href="#" onClick={()=>{setDispaly(!display),handelLogout()}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+            <Link  onClick={()=>{setDispaly(!display),handelLogout()}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>
           </li>
         </ul>
       </div>

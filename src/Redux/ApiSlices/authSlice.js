@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { publicRequest } from "../../lib/publicRequest";
 import { privateRequest } from "../../lib/privateRequest";
-import Verify_email_pass from "../../Pages/Verify-email/Verify_email_pass";
 
 
 export const register=createAsyncThunk("auth/register",async(data,ThunkApi)=>{
