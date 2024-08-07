@@ -14,14 +14,13 @@ const Login = () => {
   const [formStatus, setFormStatus] = useState("");
 
   const handleSubmit =  (values, { setSubmitting }) => {
-    console.log(values)
 
     const data=values
     dispatch(login(data)).unwrap().then((res)=>{
       navigate("/",{replace:true})
       return toast.success(res.message)
     }).catch((rej)=>{
-      // return toast.error(rej?.response?.data?.message)
+      return toast.error(rej?.response?.data?.message)
     })
     // try {
     //   const response = await axios.post("http://localhost:8000/login", values);

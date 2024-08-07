@@ -327,7 +327,7 @@ const RegisterPage = () => {
             )}
           </div>
           {
-            isLoading ?<div className="bg-white w-fit m-auto rounded-lg flex justify-center items-center"><Loading2/></div>
+            isLoading ?<div className="bg-white w-fit mx-auto rounded-lg flex justify-center items-center"><Loading2/></div>
             :<button
             type="submit"
             className={`w-full lg:w-full xl:w-auto bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
