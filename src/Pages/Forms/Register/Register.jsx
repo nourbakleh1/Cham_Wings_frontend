@@ -1,38 +1,50 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import ReactFlagsSelect from "react-flags-select";
 import { validate } from "./validationSchema";
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../../Redux/ApiSlices/authSlice";
+import { toast } from "react-toastify";
+import Loading2 from "../../../Components/Loading/Loading2";
 
 const RegisterPage = () => {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const {isLoading}=useSelector((state)=>state.auth)
+  
   const [formValues, setFormValues] = useState({
-    title: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    date_of_birth: "",
     country: "",
     country_code: "",
     mobile: "",
   });
+
+  // new 
+  const [title,setTitle]=useState("");
+  const [first_name,setFirst_name]=useState("");
+  const [last_name,setLast_name]=useState("");
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+  const [confirm_password,setConfirmPassword]=useState("");
+  const [date_of_birth,setDate]=useState("");
+  // 
+
 
   const [errors, setErrors] = useState({});
   const [formStatus, setFormStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedData, setSubmittedData] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormValues((prevValues) => ({
+  //     ...prevValues,
+  //     [name]: value,
+  //   }));
+  // };
 
   const handleSelectCountry = (code) => {
     setFormValues((prevValues) => ({
@@ -49,47 +61,63 @@ const RegisterPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =(e) => {
     e.preventDefault();
+    // console.log(first_name, last_name,email,formValues)
 
-    const validationErrors = validate(formValues);
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
+
+
+    //destructuring data
+    const {country:country_of_residence,mobile:phone}=formValues;
+
+    const data={
+        title,first_name,last_name,email,password,confirm_password,country_of_residence,phone,date_of_birth
     }
+    
+    dispatch(register(data)).unwrap().then((res)=>{
+      navigate(`/verify-email/${email}`,{replace:true});
+      return toast.success(res.success)
+    }).catch((rej)=>{
+      return toast.error(rej?.response?.data?.message)
+    })
+    // const validationErrors = validate(formValues);
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
+    //   return;
+    // }
 
-    console.log("Form Values:", formValues);
+    // console.log("Form Values:", formValues);
 
-    setIsSubmitting(true);
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/register",
-        formValues
-      );
+    // setIsSubmitting(true);
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:8000/api/register",
+    //     formValues
+    //   );
 
-      console.log("Backend Response Status:", response.status);
-      console.log("Backend Response Data:", response.data);
+    //   console.log("Backend Response Status:", response.status);
+    //   console.log("Backend Response Data:", response.data);
 
-      setFormStatus("Registration successful!");
-      setSubmittedData(response.data);
-      setFormValues({
-        title: "",
-        first_name: "",
-        last_name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        date_of_birth: "",
-        country: "",
-        country_code: "",
-        mobile: "",
-      });
-    } catch (error) {
-      console.error("Registration error:", error);
-      setFormStatus("Registration failed. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    //   setFormStatus("Registration successful!");
+    //   setSubmittedData(response.data);
+    //   setFormValues({
+    //     title: "",
+    //     first_name: "",
+    //     last_name: "",
+    //     email: "",
+    //     password: "",
+    //     confirm_password: "",
+    //     date_of_birth: "",
+    //     country: "",
+    //     country_code: "",
+    //     mobile: "",
+    //   });
+    // } catch (error) {
+    //   console.error("Registration error:", error);
+    //   setFormStatus("Registration failed. Please try again.");
+    // } finally {
+    //   setIsSubmitting(false);
+    // }
   };
 
   return (
@@ -108,13 +136,13 @@ const RegisterPage = () => {
               <select
                 id="title"
                 name="title"
-                value={formValues.title}
-                onChange={handleChange}
+                defaultValue={"Select"}
+                onChange={(e)=>setTitle(e.target.value)}
                 className={`input-field shadow-md rounded-md ${
                   errors.title ? "unfamiliar-animation" : ""
                 }`}
               >
-                <option value="" disabled>
+                <option value="Select"  disabled>
                   Select
                 </option>
                 <option value="Miss">Miss.</option>
@@ -135,9 +163,9 @@ const RegisterPage = () => {
               <input
                 type="text"
                 id="first_name"
+                value={first_name}
+                onChange={(e)=>setFirst_name(e.target.value)}
                 name="first_name"
-                value={formValues.first_name}
-                onChange={handleChange}
                 className={`input-field shadow-md rounded-md ${
                   errors.first_name ? "unfamiliar-animation" : ""
                 }`}
@@ -155,9 +183,9 @@ const RegisterPage = () => {
               <input
                 type="text"
                 id="last_name"
+                value={last_name}
+                onChange={(e)=>setLast_name(e.target.value)}
                 name="last_name"
-                value={formValues.last_name}
-                onChange={handleChange}
                 className={`input-field shadow-md rounded-md ${
                   errors.last_name ? "unfamiliar-animation" : ""
                 }`}
@@ -176,9 +204,9 @@ const RegisterPage = () => {
             <input
               type="email"
               id="email"
+              value={email}
+                onChange={(e)=>setEmail(e.target.value)}
               name="email"
-              value={formValues.email}
-              onChange={handleChange}
               className={`input-field shadow-md rounded-md ${
                 errors.email ? "unfamiliar-animation" : ""
               }`}
@@ -197,9 +225,9 @@ const RegisterPage = () => {
               <input
                 type="password"
                 id="password"
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
                 name="password"
-                value={formValues.password}
-                onChange={handleChange}
                 className={`input-field shadow-md rounded-md ${
                   errors.password ? "unfamiliar-animation" : ""
                 }`}
@@ -211,22 +239,22 @@ const RegisterPage = () => {
               )}
             </div>
             <div className="w-full md:w-1/2">
-              <label htmlFor="confirmPassword" className="text-white">
+              <label htmlFor="confirm_password" className="text-white">
                 Confirm Password
               </label>
               <input
                 type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formValues.confirmPassword}
-                onChange={handleChange}
+                id="confirm_password"
+                value={confirm_password}
+                onChange={(e)=>setConfirmPassword(e.target.value)}
+                name="confirm_password"
                 className={`input-field shadow-md rounded-md ${
-                  errors.confirmPassword ? "unfamiliar-animation" : ""
+                  errors.confirm_password ? "unfamiliar-animation" : ""
                 }`}
               />
-              {errors.confirmPassword && (
+              {errors.confirm_password && (
                 <div className="text-red-500 font-semibold mt-1">
-                  {errors.confirmPassword}
+                  {errors.confirm_password}
                 </div>
               )}
             </div>
@@ -239,9 +267,9 @@ const RegisterPage = () => {
               <input
                 type="date"
                 id="date_of_birth"
+                value={date_of_birth}
+                onChange={(e)=>setDate(e.target.value)}
                 name="date_of_birth"
-                value={formValues.date_of_birth}
-                onChange={handleChange}
                 className={`input-field shadow-md rounded-md ${
                   errors.date_of_birth ? "unfamiliar-animation" : ""
                 }`}
@@ -278,7 +306,7 @@ const RegisterPage = () => {
               Mobile
             </label>
             <PhoneInput
-              country={formValues.country_code || "sy"}
+             country={formValues.country_code || "sy"}
               value={formValues.mobile}
               onChange={handlePhoneChange}
               inputProps={{
@@ -298,15 +326,19 @@ const RegisterPage = () => {
               </div>
             )}
           </div>
-          <button
+          {
+            isLoading ?<div className="bg-white w-fit m-auto rounded-lg flex justify-center items-center"><Loading2/></div>
+            :<button
             type="submit"
             className={`w-full lg:w-full xl:w-auto bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
               isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:shadow-lg"
             }`}
             disabled={isSubmitting}
           >
-            Create An Account
+          Create An Account 
           </button>
+          }
+          
         </form>
         {formStatus && <div className="text-white mt-4">{formStatus}</div>}
         {submittedData && (

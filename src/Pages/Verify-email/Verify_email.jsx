@@ -1,23 +1,36 @@
 import React, { useRef, useState } from 'react';
 import Headings from '../../Components/Headings/Headings';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import "./Verify.css"
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelopeOpenText, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkVerify } from '../../Redux/ApiSlices/authSlice';
 
 const Verify_email = () => {
+
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
     const [verify_code,setVerify_code]=useState("");
     const {email}=useParams();
     const ref=useRef();
     
-    const handelVerify = (data)=>{
+    const handelVerify = ()=>{
       if(ref.current.value.length >4)
       {
         setVerify_code("")
         return toast.error("It must contain four digits")
       }
-
+      const code=ref.current.value;
+      const data={code:{code},email}
+      dispatch(checkVerify(data)).unwrap().then((res)=>{
+        navigate("/login",{replace:true});
+        return toast.success(res.data);
+      }).catch((rej)=>{
+        return toast.error(rej?.response?.data?.errors)
+      })
+      
         
 
     }
@@ -32,8 +45,8 @@ const Verify_email = () => {
         
         <div className='my-5 flex justify-center items-center flex-col gap-3 bg-secoundary_color_1 p-4  m-auto w-fit   rounded-lg'>
         <label className='text-white'>enter your code here</label>
-        <input ref={ref} className='text-primary_color w-[75px] text-[30px]  p-1 bg-transparent  border-b-4 border-dashed border-white_color outline-none' type="number" 
-        value={verify_code} onChange={(e)=>{setVerify_code(e.target.value) ; e.target.value.length >= 4 && handelVerify(e.target.value) }} />
+        <input ref={ref} className='text-primary_color w-[75px] text-[30px]  p-1 bg-transparent  border-b-4 border-dashed border-white_color outline-none' type="text" 
+        value={verify_code} onChange={(e)=>{setVerify_code(e.target.value) ; e.target.value.length >= 4 && handelVerify() }} />
 
         </div>
         
