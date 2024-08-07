@@ -1,4 +1,5 @@
 import axios from "axios";
+import usePrivate from "../Hooks/usePrivate";
 
 
 
@@ -10,11 +11,12 @@ export const privateRequest = axios.create({
 });
 
 
-privateRequest.interceptors.request.use(function (config) {
+privateRequest.interceptors.request.use( (config)=> {
     // Do something before request is sent
-     config.headers.Authorization= "Bearer " + JSON.parse(localStorage.getItem("token"));
+    const {getToken} =usePrivate();
+     config.headers.Authorization= "Bearer " + getToken();
      return config
-  }, function (error) {
+  }, (error)=> {
     // Do something with request error
     return Promise.reject(error);
   });
