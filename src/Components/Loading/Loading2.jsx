@@ -4,8 +4,8 @@ import { Blocks, InfinitySpin } from 'react-loader-spinner'
 const Loading2 = () => {
   return (
     <Blocks
-    height="60"
-    width="60"
+    height="50"
+    width="50"
     color="#4fa94d"
     ariaLabel="blocks-loading"
     wrapperStyle={{}}
