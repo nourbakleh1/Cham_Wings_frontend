@@ -6,13 +6,19 @@ import Offer_list from '../../Components/Offers/Offer_list'
 import {offers} from "../../dummy_data.js"
 import Our_responsibilty from './Components/Our_responsibilty.jsx'
 import Search_flight from './Components/Search_flight.jsx'
+import { useSelector } from 'react-redux'
 
 
 
 
 const Home = () => {
+  const {user}=useSelector((state)=>{
+    return state.auth});
   useEffect(()=>{
     window.scrollTo(0,0);
+  },[]);
+  useEffect(()=>{
+    localStorage.setItem("token",JSON.stringify(user?.data?.token?.slice(3)));
   },[]);
   return (
     <div className='relative'>

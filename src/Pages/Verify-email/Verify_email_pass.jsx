@@ -6,9 +6,9 @@ import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelopeOpenText } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { checkVerify } from '../../Redux/ApiSlices/authSlice';
+import { checkVerify, checkVerifyPass } from '../../Redux/ApiSlices/authSlice';
 
-const Verify_email = () => {
+const Verify_email_pass = () => {
 
     const dispatch=useDispatch();
     const navigate=useNavigate();
@@ -24,13 +24,16 @@ const Verify_email = () => {
       }
       const code=ref.current.value;
       const data={code:{code},email}
-      dispatch(checkVerify(data)).unwrap().then((res)=>{
-        navigate("/login",{replace:true});
-        return toast.success(res.data);
+      
+      dispatch(checkVerifyPass(data)).unwrap().then((res)=>{
+        navigate("/reset_password",{replace:true});
+        return toast.success(res.success);
       }).catch((rej)=>{
         return toast.error(rej?.response?.data?.errors)
       })
+      
         
+
     }
   return (
     <div className="flex flex-col lg:flex-row min-h-[68vh] overflow-hidden ">
@@ -60,4 +63,4 @@ const Verify_email = () => {
   )
 }
 
-export default Verify_email;
+export default Verify_email_pass;

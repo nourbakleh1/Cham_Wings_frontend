@@ -1,28 +1,41 @@
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, replace } from "formik";
 import axios from "axios";
 import { validationSchema } from "./validationSchema";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../Register/style.css";
+import { useDispatch } from "react-redux";
+import { login } from "../../../Redux/ApiSlices/authSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
   const [formStatus, setFormStatus] = useState("");
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      const response = await axios.post("http://localhost:3000/login", values);
-      setFormStatus("Login successful!");
-      // Handle navigation or state update after successful login
-    } catch (error) {
-      setFormStatus("Login failed. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
+  const handleSubmit =  (values, { setSubmitting }) => {
+
+    const data=values
+    dispatch(login(data)).unwrap().then((res)=>{
+      navigate("/",{replace:true})
+      return toast.success(res.message)
+    }).catch((rej)=>{
+      return toast.error(rej?.response?.data?.message)
+    })
+    // try {
+    //   const response = await axios.post("http://localhost:8000/login", values);
+    //   setFormStatus("Login successful!");
+    //   // Handle navigation or state update after successful login
+    // } catch (error) {
+    //   setFormStatus("Login failed. Please try again.");
+    // } finally {
+    //   setSubmitting(false);
+    // }
   };
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <div className="h-dvh md:w-full lg:w-1/2 bg-primary_color py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
+      <div className="h-dvh md:w-full lg:w-1/2 bg-secoundary_color py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
         <h1 className="xs:text-2xl md:text-3xl font-bold text-white md:mb-6 sm:mb-6 xs:pb-4 md:pb-0">
           Login to Cham Wings
         </h1>
@@ -54,7 +67,7 @@ const Login = () => {
                   <ErrorMessage
                     name="email"
                     component="div"
-                    className="text-blue-900 font-semibold mt-1"
+                    className="text-red-500 font-semibold mt-1"
                   />
                 </div>
               </div>
@@ -76,18 +89,14 @@ const Login = () => {
                   <ErrorMessage
                     name="password"
                     component="div"
-                    className="text-blue-900 font-semibold mt-1"
+                    className="text-red-500 font-semibold mt-1"
                   />
                 </div>
               </div>
               <button
                 type="submit"
-                className={`w-full md:w-1/3 bg-primary_color hover:bg-primary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
-                  isSubmitting
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:shadow-lg"
-                }`}
-                disabled={isSubmitting}
+                className={`w-full md:w-1/3 bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out `}
+                
               >
                 Login
               </button>
@@ -97,8 +106,8 @@ const Login = () => {
         {formStatus && <div className="text-red-600 mt-4">{formStatus}</div>}
         <div className="mt-4 pt-4 text-white">
           Don't have an account?{" "}
-          <Link to="/register" className="text-blue-700 underline">
-            Register now
+          <Link to="/forgot_password" className="text-white underline">
+            Forgot password
           </Link>
         </div>
       </div>
