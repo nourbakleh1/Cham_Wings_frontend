@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage, replace } from "formik";
 import axios from "axios";
 import { validationSchema } from "./validationSchema";
 import { Link, useNavigate } from "react-router-dom";
 import "../Register/style.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../Redux/ApiSlices/authSlice";
 import { toast } from "react-toastify";
 
@@ -12,12 +12,32 @@ const Login = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const [formStatus, setFormStatus] = useState("");
-
+  
   const handleSubmit =  (values, { setSubmitting }) => {
 
     const data=values
     dispatch(login(data)).unwrap().then((res)=>{
-      navigate("/",{replace:true})
+      const role = res?.data?.user?.employee?.roles[0]?.role_id;
+      if(res?.data){
+        if(role == 4){
+            localStorage.setItem("token",JSON.stringify(res?.data?.token?.split("|")[1]))
+            navigate("/admin_dashboard",{replace:true})
+          }
+          else if(role == 5 || role == 6 || role == 7 || role == 8 ||role == 9 || role == 10 ||role == 11 || role == 12 ||role == 13 || role == 14)
+          {
+            localStorage.setItem("token",JSON.stringify(res?.data?.token?.split("|")[1]))
+            navigate("/dashboard/employee",{replace:true})
+          }
+          else{
+            localStorage.setItem("token",JSON.stringify(res?.data?.token?.split("|")[1]))
+            navigate("/",{replace:true})
+          }
+       }
+       else{
+        return navigate("/login")
+       }
+
+     
       return toast.success(res.message)
     }).catch((rej)=>{
       return toast.error(rej?.response?.data?.message)
