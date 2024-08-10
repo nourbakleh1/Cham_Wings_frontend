@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-import { BrowserRouter as  Router, Routes,Route } from 'react-router-dom';
+import { BrowserRouter as  Router, Routes,Route, Navigate } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Layouts from './Components/Layouts/Layouts';
 import Error_page from './Pages/Error_page/Error_page';
@@ -39,9 +39,10 @@ import Reset_password from './Pages/Reset_Password/Reset_password';
 import { useSelector } from 'react-redux';
 import Verify_email_pass from './Pages/Verify-email/Verify_email_pass';
 
-
 const App = () => {
   const ref=useRef(null);
+  const {user}=useSelector((state)=>state.auth)
+  const role = user?.data?.user?.employee?.roles[0]?.role_id;
  
   useEffect(()=>{
     window.addEventListener("scroll",()=>{
@@ -61,69 +62,66 @@ const App = () => {
       <Router>
       <ToastContainer theme="colored" position="top-center"/>
              <Routes>
-                    <Route path="/" element={<Layouts />}>
-                    <Route index element={<Home />} />
-                    <Route path="register" element={<Register />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="verify-email/:email" element={<Verify_email/>}/>
-                    <Route path="verify-email_pass/:email" element={<Verify_email_pass/>}/>
+                    <Route path="/" element={role == undefined ?<Layouts />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}>
+                    <Route index element={role == undefined ?<Home/>: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
 
-                    <Route path="forgot_password" element={<Forgot_password/>}/>
-                    <Route path="reset_password" element={<Reset_password/>}/>
+                      {/* auth routes */}
+                    <Route path="register" element={!user ? <Register />: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>} />
+                    <Route path="login" element={!user ? <Login />: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>} />
+                    <Route path="verify-email/:email" element={!user ? <Verify_email/>: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>}/>
+                    <Route path="verify-email_pass/:email" element={!user ? <Verify_email_pass/>: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>}/>
+                    <Route path="forgot_password" element={!user ? <Forgot_password/>: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>}/>
+                    <Route path="reset_password" element={!user ? <Reset_password/>: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>}/>
 
 
 
 
 
                     <Route path="profile" element={<ProfilePage />} />
-                    <Route path="flight" element={<FlightList />} />
-                    <Route path="contact-us" element={<ContactUs />} />
-                    <Route path="reservation" element={<Companions />} />
-                    
-
-
-                    <Route path="reservation_seats" element={<Reservation_seats />} />
+                    {/* passenger page */}
+                    <Route path="flight" element={role == undefined ? <FlightList />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="contact-us" element={role == undefined ? <ContactUs />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="reservation" element={role == undefined ? <Companions />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="reservation_seats" element={role == undefined?<Reservation_seats />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
                     
 
 
                   {/* about page nested route */}
                     <Route path="about-us">
-                    <Route index element={<AboutUs />} />
-                    <Route path="our-mission" element={<Mission />} />
-                    <Route path="our-fleet" element={<OurFleet />} />
-                    <Route path="our-company" element={<OurCompany />} />
-                    <Route path="our-responsibility" element={<OurResponsibility />} />
-                    <Route path="ceos-letter" element={<ChairMan />}/>
+                    <Route index element={role == undefined?<AboutUs />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="our-mission" element={role == undefined?<Mission />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="our-fleet" element={role == undefined?<OurFleet />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="our-company" element={role == undefined?<OurCompany />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="our-responsibility" element={role == undefined?<OurResponsibility />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="ceos-letter" element={role == undefined?<ChairMan />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
                     </Route>
 
 
                     </Route>
-                    <Route path='/dashboard/employee' element={<Layouts_dashboard/>}>
+                    
 
 
                      {/* employee page nested route */}
-                     
-                    <Route index element={<Employee/>}/>
-                    <Route path="manage-offers" element={<Manage_Offer/>}/>
-                    <Route path="chatbot_emp" element={<Chatbot_emp/>}/>
-                    <Route path="reservation" element={<Reservation/>}/>
-                    <Route path="manage-flights" element={<Manage_flights/>}/>
-                    <Route path="answer-questions" element={<Answer_Questions/>}/>
-                    <Route path="view-history" element={<View_history/>}/>
-                    <Route path="visa-information" element={<Visa_information/>}/>
+                    <Route path='/dashboard/employee' element={role != 4 && role != undefined ?<Layouts_dashboard/> : <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}>
+
+                    <Route index element={role != 4 && role != undefined ?<Employee/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="manage-offers" element={role != 4 && role != undefined ?<Manage_Offer/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="chatbot_emp" element={role != 4 && role != undefined ?<Chatbot_emp/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="reservation" element={role != 4 && role != undefined ?<Reservation/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="manage-flights" element={role != 4 && role != undefined ?<Manage_flights/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="answer-questions" element={role != 4 && role != undefined ?<Answer_Questions/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="view-history" element={role != 4 && role != undefined ?<View_history/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="visa-information" element={role != 4 && role != undefined ?<Visa_information/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     
                     </Route>
 
-                    <Route path="/admin_dashboard" element={<Layouts_admin_dash/>}>
+                    {/* admin page nested route */}
+                    <Route path="/admin_dashboard" element={role == 4 ?<Layouts_admin_dash/>:<Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}>     
 
-                       {/* admin page nested route */}
-
-                     
-                    <Route path='admin' element={<Admin/>}>
-                     <Route path='manage-employees' element={<Manage_employees/>}/>
-                    <Route path='manage-permissions' element={<Manage_permissions/>}/>
-                    </Route>
-
+                    <Route index element={role == 4 ? <Admin/>:<Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+                     <Route path='manage-employees' element={role == 4 ? <Manage_employees/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+                    <Route path='manage-permissions' element={role == 4 ? <Manage_permissions/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+                    
                     </Route>
 
                     <Route path="/*" element={<Error_page/>}/>
@@ -140,3 +138,12 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
+
+
+ 
+
+
