@@ -12,14 +12,11 @@ import { useSelector } from 'react-redux'
 
 
 const Home = () => {
-  const {user}=useSelector((state)=>{
-    return state.auth});
+ 
   useEffect(()=>{
     window.scrollTo(0,0);
   },[]);
-  useEffect(()=>{
-    localStorage.setItem("token",JSON.stringify(user?.data?.token?.slice(3)));
-  },[]);
+  
   return (
     <div className='relative'>
       <Hero img={"/assets/images/Hero_images/ChamWingsAirlines1.webp"}/>
