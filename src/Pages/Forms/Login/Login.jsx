@@ -12,6 +12,7 @@ const Login = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const [formStatus, setFormStatus] = useState("");
+  const {isLoading}=useSelector((state)=>state.auth);
   
   const handleSubmit =  (values, { setSubmitting }) => {
 
@@ -115,7 +116,8 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className={`w-full md:w-1/3 bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out `}
+                disabled={isLoading}
+                className={`w-full md:w-1/3 disabled:cursor-wait bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out `}
                 
               >
                 Login

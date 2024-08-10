@@ -92,3 +92,13 @@
     transform: translateX(-5px);
   }
 }
+
+#country  input{
+  background-color: #ccc !important;
+  color:#00529B;
+  font-weight: bolder;
+}
+
+#country ul::-webkit-scrollbar {
+  width: 0px !important;
+}

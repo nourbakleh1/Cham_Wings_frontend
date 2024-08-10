@@ -31,7 +31,7 @@ const handelNav=()=>{
     <nav  className="bg-[#0c1524]  border-gray-200 dark:bg-gray-900 fixed w-full top-0 left-0  z-[1000] " id="nav">
   <div className="flex flex-wrap items-center justify-between mx-auto p-5">
   <Link to={role == undefined ?"/":"#"} className="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="/assets/images/logo_wings.png" className="h-9 sm:h-[38px]  lg:h-[42px] " alt="Logo" />
+      <img src="/assets/images/logo_wings.png" className="h-8 sm:h-[38px]  lg:h-[42px] " alt="Logo" />
   </Link>
   {
     user ?
@@ -45,12 +45,12 @@ const handelNav=()=>{
       {/* <!-- Dropdown menu --> */}
       {
         display &&
-        <div className="z-50 absolute p-5 top-[65%] right-[2%] my-4 text-base  divide-y divide-gray-500 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
-        <div className="px-4 py-3">
+        <div className="z-50 absolute p-5 top-[65%] right-[2%] my-4 text-base  divide-y divide-gray-500   rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+        <div className="px-4 py-3 shadow-sm shadow-primary_color">
           <span className="block text-sm text-gray-900 dark:text-white my-2">{user?.data?.user?.employee ?user?.data?.user?.employee?.name :
            user?.data?.user?.passenger?.travel_requirement?.first_name + " " +
             user?.data?.user?.passenger?.travel_requirement?.last_name}</span>
-          <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user?.data?.user?.email}</span>
+          <span className="block text-sm  text-primary_color truncate ">{user?.data?.user?.email}</span>
         </div>
         <ul className="py-2 my-2" aria-labelledby="user-menu-button">
           <li>
@@ -90,14 +90,14 @@ const handelNav=()=>{
     <div className="items-center  hidden justify-between w-full md:flex  md:w-auto md:order-1" id="navbar-user">
     {
     user?
-    <div className=" md:hidden  right-[2%] text-base mt-3 list-none border-b-4 border-solid border-primary_color divide-y divide-gray-300  bg-[#1f2937]  dark:divide-gray-600" >
+    <div className=" md:hidden  right-[2%] text-base mt-3  list-none border-b-4 border-solid border-primary_color divide-y divide-gray-300  bg-[#1f2937]  dark:divide-gray-600" >
         <div className="px-4 py-3">
           <span className="block text-sm text-gray-900 dark:text-white">{user?.data?.user?.employee ?user?.data?.user?.employee?.name :
            user?.data?.user?.passenger?.travel_requirement?.first_name + " " +
             user?.data?.user?.passenger?.travel_requirement?.last_name}</span>
           <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{user?.data?.user?.email}</span>
         </div>
-        <ul className="py-2" aria-labelledby="user-menu-button">
+        <ul className="py-2 " aria-labelledby="user-menu-button">
           <li>
             <a href="#" onClick={()=>{setDispaly(!display)}} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
           </li>

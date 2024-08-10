@@ -58,11 +58,11 @@ const Chatbot_emp = () => {
   
   return (
     <div className='flex justify-between items-center'>
-    <div className='relative flex flex-col justify-start items-start mt-[65px] h-[calc(100vh-65px)] w-full bg-[#000]/90 md:w-[calc(100%-256px)] ml-0 sm:ml-auto'>
+    <div className='relative flex flex-col justify-start items-start mt-[72px] h-[calc(100vh-71px)] w-full bg-[#000]/90 lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
 
     <div className='w-[70%] mx-auto flex justify-center items-center text-[20px] gap-3  p-3'>
-      <p className='text-primary_color font-bold text-[20px] p-3'>ChamAi</p>
-      <img className='h-[30px] rounded-[50%]' src='/assets/images/logo_small.png'/>
+      <p className='text-primary_color font-bold text-[13px] lg:text-[20px]  p-3'>ChamAi</p>
+      <img className='h-[20px] lg:h-[30px] rounded-[50%]' src='/assets/images/logo_small.png'/>
     </div>
     {
       !result ?<><section className='w-[70%] mx-auto'>
