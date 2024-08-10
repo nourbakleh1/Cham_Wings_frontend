@@ -80,7 +80,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
 </button>
 
     
-        <aside id="default-sidebar" className="fixed top-[70px] md:top-[65px] lg:top-[70px]  left-0 transition-transform md:translate-x-0 -translate-x-[110%] z-[40] w-44 sm:w-[276px] lg:w-[320px] h-screen " aria-label="Sidebar">
+        <aside id="default-sidebar" className="fixed top-[80px]  md:top-[78px] lg:top-[84px]  left-0 transition-transform md:translate-x-0 -translate-x-[110%] z-[40] w-44 sm:w-[276px] lg:w-[320px] h-screen " aria-label="Sidebar">
         <FontAwesomeIcon onClick={closeSide} icon={faChevronLeft} className='absolute top-[20%] left-[100%]  sm:hidden text-[20px] text-white_color bg-secoundary_color'/>
    <div className="h-full px-1 sm:px-3 py-4 w-[190px] sm:w-[256px]  overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul className="space-y-2 font-medium">
