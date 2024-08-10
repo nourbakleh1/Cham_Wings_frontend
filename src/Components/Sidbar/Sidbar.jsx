@@ -219,12 +219,6 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
          </li>
          <li>
             <NavLink to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <FontAwesomeIcon icon={faPersonWalkingArrowLoopLeft} />
-               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">return to the home page</span>
-            </NavLink>
-         </li>
-         <li>
-            <NavLink to="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faRightFromBracket} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">sign out</span>
             </NavLink>
