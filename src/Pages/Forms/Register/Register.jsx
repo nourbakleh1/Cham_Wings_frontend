@@ -287,6 +287,7 @@ const RegisterPage = () => {
               <ReactFlagsSelect
                 id="country"
                 name="country"
+                searchPlaceholder="Search"
                 selected={formValues.country}
                 onSelect={handleSelectCountry}
                 searchable

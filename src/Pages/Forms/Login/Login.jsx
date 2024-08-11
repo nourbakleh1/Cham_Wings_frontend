@@ -12,6 +12,7 @@ const Login = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const [formStatus, setFormStatus] = useState("");
+  const {isLoading}=useSelector((state)=>state.auth);
   
   const handleSubmit =  (values, { setSubmitting }) => {
 
@@ -20,16 +21,16 @@ const Login = () => {
       const role = res?.data?.user?.employee?.roles[0]?.role_id;
       if(res?.data){
         if(role == 4){
-            localStorage.setItem("token",JSON.stringify(res?.data?.token?.split("|")[1]))
+            localStorage.setItem("token",JSON.stringify(res?.data?.token))
             navigate("/admin_dashboard",{replace:true})
           }
           else if(role == 5 || role == 6 || role == 7 || role == 8 ||role == 9 || role == 10 ||role == 11 || role == 12 ||role == 13 || role == 14)
           {
-            localStorage.setItem("token",JSON.stringify(res?.data?.token?.split("|")[1]))
+            localStorage.setItem("token",JSON.stringify(res?.data?.token))
             navigate("/dashboard/employee",{replace:true})
           }
           else{
-            localStorage.setItem("token",JSON.stringify(res?.data?.token?.split("|")[1]))
+            localStorage.setItem("token",JSON.stringify(res?.data?.token))
             navigate("/",{replace:true})
           }
        }
@@ -115,7 +116,8 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className={`w-full md:w-1/3 bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out `}
+                disabled={isLoading}
+                className={`w-full md:w-1/3 disabled:cursor-wait bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out `}
                 
               >
                 Login
