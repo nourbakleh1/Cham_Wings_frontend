@@ -15,12 +15,12 @@ export const fetchProfile = createAsyncThunk(
       console.log("Fetching profile...");
       const response = await privateRequest.get("/api");
       console.log("Fetch response:", response);
-      if (response.data && response.data.success) {
-        return response.data.data;
-      } else {
-        console.log("Fetch failed:", response.data);
-        return rejectWithValue("Failed to fetch profile");
-      }
+      // if (response.data && response.data.success) {
+        return response.data;
+      // } else {
+      //   console.log("Fetch failed:", response.data);
+      //   return rejectWithValue("Failed to fetch profile");
+      // }
     } catch (error) {
       console.error("Fetch Profile Error:", error.response || error.message);
       return rejectWithValue(error.response?.data || error.message);

@@ -12,7 +12,11 @@ import { validateProfileForm } from "./validation";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.profile.profile);
+  const { profile, fetchStatus, updateStatus, error } = useSelector(
+    (state) => state.profile
+  );
+  console.log("Profile",profile);
+  
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -43,7 +47,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     dispatch(fetchProfile());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (profile) {
