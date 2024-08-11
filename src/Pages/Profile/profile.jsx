@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProfile,
   updateProfile,
-} from "../../Redux/features/profile/profileSlice.js";
+} from "../../Redux/ApiSlices/profileSlice.js";
 import TextInput from "../../Components/Fields/TextInput.jsx";
 import DateInput from "../../Components/Fields/DateInput.jsx";
 import PhoneInputComponent from "../../Components/Fields/PhoneInputComponent.jsx";
