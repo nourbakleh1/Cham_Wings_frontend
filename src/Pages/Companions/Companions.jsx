@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Collapse } from "react-collapse";
-import axios from "axios"; // Import axios for API calls
-import {
-  fetchProfile,
-  updateProfile,
-} from "../../Redux/features/profile/profileSlice.js";
+import axios from "axios";
+// import {
+//   fetchProfile,
+//   updateProfile,
+// } from "../../Redux/ApiSlices/profileSlice.js";
 import TextInput from "../../Components/Fields/TextInput.jsx";
 import DateInput from "../../Components/Fields/DateInput.jsx";
 import PhoneInputComponent from "../../Components/Fields/PhoneInputComponent.jsx";
