@@ -37,6 +37,7 @@ import Forgot_password from './Pages/Reset_Password/Forgot_password';
 import Reset_password from './Pages/Reset_Password/Reset_password';
 import { useSelector } from 'react-redux';
 import Verify_email_pass from './Pages/Verify-email/Verify_email_pass';
+import ProfilePage from './Pages/Profile/profile';
 
 const App = () => {
   const ref=useRef(null);
@@ -75,7 +76,7 @@ const App = () => {
 
 
 
-
+                    <Route path="profile" element={<ProfilePage />} />
                     {/* passenger page */}
                     <Route path="flight" element={role == undefined ? <FlightList />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
                     <Route path="contact-us" element={role == undefined ? <ContactUs />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
