@@ -22,7 +22,7 @@ const Chatbot_emp = () => {
 
 //loading
   const Loading =
-     <div id='result' className='w-[100%] mx-auto flex justify-start gap-1 mb-[50px] flex-col items-start text-white_color'>
+     <div id='result' className='w-[100%]  mx-auto flex justify-start gap-1 mb-[50px] flex-col items-start text-white_color'>
 
      <div className='flex justify-start items-center gap-3'>
         <img className='h-[30px] rounded-[50%]' src='/assets/images/user-avatar.png'/>
