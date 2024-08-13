@@ -16,6 +16,7 @@ const Chatbot_emp = () => {
   const {chat,view,isLoading:ISLOADING}=useSelector((state)=>state.chatbot)
   const [isLoading,setIsLoading]=useState(null);
   const [thread_id_chat,setThread_id]=useState(null);
+  const {user}=useSelector(state=>state.auth)
   
   const [newChat,setNewchat]=useState([])
   
@@ -134,7 +135,7 @@ const Chatbot_emp = () => {
       view ?<><section className='w-[70%] mx-auto'>
     <div className='my-[50px] text-[20px] sm:text-[30px] md:text-[40px] lg:text-[50px] text-[#c4c7c5] p-5'>
       <p className='animate__myself'>
-        <span className=" multe">Hello, John.</span>
+        <span className=" multe">Hello, {user?.data?.user?.employee.name}</span>
       </p>
       <p className='animate__myself'>How can i help you today?</p>
     </div>
