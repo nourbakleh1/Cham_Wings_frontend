@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { publicRequest } from "../../lib/publicRequest";
+import { privateRequest } from "../../lib/privateRequest";
 
 
 export const getpdfs=createAsyncThunk("chatbot/getpdfs",async(_,ThunkApi)=>{
@@ -49,31 +50,58 @@ export const deletePdf=createAsyncThunk("chatbot/UploadPdf",async(id,ThunkApi)=>
     }
 });
 export const SendAndReceive=createAsyncThunk("chatbot/SendAndReceive",async(data,ThunkApi)=>{
-    const {rejectWithValue}=ThunkApi;
+    const {rejectWithValue,dispatch}=ThunkApi;
     try{
-       const {data}=  await  publicRequest.post('/chat',data);
-       return data
+       const res=  await  privateRequest.post('/api/send-message',data);
+       return res.data
     }
     catch(error)
     {
         return rejectWithValue(error.message);
     }
 })
-
+export const getThreads=createAsyncThunk("chatbot/getThreads",async(_,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+    try{
+       const res=  await  privateRequest.get('/api/threads');
+       return res.data
+    }
+    catch(error)
+    {
+        return rejectWithValue(error.message);
+    }
+})
+export const getChat=createAsyncThunk("chatbot/getChat",async(id,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+    try{
+       const res=  await  privateRequest.get(`/api/chat-history/${id}`);
+       return res.data
+    }
+    catch(error)
+    {
+        return rejectWithValue(error.message);
+    }
+})
 const initialState={
     Pdf_file:[],
     Pdf_file_sorted:[],
     isLoading:false,
-    error:null
+    error:null,
+    threads:[],
+    chat:null,
+    view:true,
     
 }
+
 
 
 const chatbotSlice=createSlice({
     name:"chatbot",
     initialState,
     reducers:{
-
+        change_view:(state,action)=>{
+            state.view = action.payload
+        }
     },
     extraReducers:
         (builder)=>{
@@ -113,14 +141,27 @@ const chatbotSlice=createSlice({
                 state.isLoading = false;
                 state.error=action.payload;
             })
-            .addCase(SendAndReceive.pending,(state)=>{
+            .addCase(getThreads.pending,(state)=>{
                 state.isLoading = true;
             }).
-            addCase(SendAndReceive.fulfilled,(state,action)=>{
+            addCase(getThreads.fulfilled,(state,action)=>{
                 state.isLoading = false;
+                state.threads = action.payload
                 
             }).
-            addCase(SendAndReceive.rejected,(state,action)=>{
+            addCase(getThreads.rejected,(state,action)=>{
+                state.isLoading = false;
+                state.error=action.payload;
+            })
+            .addCase(getChat.pending,(state)=>{
+                state.isLoading = true;
+            }).
+            addCase(getChat.fulfilled,(state,action)=>{
+                state.isLoading = false;
+                state.chat = action.payload
+                
+            }).
+            addCase(getChat.rejected,(state,action)=>{
                 state.isLoading = false;
                 state.error=action.payload;
             })
@@ -129,5 +170,5 @@ const chatbotSlice=createSlice({
 
     
 });
-
+export const {change_view}=chatbotSlice.actions;
 export default chatbotSlice.reducer;
