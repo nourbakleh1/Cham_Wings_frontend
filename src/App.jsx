@@ -26,7 +26,7 @@ import Manage_employees from './Pages/Admin/Components/Manage_employees';
 import Manage_permissions from './Pages/Admin/Components/Manage_permissions';
 import Layouts_dashboard from './Components/Layouts/Layouts_dashboard';
 import Layouts_admin_dash from './Components/Layouts/Layouts_admin_dash';
-import ProfilePage from './Pages/Profile/ProfilePage';
+// import ProfilePage from './Pages/Profile/ProfilePage';
 import FlightList from './Pages/Flight/FlightList';
 import ContactUs from './Pages/ContactUs/ContactUs';
 import Chatbot_user from './Components/Chatbot_user/Chatbot_user'; 
@@ -77,7 +77,7 @@ const App = () => {
 
 
 
-                    <Route path="profile" element={<ProfilePage />} />
+                    {/* <Route path="profile" element={<ProfilePage />} /> */}
                     {/* passenger page */}
                     <Route path="flight" element={role == undefined ? <FlightList />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
                     <Route path="contact-us" element={role == undefined ? <ContactUs />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />

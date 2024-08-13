@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProfile,
-  updateProfile,
-} from "../../Redux/features/profile/profileSlice.js";
+  // updateProfile,
+} from "../../Redux/ApiSlices/profileSlice.js";
 import TextInput from "../../Components/Fields/TextInput.jsx";
 import DateInput from "../../Components/Fields/DateInput.jsx";
 import PhoneInputComponent from "../../Components/Fields/PhoneInputComponent.jsx";
@@ -123,16 +123,27 @@ const ProfilePage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validateProfileForm(formData);
-    if (Object.keys(validationErrors).length === 0) {
-      dispatch(updateProfile(formData));
-      setEditMode(false);
-    } else {
-      setErrors(validationErrors);
-    }
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form Data:", formData); // Check the form data
+  //   const validationErrors = validateProfileForm(formData);
+  //   console.log("Validation Errors:", validationErrors); // Check for validation errors
+
+  //   if (Object.keys(validationErrors).length === 0) {
+  //     dispatch(updateProfile(formData))
+  //       .unwrap()
+  //       .then((data) => {
+  //         console.log("Update Successful:", data);
+  //         setEditMode(false);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Update Failed:", error);
+  //       });
+  //   } else {
+  //     setErrors(validationErrors);
+  //   }
+  // };
+  
 
   return (
     <div className="bg-gray-200 bg-opacity-50 py-2">
@@ -141,7 +152,7 @@ const ProfilePage = () => {
           Profile Information
         </h1>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form  className="space-y-8">
           <div className="flex justify-between items-center mb-4">
             <button
               type="button"
@@ -162,7 +173,7 @@ const ProfilePage = () => {
                 label="First Name"
                 name="firstName"
                 type="text"
-                value={formData.firstName || ""}
+                value={profile?.first_name || ""}
                 onChange={handleChange}
                 disabled={!editMode}
                 error={errors.firstName}
@@ -171,7 +182,7 @@ const ProfilePage = () => {
                 label="Last Name"
                 name="lastName"
                 type="text"
-                value={formData.lastName}
+                value={profile?.last_name}
                 onChange={handleChange}
                 disabled={!editMode}
                 error={errors.lastName}
@@ -304,7 +315,7 @@ const ProfilePage = () => {
                 label="Email"
                 name="email"
                 type="email"
-                value={formData.email}
+                value={profile?.email}
                 onChange={handleChange}
                 disabled={!editMode}
                 error={errors.email}
@@ -313,7 +324,7 @@ const ProfilePage = () => {
                 label="Password"
                 name="password"
                 type="password"
-                value={formData.password}
+                value={profile?.password}
                 onChange={handleChange}
                 disabled={!editMode}
                 error={errors.password}
