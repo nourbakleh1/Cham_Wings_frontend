@@ -21,6 +21,9 @@ const handelNav=()=>{
  const handelLogout=()=>{
     dispatch(logout()).unwrap().then((res)=>{
       navigate("/login",{replace:true});
+      if(window.sessionStorage.getItem("id") != null){
+         window.sessionStorage.removeItem("id")
+      }
       return toast.success(res.data)
     }).catch((rej)=>{
       return toast.error(rej?.response?.data?.errors);

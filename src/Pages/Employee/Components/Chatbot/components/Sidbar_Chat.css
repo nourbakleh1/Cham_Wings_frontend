@@ -1,7 +1,11 @@
 .handelWidth{
     width: 200px !important;
 }
-
+@media (max-width:576px) {
+    .handelWidth{
+        width: 150px !important;
+    }
+}
 .multe{
     background: -webkit-linear-gradient(16deg,#00529B,#AE8A3B);
     -webkit-background-clip: text;
@@ -95,4 +99,10 @@ textarea::-webkit-scrollbar{
         background-position:  800px;
 
     }
+}
+#result p::selection{
+    background-color: #00529B !important;
+}
+.leatest::-webkit-scrollbar{
+    width: 0px !important;
 }
