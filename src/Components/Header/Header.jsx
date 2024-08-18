@@ -54,7 +54,7 @@ const handelNav=()=>{
         </div>
         <ul className="py-2 my-2" aria-labelledby="user-menu-button">
           <li>
-            <a href="#" onClick={()=>{setDispaly(!display)}} className="block px-4 py-2 text-sm text-gray-700 shadow-md  hover:shadow-secoundary_color  hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
+            <a href="/profile" onClick={()=>{setDispaly(!display)}} className="block px-4 py-2 text-sm text-gray-700 shadow-md  hover:shadow-secoundary_color  hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Profile</a>
           </li>
           <li>
             <Link  onClick={()=>{setDispaly(!display),handelLogout()}} className="block px-4 py-2 text-sm shadow-md hover:shadow-secoundary_color text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</Link>

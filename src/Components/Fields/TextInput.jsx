@@ -15,7 +15,7 @@ const TextInput = ({
       <div className="flex items-center">
         <input
           type={type}
-          value={value}
+          value={value || ""}
           name={name}
           onChange={onChange}
           disabled={disabled}
