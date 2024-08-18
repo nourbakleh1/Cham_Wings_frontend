@@ -1,62 +1,40 @@
-export const validateProfileForm = (formData) => {
+export const validatePersonalInfo = (formData) => {
+  let errors = {};
+
+  if (!formData.title) errors.title = "Title is required";
+  if (!formData.first_name) errors.first_name = "First name is required";
+  if (!formData.last_name) errors.last_name = "Last name is required";
+  if (!formData.date_of_birth)
+    errors.date_of_birth = "Date of birth is required";
+  if (!formData.gender) errors.gender = "Gender is required";
+  if (!formData.nationality) errors.nationality = "Nationality is required";
+  if (!formData.address) errors.address = "Address is required";
+  if (!formData.city) errors.city = "City is required";
+  if (!formData.country_of_residence)
+    errors.country_of_residence = "Country of residence is required";
+  if (!formData.phone) errors.phone = "Phone number is required";
+  if (!formData.email) errors.email = "Email is required";
+
+  return errors; // Add this line to return the errors object
+};
+
+export const validateProfileForm = (data) => {
   const errors = {};
 
-  const requiredFields = [
-    "first_name",
-    "last_name",
-    "date_of_birth",
-    "gender",
-    "nationality",
-    "address",
-    "city",
-    "country_of_residence",
-    "mobile",
-    "mobile_during_travel",
-    "email",
-    "password",
-    "confirm_password",
-    "passportNumber",
-    "passportIssuedDate",
-    "passport_expiry_date",
-  ];
-
-  requiredFields.forEach((field) => {
-    if (!formData[field]) {
-      errors[field] = "This field is required.";
-    }
-  });
-
-  if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-    errors.email = "Invalid email address.";
+  if (!data.number) {
+    errors.number = "Passport number is required.";
   }
-
-  if (formData.password && formData.password.length < 6) {
-    errors.password = "Password must be at least 6 characters long.";
+  if (!data.passport_issued_country) {
+    errors.passport_issued_country = "Passport issued country is required.";
   }
-
-  if (formData.password !== formData.confirm_password) {
-    errors.confirm_password = "Passwords do not match.";
+  if (!data.passport_issued_date) {
+    errors.passport_issued_date = "Passport issued date is required.";
   }
-
-  const phonePattern = /^[0-9]+$/;
-  if (formData.mobile && !phonePattern.test(formData.mobile)) {
-    errors.mobile = "Invalid mobile number.";
+  if (!data.passport_expiry_date) {
+    errors.passport_expiry_date = "Passport expiry date is required.";
   }
-  if (
-    formData.mobileDuringTravel &&
-    !phonePattern.test(formData.mobileDuringTravel)
-  ) {
-    errors.mobileDuringTravel = "Invalid mobile number during travel.";
-  }
-
-  if (formData.passportIssuedDate && formData.passport_expiry_date) {
-    const issuedDate = new Date(formData.passportIssuedDate);
-    const expiryDate = new Date(formData.passport_expiry_date);
-
-    if (expiryDate <= issuedDate) {
-      errors.passport_expiry_date =
-        "Expiry date must be after the issued date.";
-    }
+  if (!data.passport_image) {
+    errors.passport_image = "Passport image is required.";
   }
 
   return errors;
