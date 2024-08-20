@@ -12,6 +12,7 @@ import { countryList } from "../Countries/countryList.js";
 import LoadingSpinner from "../Loading/LoadingSpinner.jsx";
 import Toast from "../Toast/Toast.jsx";
 import PropTypes from "prop-types";
+import PassportImageUpload from "./PassportImageUpload";
 
 const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
     passport_issued_country: "",
     passport_issued_date: "",
     passport_expiry_date: "",
-    passport_image: "",
+    passport_image: null,
     status: "Active",
   });
 
@@ -30,6 +31,7 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [buttonHidden, setButtonHidden] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     dispatch(fetchPassportInfo());
@@ -91,6 +93,27 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
     } else {
       setErrors(validationErrors);
     }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormDataPassport((prevData) => ({
+      ...prevData,
+      passport_image: file,
+    }));
+
+    if (file) {
+      const objectUrl = URL.createObjectURL(file);
+      setImagePreview(objectUrl);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setImagePreview(null);
+    setFormDataPassport((prevData) => ({
+      ...prevData,
+      passport_image: null,
+    }));
   };
 
   const handleToastClose = () => {
@@ -177,6 +200,14 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
           }
           disabled={!editModePassport || isLoading}
           error={errors.passport_expiry_date}
+        />
+        <PassportImageUpload
+          imagePreview={imagePreview}
+          passportImage={formDataPassport.passport_image}
+          onFileChange={handleFileChange}
+          onRemoveImage={handleRemoveImage}
+          isDisabled={!editModePassport || isLoading}
+          error={errors.passport_image}
         />
       </div>
 
