@@ -19,6 +19,9 @@ const Sidbar_Chat = ({setNewchat,setSearch,handelChat,change_view,view}) => {
     },[]);
 
     const handelNewChat=()=>{
+        if(view == true){
+            return
+        }
         setNewchat([]);
         setSearch("");
         handelChat(null);
