@@ -1,30 +1,30 @@
 import React from 'react'
+import "./Pagination.css"
 
-const Pagination = () => {
+const Pagination = ({page,setPage,totalElement,perPage}) => {
+  const numer= Math.ceil(totalElement / perPage);
+  const newArr=[];
+  for(let i=1;i<=numer;i++){
+    newArr.push(i)
+  }
   return (
     <>
-      <nav aria-label="Page navigation example">
-  <ul className="inline-flex -space-x-px text-base h-10">
+      <nav aria-label="Page navigation example" className='w-full items-center flex p-5'>
+  <ul className="inline-flex -space-x-px text-base h-8 border-0 outline-none ">
     <li>
-      <a href="#" className="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray_color bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-primary_color_1 hover:text-white_color dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+      <button  onClick={()=>setPage(page - 1)} disabled= {page == 1} className= {`flex items-center justify-center px-2 h-8 shadow-xl shadow-black_color/40 ms-0 disabled:cursor-not-allowed leading-tight text-secoundary_color_1/80 bg-black/20  rounded-s-lg hover:bg-primary_color_1 hover:text-white_color `}>Prev</button>
     </li>
+    {
+      newArr?.map((el)=>{
+        return <li key={el}>
+         <button onClick={()=>setPage(el)} className={page == el ? `active_page`: "" +"flex items-center justify-center px-2 h-8 shadow-xl shadow-black_color/40 leading-tight text-secoundary_color_1/80 bg-black/20  hover:bg-primary_color_1 hover:text-white_color"}>{el}</button>
+         </li>
+      })
+    }
+    
+    
     <li>
-      <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-gray_color bg-white border border-gray-300 hover:bg-primary_color_1 hover:text-white_color dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-gray_color bg-white border border-gray-300 hover:bg-primary_color_1 hover:text-white_color dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-    </li>
-    <li>
-      <a href="#" aria-current="page" className="flex items-center justify-center px-4 h-10 text-gray_color border border-gray-300  hover:bg-primary_color_1 hover:text-white_color  dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-gray_color bg-white border border-gray-300 hover:bg-primary_color_1 hover:text-white_color dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-gray_color bg-white border border-gray-300 hover:bg-primary_color_1 hover:text-white_color dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-    </li>
-    <li>
-      <a href="#" className="flex items-center justify-center px-4 h-10 leading-tight text-gray_color bg-white border border-gray-300 rounded-e-lg hover:bg-primary_color_1 hover:text-white_color dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+      <button onClick={()=>setPage(page + 1)} disabled={newArr.length == page} className="flex items-center justify-center px-2 h-8 disabled:cursor-not-allowed shadow-xl shadow-black_color/40 leading-tight text-secoundary_color_1/80 bg-black/20  rounded-e-lg hover:bg-primary_color_1 hover:text-white_color  ">Next</button>
     </li>
   </ul>
 </nav>

@@ -1,11 +1,12 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { publicRequest } from "../../lib/publicRequest";
+import { privateRequest } from "../../lib/privateRequest";
 
 
 export const getStatistics=createAsyncThunk("statistics/getStatistics",async(_,ThunkApi)=>{
         const {rejectWithValue}=ThunkApi;
     try{
-        const statistics=await publicRequest.get('/api/segmentation-results');
+        const statistics=await privateRequest.get('/api/segmentation-results');
         const x= await JSON.parse(statistics.data);
         return x;
     }

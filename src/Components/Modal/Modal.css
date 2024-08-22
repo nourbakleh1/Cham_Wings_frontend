@@ -1,0 +1,7 @@
+.removeScroll::-webkit-scrollbar{
+    width: 0;
+}
+
+.animate__fadeInDown,.animate__zoomInUp,.animate__animated{
+    border-radius: 0;
+}

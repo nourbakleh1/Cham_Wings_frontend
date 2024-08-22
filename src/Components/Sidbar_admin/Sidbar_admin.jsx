@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import "./Sidbar_admin.css"
+import { useDispatch } from 'react-redux';
+import { logout } from '../../Redux/ApiSlices/authSlice';
+
 
 const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
-   
+    const dispatch = useDispatch();
+      
     const handelSide=()=>{
       document.getElementById("three").classList.add("hidden");
       document.getElementById("default-sidebar").classList.remove("-translate-x-[110%]");
@@ -16,6 +20,17 @@ const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
       document.getElementById("default-sidebar").classList.add("-translate-x-[110%]");
 
     }
+    const handelLogout=()=>{
+      dispatch(logout()).unwrap().then((res)=>{
+        navigate("/login",{replace:true});
+        if(window.sessionStorage.getItem("id") != null){
+           window.sessionStorage.removeItem("id")
+        }
+        return toast.success(res.data)
+      }).catch((rej)=>{
+        return toast.error(rej?.response?.data?.errors);
+      })
+   }
 
   return (
     
@@ -30,7 +45,7 @@ const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
 
     
         <aside id="default-sidebar" className="fixed top-[80px]  md:top-[78px] lg:top-[84px]  left-0 transition-transform lg:translate-x-0 -translate-x-[110%] z-[40] w-56 sm:w-[286px] lg:w-[360px] h-screen " aria-label="Sidebar">
-        <FontAwesomeIcon onClick={closeSide} icon={faChevronLeft} className='absolute top-[20%] left-[91%]  sm:hidden text-[20px] text-white_color bg-secoundary_color'/>
+        <FontAwesomeIcon onClick={closeSide} icon={faChevronLeft} className='absolute top-[20%] left-[91%]  lg:hidden text-[20px] text-white_color bg-secoundary_color'/>
    <div className="h-full px-1 sm:px-3 py-4 w-[210px] sm:w-[296px]  overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul className="space-y-2 font-medium">
          <li>
@@ -40,14 +55,14 @@ const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
             </NavLink>
          </li>
          <li>
-            <NavLink to="/admin_dashboard/manage-employees" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink end to="/admin_dashboard/manage-employees" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faPeopleRoof} />
                <span className="flex-1 ms-3 whitespace-nowrap md:text-[14px] text-[11px] ">manage employees</span>
             </NavLink>
          </li>
          
          <li>
-            <NavLink to="/admin_dashboard/manage-permissions" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink end to="/admin_dashboard/manage-permissions" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faGears} />
                
                <span className="flex-1 ms-3 whitespace-nowrap md:text-[14px] text-[11px] ">manage permissions</span>
@@ -55,10 +70,10 @@ const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
          </li>
          
          <li>
-            <NavLink to="/" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a  className="flex items-center p-3 cursor-pointer my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" onClick={handelLogout}>
             <FontAwesomeIcon icon={faRightFromBracket} />
-               <span className="flex-1 ms-3 whitespace-nowrap md:text-[14px] text-[11px] ">sign out</span>
-            </NavLink>
+               <span className="flex-1 ms-3 whitespace-nowrap md:text-[14px] text-[11px] " >sign out</span>
+            </a>
          </li>
          
       </ul>
