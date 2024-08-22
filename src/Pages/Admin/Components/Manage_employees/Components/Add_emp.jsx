@@ -8,6 +8,7 @@ import Button from '../../../../../Components/Button/Button';
 import Headings from '../../../../../Components/Headings/Headings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImages } from '@fortawesome/free-solid-svg-icons';
+import "./../Manage_emp.css"
 
 
 const Add_emp = ({setOpen2,open2}) => {
@@ -119,7 +120,7 @@ const Add_emp = ({setOpen2,open2}) => {
                 return;
             }
             return (
-                <div key={role.role_id} className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[150px] sm:w-[200px]'><input type='checkbox' value={role?.role_id} onChange={()=>setRoles((prev)=>{
+                <div key={role.role_id} className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[150px] sm:w-[200px]'><input type='checkbox' className='Checkboxes' value={role?.role_id} onChange={()=>setRoles((prev)=>{
                if(roles?.includes(role?.role_id)){
              
              let x= roles?.filter((item)=>{

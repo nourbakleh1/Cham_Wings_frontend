@@ -7,7 +7,7 @@ export const getpdfs=createAsyncThunk("chatbot/getpdfs",async(_,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
 
     try{
-       const pdf=await publicRequest.get("/api/pdfs");
+       const pdf=await privateRequest.get("/api/pdfs");
 
        return pdf.data;
 
@@ -26,7 +26,7 @@ export const uploadPdf=createAsyncThunk("chatbot/uploadPdf",async(formdata,Thunk
 
 
     try{
-       const {data}=await publicRequest.post("/api/ingest-pdf",formdata,{
+       const {data}=await privateRequest.post("/api/ingest-pdf",formdata,{
         headers:{
             "Content-Type":"multipart/form-data"
         }
@@ -41,7 +41,7 @@ export const uploadPdf=createAsyncThunk("chatbot/uploadPdf",async(formdata,Thunk
 export const deletePdf=createAsyncThunk("chatbot/UploadPdf",async(id,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
     try{
-         const {data}=await publicRequest.delete(`/api/pdfs/${id}`);
+         const {data}=await privateRequest.delete(`/api/pdfs/${id}`);
        return {data,id};
     }
     catch(error)
@@ -86,6 +86,7 @@ const initialState={
     Pdf_file:[],
     Pdf_file_sorted:[],
     isLoading:false,
+    isLoading_chat:false,
     error:null,
     threads:[],
     chat:null,
@@ -154,15 +155,15 @@ const chatbotSlice=createSlice({
                 state.error=action.payload;
             })
             .addCase(getChat.pending,(state)=>{
-                state.isLoading = true;
+                state.isLoading_chat = true;
             }).
             addCase(getChat.fulfilled,(state,action)=>{
-                state.isLoading = false;
+                state.isLoading_chat = false;
                 state.chat = action.payload
                 
             }).
             addCase(getChat.rejected,(state,action)=>{
-                state.isLoading = false;
+                state.isLoading_chat = false;
                 state.error=action.payload;
             })
 

@@ -13,7 +13,7 @@ const Chatbot_emp = () => {
   const ref=useRef(null);
   const referance=useRef(null);
   const dispatch=useDispatch();
-  const {chat,view,isLoading:ISLOADING}=useSelector((state)=>state.chatbot)
+  const {chat,view,isLoading_chat}=useSelector((state)=>state.chatbot)
   const [isLoading,setIsLoading]=useState(null);
   const [thread_id_chat,setThread_id]=useState(null);
   const {user}=useSelector(state=>state.auth)
@@ -162,7 +162,7 @@ const Chatbot_emp = () => {
     </div>
       </>:<>
       {
-        ISLOADING ?<> <div id='result'  className=' w-[70%] mx-auto flex  result justify-start gap-1 mb-[50px] flex-col items-start text-white_color'>{Loading}
+        isLoading_chat ?<> <div id='result'  className=' w-[70%] mx-auto flex  result justify-start gap-1 mb-[50px] flex-col items-start text-white_color'>{Loading}
         </div>
         <div id='result'  className=' w-[70%] mx-auto flex  result justify-start gap-1 mb-[50px] flex-col items-start text-white_color'>{Loading}
         </div>

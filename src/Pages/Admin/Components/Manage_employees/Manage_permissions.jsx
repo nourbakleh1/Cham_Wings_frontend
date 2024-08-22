@@ -196,7 +196,7 @@ const Manage_permissions = () => {
             } */}
             return (
                 <div key={role.role_id}  className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[150px] sm:w-[200px]'>
-                <input type='checkbox' disabled={save ? true:false}  className='disabled:cursor-not-allowed' value={role?.role_id} onChange={()=>setPerm((prev)=>{
+                <input type='checkbox' disabled={save ? true:false}  className='disabled:cursor-not-allowed Checkboxes' value={role?.role_id} onChange={()=>setPerm((prev)=>{
                if(perm?.includes(role?.role_id)){
              
              let x= perm?.filter((item)=>{
@@ -255,7 +255,7 @@ const Manage_permissions = () => {
             
             return (
                 <div key={role.role_id}  className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[150px] sm:w-[200px]'>
-                <input type='checkbox' disabled={save ? true:false} className='disabled:cursor-not-allowed'  value={role?.role_id} onChange={()=>setPerm((prev)=>{
+                <input type='checkbox' disabled={save ? true:false} className='disabled:cursor-not-allowed Checkboxes'  value={role?.role_id} onChange={()=>setPerm((prev)=>{
                if(perm?.includes(role?.role_id)){
              
              let x= perm?.filter((item)=>{
