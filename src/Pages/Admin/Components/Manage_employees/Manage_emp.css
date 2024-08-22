@@ -5,7 +5,7 @@ select::-webkit-scrollbar{
 
 
 
-  input[type="checkbox"] {
+.Checkboxes {
     appearance: none;
     background-color: #00539bca;
     margin: 0;
@@ -22,13 +22,13 @@ select::-webkit-scrollbar{
     margin-top: 1em;
   }
 
-  input[type="checkbox"] {
+.Checkboxes {
     /* ...existing styles */
   
     display: grid;
     place-content: center;
   }
-  input[type="checkbox"]::before {
+.Checkboxes::before {
     content: "";
     width: 0.85em;
     height: 0.85em;
@@ -42,10 +42,10 @@ select::-webkit-scrollbar{
   }
 
   
-  input[type="checkbox"]:checked::before {
+.Checkboxes:checked::before {
     transform: scale(1);
   }
-  input[type="checkbox"]::before {
+.Checkboxes::before {
     /* ...existing styles */
   
     /* Windows High Contrast Mode */
