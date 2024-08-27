@@ -7,7 +7,7 @@ import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import Headings from '../Headings/Headings';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePdf, getpdfs, uploadPdf } from '../../Redux/ApiSlices/chatbotSlice';
+import { deletePdf, getpdfs, uploadPdf } from '../../Redux/ApiSlices/employee/chatbotSlice';
 import { toast } from 'react-toastify';
 import Loading1 from '../Loading/Loading1';
 
@@ -81,7 +81,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
 
     
         <aside id="default-sidebar" className="fixed top-[80px]  md:top-[78px] lg:top-[84px]  left-0 transition-transform lg:translate-x-0 -translate-x-[110%] z-[40] w-56 sm:w-[286px] lg:w-[360px] h-screen " aria-label="Sidebar">
-        <FontAwesomeIcon onClick={closeSide} icon={faChevronLeft} className='absolute top-[20%] left-[91%]  sm:hidden text-[20px] text-white_color bg-secoundary_color'/>
+        <FontAwesomeIcon onClick={closeSide} icon={faChevronLeft} className='absolute top-[20%] left-[91%]  lg:hidden text-[20px] text-white_color bg-secoundary_color'/>
    <div className="h-full px-1 sm:px-3 py-4 w-[210px] sm:w-[296px]  overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul className="space-y-2 font-medium">
          <li>

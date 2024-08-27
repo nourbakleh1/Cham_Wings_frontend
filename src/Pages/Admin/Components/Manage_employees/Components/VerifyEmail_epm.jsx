@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../../../../../Components/Modal/Modal';
 import LargeModal from '../../../../../Components/Modal/LargeModal';
-import { getEmployees, verifyEmail_Employee } from '../../../../../Redux/ApiSlices/adminSlice';
+import { getEmployees, verifyEmail_Employee } from '../../../../../Redux/ApiSlices/admin/adminSlice';
 import { toast } from 'react-toastify';
 
 const VerifyEmail_epm = ({open4,setOpen4,email,id,page}) => {

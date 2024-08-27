@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import LargeModal from '../../../../../Components/Modal/LargeModal';
 import { toast } from 'react-toastify';
-import { AddEmployee } from '../../../../../Redux/ApiSlices/adminSlice';
+import { AddEmployee } from '../../../../../Redux/ApiSlices/admin/adminSlice';
 import Loading1 from '../../../../../Components/Loading/Loading1';
 import Button from '../../../../../Components/Button/Button';
 import Headings from '../../../../../Components/Headings/Headings';

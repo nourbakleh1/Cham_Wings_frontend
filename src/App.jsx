@@ -16,7 +16,7 @@ import OurCompany from './Pages/AboutUs/OurCompany';
 import OurResponsibility from './Pages/AboutUs/OurResponsibility';
 import ChairMan from './Pages/AboutUs/ChairMan';
 import Manage_Offer from './Pages/Employee/Components/Manage_Offer';
-import Manage_flights from './Pages/Employee/Components/Manage_flights';
+import Manage_flights from './Pages/Employee/Manage_flights/Manage_flights';
 import Answer_Questions from './Pages/Employee/Components/Answer_Questions';
 import View_history from './Pages/Employee/Components/View_history';
 import Visa_information from './Pages/Employee/Components/Visa_information';

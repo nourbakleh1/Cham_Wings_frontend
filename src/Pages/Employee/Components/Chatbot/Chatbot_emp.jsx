@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "../Chatbot/components/Sidbar_Chat.css"
 import { ReactTyped } from "react-typed";
 import { useDispatch, useSelector } from 'react-redux'
-import { getChat, SendAndReceive,change_view, getThreads } from '../../../../Redux/ApiSlices/chatbotSlice'
+import { getChat, SendAndReceive,change_view, getThreads } from '../../../../Redux/ApiSlices/employee/chatbotSlice'
 import { toast } from 'react-toastify'
 
 const Chatbot_emp = () => {

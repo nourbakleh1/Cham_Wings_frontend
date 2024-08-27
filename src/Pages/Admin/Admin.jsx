@@ -139,7 +139,7 @@ datasets: [
     
       if(isLoading){
         return (
-          <div className='flex justify-center items-center h-screen w-full bg-off_white md:w-[calc(100%-256px)] ml-0 sm:ml-auto'>
+          <div className='flex justify-center items-center h-screen w-full bg-off_white lg:w-[calc(100%-256px)] ml-0 sm:ml-auto'>
           <div className='p-[100px] flex'>
           <Loading/>
           </div>
@@ -148,7 +148,7 @@ datasets: [
       };
       if(error){
         return (
-          <div className='flex justify-center items-center h-screen w-full bg-off_white md:w-[calc(100%-256px)] ml-0 sm:ml-auto'>
+          <div className='flex justify-center items-center h-screen w-full bg-off_white lg:w-[calc(100%-256px)] ml-0 sm:ml-auto'>
           <div className='flex justify-center items-center text-red_color h-screen'>{error}</div>
           </div>
         )

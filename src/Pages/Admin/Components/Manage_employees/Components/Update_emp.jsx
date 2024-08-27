@@ -1,7 +1,7 @@
 import React from 'react'
 import LargeModal from '../../../../../Components/Modal/LargeModal'
 import { toast } from 'react-toastify';
-import { getEmployees, updateEmployee } from '../../../../../Redux/ApiSlices/adminSlice';
+import { getEmployees, updateEmployee } from '../../../../../Redux/ApiSlices/admin/adminSlice';
 import Headings from '../../../../../Components/Headings/Headings';
 import Loading1 from '../../../../../Components/Loading/Loading1';
 import Button from '../../../../../Components/Button/Button';
@@ -16,7 +16,7 @@ const Update_emp = ({isLoading,open,setOpen,setOpen4,setSearch,page,image,setPas
 
 
     const handelUpdate=(e)=>{
-
+        
      
 
         e.preventDefault();
@@ -55,6 +55,8 @@ const Update_emp = ({isLoading,open,setOpen,setOpen4,setSearch,page,image,setPas
 
         dispatch(updateEmployee(data)).unwrap().then((res)=>{
             setSearch("")
+            setPassword("")
+            setConfirm_password("")
 
             if(res?.success == "your profile updated and we sent verification code to your new email"){
                 setOpen4(true);

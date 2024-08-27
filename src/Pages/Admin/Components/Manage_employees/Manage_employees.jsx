@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronRight, faEye, faImage, faImages, faPersonCirclePlus, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../../../Components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { activateEmployee, AddEmployee, deleteEmployee, getEmployees, getEmployees_info, getRoles, SearchEmployees, updateEmployee } from '../../../../Redux/ApiSlices/adminSlice';
+import { activateEmployee, AddEmployee, deleteEmployee, getEmployees, getEmployees_info, getRoles, SearchEmployees, updateEmployee } from '../../../../Redux/ApiSlices/admin/adminSlice';
 import image_emp from "/assets/images/user-avatar.png";
 import Pagination from '../../../../Components/Pagination/Pagination';
 import Loading1 from '../../../../Components/Loading/Loading1';
@@ -321,13 +321,14 @@ const Manage_employees = () => {
         }    
     </tbody>:null
         }
-        <div>
+       
+    </table>
+     <div>
         {
             search.trim() == "" ? <Pagination page={page} setPage={setPage} totalElement={employees?.data?.total} perPage={employees?.data?.per_page}/>:null
         }
            
         </div>
-    </table>
 </div>
         </div>
     </div>

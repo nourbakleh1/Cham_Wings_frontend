@@ -1,6 +1,7 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import { publicRequest } from "../../lib/publicRequest";
-import { privateRequest } from "../../lib/privateRequest";
+import { publicRequest } from "../../../lib/publicRequest";
+import { privateRequest } from "../../../lib/privateRequest";
+
 
 
 export const getpdfs=createAsyncThunk("chatbot/getpdfs",async(_,ThunkApi)=>{

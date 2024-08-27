@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faCircleQuestion, faMessage, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Headings from '../../../../../Components/Headings/Headings';
 import { useDispatch, useSelector } from 'react-redux';
-import { getThreads } from '../../../../../Redux/ApiSlices/chatbotSlice';
+import { getThreads } from '../../../../../Redux/ApiSlices/employee/chatbotSlice';
 
 const Sidbar_Chat = ({setNewchat,setSearch,handelChat,change_view,view}) => {
     const [showSidbar,setShowSidbar]=useState(true);

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
-import { publicRequest } from "../../lib/publicRequest";
-import { privateRequest } from "../../lib/privateRequest";
+import { publicRequest } from "../../../lib/publicRequest";
+import { privateRequest } from "../../../lib/privateRequest";
 
 
 export const getEmployees=createAsyncThunk("admin/getEmployees",async(id,ThunkApi)=>{
