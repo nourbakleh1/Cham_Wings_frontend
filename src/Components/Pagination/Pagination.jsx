@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Pagination.css"
 
-const Pagination = ({page,setPage,totalElement,perPage}) => {
+const Pagination = ({page,setPage,totalElement,perPage=15}) => {
   const numer= Math.ceil(totalElement / perPage);
   const newArr=[];
   for(let i=1;i<=numer;i++){

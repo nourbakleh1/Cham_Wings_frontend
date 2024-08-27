@@ -335,6 +335,9 @@ const Manage_permissions = () => {
         
         {isLoading_get ?  <div className='absolute bottom-[10%] left-[50%] translate-x-[-50%]'><Loading1/></div>:
             employees?.data?.data.map((employee)=>{
+                if(employee?.roles[0]?.role_id == 4){
+                    return
+                }
                 if(employee?.deleted_at != null){
                   return
                 }
@@ -383,8 +386,11 @@ const Manage_permissions = () => {
         {search.trim() != 0  ?
             <tbody>
         
-        {isLoading_search ? <tr> <td className=' p-5  rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className='  p-5  rounded-xl z-[99999]  '><Loading3/></td></tr>:
+        {isLoading_search ? <tr> <td className=' p-5   rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className='  p-5  rounded-xl z-[99999]  '><Loading3/></td></tr>:
             searchEmp?.data?.data.map((employee)=>{
+                if(employee?.roles[0]?.role_id == 4){
+                    return
+                }
                 return (
                     <tr key={employee?.employee_id} className="bg-white_color/80 border-b  border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-200">
             <th scope="row" className="flex items-center px-6 py-4 text-secoundary_color whitespace-nowrap  ">
