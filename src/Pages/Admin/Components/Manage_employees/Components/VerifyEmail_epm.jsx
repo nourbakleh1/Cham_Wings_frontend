@@ -29,7 +29,8 @@ const VerifyEmail_epm = ({open4,setOpen4,email,id,page}) => {
       dispatch(verifyEmail_Employee(data)).unwrap().then((res)=>{
         navigate("/admin_dashboard/manage-employees",{replace:true});
         setOpen4(false);
-        dispatch(getEmployees(page || 1))
+        setVerify_code("");
+        dispatch(getEmployees(page || 1));
         return toast.success(res.data);
       }).catch((rej)=>{
         return toast.error(rej?.response?.data?.errors)

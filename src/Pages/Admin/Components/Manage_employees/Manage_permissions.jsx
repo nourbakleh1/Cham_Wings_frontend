@@ -333,7 +333,7 @@ const Manage_permissions = () => {
         {search.trim() == ""  ?
             <tbody>
         
-        {isLoading_get ?  <div className='absolute bottom-[10%] left-[50%] translate-x-[-50%]'><Loading1/></div>:
+        {isLoading_get ?  <tr> <td className=' p-5  rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className='  p-5  rounded-xl z-[99999]  '><Loading1/></td></tr>:
             employees?.data?.data.map((employee)=>{
                 if(employee?.roles[0]?.role_id == 4){
                     return
