@@ -29,20 +29,6 @@ const PassportImageUpload = ({
           className="absolute top-2 right-2 bg-white text-red-500 p-1 rounded-full shadow-sm hover:bg-gray-200"
           aria-label="Remove Image"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
         </button>
       </div>
       <div className="mt-4 flex items-center justify-center">
