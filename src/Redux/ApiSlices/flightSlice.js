@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { mockFlights } from "../../../src/Pages/Flight/mockFlightData";
+import { publicRequest } from "../../lib/publicRequest";
 
 export const fetchFlights = createAsyncThunk(
   "flights/fetchFlights",
@@ -35,6 +36,21 @@ export const sendSelectedFlights = createAsyncThunk(
     }
   }
 );
+export const  searchFlights=createAsyncThunk("flights/searchFlights",async (data,ThunkApi) => {
+    const {rejectWithValue}=ThunkApi;
+   try{
+    console.log(data)
+
+    // data.departure_date="2024-09-17";
+      const res=await publicRequest.post("/api/flight-search",data);
+      return res.data
+   }
+   catch(err){
+    return rejectWithValue(err)
+   }
+   
+  }
+);
 
 const flightSlice = createSlice({
   name: "flights",
@@ -42,6 +58,8 @@ const flightSlice = createSlice({
     list: [],
     status: "idle",
     error: null,
+    isLoading:false,
+    resultSearch:null,
     selectedFlights: [],
   },
   reducers: {
@@ -75,6 +93,17 @@ const flightSlice = createSlice({
       })
       .addCase(sendSelectedFlights.rejected, (state, action) => {
         state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(searchFlights.pending, (state) => {
+        state.isLoading=true
+      })
+      .addCase(searchFlights.fulfilled, (state,action) => {
+        state.isLoading=false;
+        state.resultSearch=action.payload
+      })
+      .addCase(searchFlights.rejected, (state, action) => {
+        state.isLoading=false
         state.error = action.payload;
       });
   },

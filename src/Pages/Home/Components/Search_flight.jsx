@@ -1,39 +1,104 @@
 import { faArrowRightArrowLeft, faCalendarDays, faPlane, faPlaneArrival, faPlaneDeparture, faSliders } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../../Components/Button/Button'
 import { airport } from '../../../dummy_data'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./Responsibilty.css"
+import { useDispatch, useSelector } from 'react-redux'
+import { getAirports } from '../../../Redux/ApiSlices/airportSlice'
+import { searchFlights } from '../../../Redux/ApiSlices/flightSlice'
+import useDateFormat from '../../../utilities/useDateFormat'
+import { toast } from 'react-toastify'
 
 const Search_flight = () => {
-    const [displayReturn,setDisplayReturn]=useState("");
+    const dispatch=useDispatch();
+    const{All_airports}=useSelector(state=>state.airports);
+    const{resultSearch}=useSelector(state=>state.flights);
+  
+    // state 
     const [startDate, setStartDate] = useState(new Date());
     const [startDate_return, setStartDate_return] = useState(new Date());
+    const [booking_preference,setBooking_preference]=useState(null);
+    const[trip_type,setTrip_type]=useState(null);
+    const [Class,setClass]=useState(null);
+    const [adults,setAdults]=useState(null);
+    const [infants,setInfants]=useState(null);
+    const [departure_airport,setDeparture_airport]=useState(null);
+    const [arrival_airport,setArrival_airport]=useState(null);
 
-    const [bookingPreference,setBookingPreference]=useState("");
+
+    console.log("searchResult",resultSearch);
+
+    useEffect(()=>{
+        dispatch(getAirports())
+    },[]);
+    const handelSearch=(e)=>{
+        e.preventDefault();
+        if(trip_type == null){
+            return toast.error("Trip type is required")
+        }
+        if(booking_preference == null){
+            return toast.error("Booking preference is required")
+        }
+        if(Class == null){
+            return toast.error("Class is required")
+        }
+        if(booking_preference != "b"){
+            if(adults == null){
+                return toast.error("Adults is required")
+            }
+            if(infants == null){
+                return toast.error("Infants is required")
+            }
+        }
+        if(departure_airport == null){
+            return toast.error("Departure airport is required")
+        }
+        if(arrival_airport == null){
+            return toast.error("Arrival airport  is required")
+        }
+        
+
+        const data={
+            trip_type:parseInt(trip_type),booking_preference,class:Class,departure_airport:parseInt(departure_airport),arrival_airport:parseInt(arrival_airport),departure_date:useDateFormat(startDate)
+        }
+        if(booking_preference != "b"){
+            data.adults=parseInt(adults);
+            data.infants=parseInt(infants)
+        }
+        if(trip_type == 1){
+            data.return_date=useDateFormat(startDate_return)
+        }
+        console.log("data",data)
+        dispatch((searchFlights(data)))
+    }
 
   return (
-    <form>
-    <section className='h-[670px] sm:h-[420px] xl:h-[250px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1150px] bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px] '>
-        <div className='border-solid border-b-2 border-primary_color flex justify-center items-center' >
-        <FontAwesomeIcon icon={faPlane} className='text-secoundary_color px-3 text-[20px]'/>
+    <div className='Rota'>
+    <form onSubmit={handelSearch}>
+    <section className='h-[1100px] sm:h-[700px] rounded-2xl lg:h-[450px] xl:h-[420px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1200px] p-5 bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px]  xl:translate-y-[-160px] shadow-black_color/50 shadow-xl '>
+        <div className='border-solid border-b-2 bg-white/50 border-primary_color flex justify-center items-center p-2 rounded-sm '>
+        <FontAwesomeIcon icon={faPlane} className='text-secoundary_color px-3 text-[20px] '/>
             <span className='font-bold'>Flights</span>
         </div>
-            <div className='flex justify-evenly items-center w-full mb-[20px] flex-col sm:flex-row'>
-            <div className='flex flex-col md:flex-row items-center'>
-                <span className='text-[12px] text-primary_color_1  pr-2'>Trip type</span>
-                <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' value={displayReturn} onChange={(e)=>setDisplayReturn(e.target.value)}>
-                <option value="0">one way</option>
-                <option value="1">round trip</option>
+            <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col sm:flex-row Rota'>
+            <div className='flex justify-center items-center flex-col lg:flex-row gap-2'>
+                <span className='text-[12px] md:text-[16px] text-primary_color_1   pr-2'>Trip type</span>
+                <select name="roundtrip" defaultValue={"trip"} className='bg-white p-4 text-center text-secoundary_color w-[200px] lg:w-[250px] rounded-2xl text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' value={trip_type} onChange={(e)=>setTrip_type(e.target.value)}>
+                <option value={"trip"} disabled>Select...</option>
+                <option value={0}>One way</option>
+                <option value={1}>Round trip</option>
 
             </select>
             </div>
            
 
-            <div className='flex flex-col md:flex-row items-center'>
-            <span className='text-[12px] text-primary_color_1  pr-2'>Select booking preference</span>
-            <select name="roundtrip" className='bg-white p-2 text-secoundary_color w-[200px] lg:w-[250px]  text-[12px] font-bold border-primary_color border-solid border-b-2' value={bookingPreference} onChange={(e)=>setBookingPreference(e.target.value)}>
+            <div className='flex justify-center items-center flex-col lg:flex-row gap-2'>
+            <span className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Select booking preference</span>
+            <select name="roundtrip"  defaultValue={"prefrence"} className='bg-white p-4 text-secoundary_color text-center w-[200px] lg:w-[250px] rounded-2xl  text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' value={booking_preference} onChange={(e)=>setBooking_preference(e.target.value)}>
+                <option value="prefrence" disabled>Select...</option>
                 <option value="a">For me and companions</option>
                 <option value="b">For me</option>
                 <option value="c">For others only</option>
@@ -45,41 +110,46 @@ const Search_flight = () => {
             
             <div className='flex justify-evenly items-center gap-5 p-3 flex-col sm:flex-row'>
             
-            <div>
-            <span className='text-[12px] text-primary_color_1 _color pr-2'>class</span>
-            <select className='bg-white text-secoundary_color w-[150px] p-2 sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2' >
-                    <option value="economy">economy class</option>
-                    <option value="business">business class</option>
+            <div className='flex justify-center items-center flex-col md:flex-row gap-2'>
+            <span className='text-[12px] md:text-[16px] text-primary_color_1 _color pr-2'>Class</span>
+            <select defaultValue={"classification"} className='bg-white text-secoundary_color w-[150px] text-center p-4 sm:w-[100px] rounded-2xl lg:w-[150px] text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' value={Class} onChange={(e)=>setClass(e.target.value)}>
+                    <option value="classification" disabled>Select...</option>
+                    <option value="economy">Economy</option>
+                    <option value="business">Business</option>
                 </select>
             </div>
-            <div>
-            <span className='text-[12px] text-primary_color_1  pr-2'>adults</span>
-            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2' disabled={bookingPreference == "b"}>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
+            <div className='flex justify-center items-center flex-col md:flex-row gap-2'>
+            <span className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Adults</span>
+            <select defaultValue={"adults"} className='bg-white text-secoundary_color p-4 w-[150px]  sm:w-[100px] rounded-2xl lg:w-[150px] text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' disabled={booking_preference == "b"} value={adults} onChange={(e)=>setAdults(e.target.value)}>
+                    <option value="adults" disabled>Select...</option>
+                    
+                  {
+                    booking_preference == "a" ? null:<option value={1}>1</option>
+                  }  
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
 
                 </select>
             </div>
-                <div>
-            <span className='text-[12px] text-primary_color_1  pr-2'>infants</span>
-            <select className='bg-white text-secoundary_color p-2 w-[150px] sm:w-[100px] lg:w-[150px] text-[12px] font-bold border-primary_color border-solid border-b-2' disabled={bookingPreference == "b"}>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
+                <div className='flex justify-center items-center flex-col md:flex-row gap-2'>
+            <span className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Infants</span>
+            <select defaultValue={"infants"} className='bg-white text-secoundary_color  p-4 w-[150px] rounded-2xl sm:w-[100px] lg:w-[150px] text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' disabled={booking_preference == "b"} value={infants} onChange={(e)=>setInfants(e.target.value)}>
+                    <option value="infants" disabled>Select...</option>
+                    <option value={0}>0</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
                 </select>
                 </div>    
             </div>
@@ -89,25 +159,25 @@ const Search_flight = () => {
         <div className='flex justify-center gap-4 items-center flex-col sm:flex-row'>
 
         
-        <div className='flex items-center'>
+        <div className='flex justify-center items-center flex-col md:flex-row gap-2'>
             <FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>
-            <select name="departure_airport" className='bg-white text-secoundary_color w-[180px] py-2 sm:w-[100px] lg:w-[200px] text-[12px] font-bold border-primary_color border-solid border-b-2'>
-                <option value="" disabled>from</option>
+            <select name="departure_airport" defaultValue={"from"} className='bg-white text-secoundary_color  rounded-2xl text-center w-[180px] py-3 sm:w-[150px] md:w-[220px] md:text-[13px]  text-[12px] font-bold border-primary_color border-solid border-b-2 select_option' value={departure_airport} onChange={(e)=>setDeparture_airport(e.target.value)}>
+                <option value="from" disabled>from</option>
                     {
-                        airport?.map((el)=>{
-                            return <option key={el.airport_code} value={el.airport_code}>{el.airport_name}({el.airport_code})</option>
+                        All_airports?.data?.map((el)=>{
+                            return <option key={el?.airport_id} value={el?.airport_id}>{el?.airport_code}({el?.airport_name})</option>
                         })
                     }
             </select>
             </div>
             <FontAwesomeIcon icon={faArrowRightArrowLeft} className='text-primary_color_1'/>
-            <div className='flex items-center'>
+            <div className='flex justify-center items-center flex-col md:flex-row gap-2'>
             <FontAwesomeIcon icon={faPlaneArrival} className='px-2 text-[20px] text-secoundary_color' />
-            <select name="arrival_airport" className='bg-white text-secoundary_color w-[180px] py-2 sm:w-[100px] text-[12px] lg:w-[200px] xl font-bold border-primary_color border-solid border-b-2'>
-                <option value=""  disabled>to</option>
+            <select name="arrival_airport" defaultValue={"to"} className='bg-white text-secoundary_color rounded-2xl w-[180px] text-center py-3 sm:w-[150px] md:w-[220px] md:text-[13px] text-[12px]  font-bold border-primary_color border-solid border-b-2 select_option' value={arrival_airport} onChange={(e)=>setArrival_airport(e.target.value)}>
+                <option value="to"  disabled>to</option>
                 {
-                        airport?.map((el)=>{
-                            return <option key={el.airport_code} value={el.airport_code}>{el.airport_name}({el.airport_code})</option>
+                    All_airports?.data?.map((el)=>{
+                            return <option key={el?.airport_id} value={el?.airport_id}>{el?.airport_code}({el?.airport_name})</option>
                         })
                     }
             </select>
@@ -116,8 +186,9 @@ const Search_flight = () => {
             
            <div className='flex justify-center gap-4 items-center  flex-col lg:flex-row'> 
            <div className='flex items-center gap-3 justify-between   flex-col lg:flex-row'>
+           <label className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Departure</label>
             <DatePicker
-            className={`mt-1 block w-full border-b-2 outline-none bg-white z-[1000000000000] border-primary_color focus:border-indigo-500 focus:ring-0 sm:text-sm p-1 bg-transparent`}
+            className={`mt-1 block w-full border-b-2 outline-none text-center font-bold bg-white z-[1000000000000] text-secoundary_color_1 border-primary_color md:text-[16px] focus:border-indigo-500 focus:ring-0 sm:text-sm p-3 rounded-2xl bg-transparent`}
             selected={startDate} 
             onChange={(date) => setStartDate(date)}
             dateFormat="yyyy-MM-dd"
@@ -129,25 +200,35 @@ const Search_flight = () => {
                  />
                 
            {
-            displayReturn =="1" ?
+            trip_type =="1" ?
+            <>
+            <label className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Return</label>
             <DatePicker
-            className={`mt-1 block w-full border-b-2 outline-none bg-white z-[1000000000000] border-primary_color focus:border-indigo-500 focus:ring-0 sm:text-sm p-1 bg-transparent`}
+            className={`mt-1 block w-full border-b-2 text-center outline-none font-bold bg-white z-[1000000000000] text-secoundary_color_1 md:text-[16px] border-primary_color focus:border-indigo-500 focus:ring-0 sm:text-sm p-3 rounded-2xl bg-transparent`}
             selected={startDate_return} 
             onChange={(date) => setStartDate_return(date)}
             dateFormat="yyyy-MM-dd"
             placeholderText="arrival_time"
             minDate={startDate}
             maxDate={`${startDate.getFullYear()+1}-${startDate.getMonth()}-${startDate.getDate()}`}
-                 />:null
+            
+                 /></>:null
            } 
             </div>
-            <Button color={"#AE8A3B"} padding='5px'>Search</Button>
+           </div>
+           
+            </div>
+
+            <div className='m-auto'>
+           <Button color={"#AE8A3B"} padding='15px 80px'>Search</Button>
+
            </div>
 
 
-            </div>
+            
+
     </section>
-    </form>
+    </form></div>
   )
 }
 
