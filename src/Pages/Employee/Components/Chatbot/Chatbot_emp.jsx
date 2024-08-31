@@ -227,19 +227,21 @@ const Chatbot_emp = () => {
     </>
     }
     
-
+    <form onSubmit={handelstate}>
     <div className='w-[70%] mx-auto bg-transparent absolute bottom-[2%] left-[15%]'>
     <div className='animate__myself flex items-center justify-between relative gap-5 bg-black/10 px-5 py-2 rounded-[50px]'>
-      <textarea id="search" required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full resize-none max-h-[150px] h-[40px] bg-transparent border-none outline-none p-2 text-[18px] text-white'  placeholder='Enter a prompt here'></textarea>
+   
+      <input id="search" type='text' required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full resize-none max-h-[150px] h-[40px] bg-transparent border-none outline-none p-2 text-[18px] text-white'  placeholder='Enter a prompt here'/>
       <div>
-      <button onClick={ handelstate}><FontAwesomeIcon icon={faLocationArrow}  className='text-white absolute right-[10px] bottom-[5px] translate-y-[-50%]  text-[25px] w-[35px] border-transparent rotate-45'/></button>
+      <button type='submit'><FontAwesomeIcon icon={faLocationArrow}  className='text-white absolute right-[10px] bottom-[5px] translate-y-[-50%]  text-[25px] w-[35px] border-transparent rotate-45'/></button>
       </div>
+     
     </div>
     <p className='text-[13px] text-gray_color text-center mt-3'>
     ChamAi may display inaccurate info, including about people, so double-check its responses.
     </p>
     </div>
-    
+    </form>
 
         </div>
         <Sidbar_Chat setSearch={setInput_text} setNewchat={setNewchat} view={view} change_view={change_view} handelChat={handelChat}/>
