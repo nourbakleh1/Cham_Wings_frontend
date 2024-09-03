@@ -38,6 +38,7 @@ import Reset_password from './Pages/Reset_Password/Reset_password';
 import { useSelector } from 'react-redux';
 import Verify_email_pass from './Pages/Verify-email/Verify_email_pass';
 import ProfilePage from './Pages/Profile/profile';
+import Profile from './Pages/Profile/Employee/profile';
 
 const App = () => {
   const ref=useRef(null);
@@ -74,15 +75,16 @@ const App = () => {
                     <Route path="reset_password" element={!user ? <Reset_password/>: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>}/>
 
 
+                    
+                    <Route path="profile" element={role == undefined ?<ProfilePage/>: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
 
-
-                    <Route path="profile" element={<ProfilePage />} />
                     {/* passenger page */}
                     <Route path="flight" element={role == undefined ? <FlightList />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
                     <Route path="contact-us" element={role == undefined ? <ContactUs />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
                     <Route path="reservation" element={role == undefined ? <Companions />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
                     <Route path="reservation_seats" element={role == undefined?<Reservation_seats />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
-                    
+                    <Route path="verifyEmail/:email" element={!user ? <verfiyEmail />: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>}/>
+
 
 
                   {/* about page nested route */}
@@ -97,8 +99,6 @@ const App = () => {
 
 
                     </Route>
-                    
-
 
                      {/* employee page nested route */}
                     <Route path='/dashboard/employee' element={role != 4 && role != undefined ?<Layouts_dashboard/> : <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}>
@@ -111,7 +111,8 @@ const App = () => {
                     <Route path="answer-questions" element={role != 4 && role != undefined ?<Answer_Questions/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="view-history" element={role != 4 && role != undefined ?<View_history/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="visa-information" element={role != 4 && role != undefined ?<Visa_information/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
-                    
+                    <Route path="profile" element={role != 4 && role != undefined ?<Profile/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+
                     </Route>
 
                     {/* admin page nested route */}
@@ -120,7 +121,8 @@ const App = () => {
                     <Route index element={role == 4 ? <Admin/>:<Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
                      <Route path='manage-employees' element={role == 4 ? <Manage_employees/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
                     <Route path='manage-permissions' element={role == 4 ? <Manage_permissions/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
-                    
+                    <Route path="profile" element={role == 4 ? <Profile/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+
                     </Route>
 
                     <Route path="/*" element={<Error_page/>}/>
@@ -137,12 +139,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
- 
-
-
