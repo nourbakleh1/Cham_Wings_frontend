@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import TextInput from "../../../Components/Fields/TextInput.jsx";
-import DateInput from "../../../Components/Fields/DateInput.jsx";
-import PhoneInputComponent from "../../../Components/Fields/PhoneInputComponent.jsx";
-import ReactFlagsSelect from "react-flags-select";
+import CompanionForm from "./Companion/CompanionForm.jsx";
+import CompanionSelectDropdown from "./Companion/CompanionSelectDropdown.jsx";
+import PassportForm from "./Companion/PassportForm.jsx";
 import { privateRequest } from "../../../lib/privateRequest.js";
-import { countryList } from "../../Profile/Countries/countryList.js";
 import Toast from "../Toast/Toast.jsx";
+import LoadingSpinner from "../Loading/LoadingSpinner.jsx";
 
-const CompanionSelect = ({ onChange, value, editMode }) => {
+const CompanionSelect = ({ onChange }) => {
   const [passenger, setPassenger] = useState(null);
   const [companions, setCompanions] = useState([]);
   const [selectedCompanion, setSelectedCompanion] = useState(null);
@@ -16,34 +15,29 @@ const CompanionSelect = ({ onChange, value, editMode }) => {
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [editMode, setEditMode] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [passengerData, setPassengerData] = useState({
+    number: "",
+    passport_issued_country: "",
+    passport_issued_date: "",
+    passport_expiry_date: "",
+    passport_image: "",
+  });
+  const [isAddingCompanion, setIsAddingCompanion] = useState(false);
 
-  console.log("Form DATA", formData);
-
-  const getSelectedCountryCode = (countryName) => {
-    const entry = countryList.find(({ name }) => name === countryName);
-    return entry ? entry.code : "";
+  const toggleEditMode = () => {
+    setEditMode((prev) => !prev);
   };
 
-  const handleNationalityChange = (countryCode) => {
-    const selectedCountry =
-      countryList.find(({ code }) => code === countryCode)?.name || "";
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       travel_requirement: {
         ...prevData.travel_requirement,
-        nationality: selectedCountry,
-      },
-    }));
-  };
-
-  const handleCountryChange = (countryCode) => {
-    const selectedCountry =
-      countryList.find(({ code }) => code === countryCode)?.name || "";
-    setFormData((prevData) => ({
-      ...prevData,
-      travel_requirement: {
-        ...prevData.travel_requirement,
-        country_of_residence: selectedCountry,
+        [name]: value,
       },
     }));
   };
@@ -51,13 +45,13 @@ const CompanionSelect = ({ onChange, value, editMode }) => {
   useEffect(() => {
     const fetchCompanions = async () => {
       try {
-        const response = await privateRequest.get(
-          "/api/passenger_companions_details"
-        );
-
+        const response = await privateRequest.get("/api/passengers");
         if (response.data.success) {
           const fetchedPassenger = response.data.data.passenger;
-          const fetchedCompanions = response.data.data.companions || [];
+          const fetchedCompanions =
+            response.data.data.filter(
+              (companion) => companion && companion.travel_requirement
+            ) || [];
 
           setPassenger(fetchedPassenger);
           setCompanions(fetchedCompanions);
@@ -65,7 +59,7 @@ const CompanionSelect = ({ onChange, value, editMode }) => {
           const defaultCompanion =
             fetchedPassenger || fetchedCompanions[0] || null;
           setSelectedCompanion(defaultCompanion);
-          setFormData(defaultCompanion);
+          setFormData(defaultCompanion || { travel_requirement: {} });
           onChange(defaultCompanion);
         } else {
           setError("Failed to load companions");
@@ -85,33 +79,119 @@ const CompanionSelect = ({ onChange, value, editMode }) => {
     };
 
     fetchCompanions();
-  }, []); // Empty dependency array ensures this runs only once
+  }, [refreshTrigger]);
 
-  const handleSelectChange = (e) => {
-    const selectedId = e.target.value;
-    const selected =
-      companions.find((c) => c.passenger_id === parseInt(selectedId)) ||
-      passenger;
+  useEffect(() => {
+    const fetchPassengerData = async () => {
+      try {
+        if (selectedCompanion && selectedCompanion.travel_requirement_id) {
+          const response = await privateRequest.get(
+            `/api/passengers/${selectedCompanion.travel_requirement_id}`
+          );
+          const passenger = response.data.data;
 
-    setSelectedCompanion(selected);
-    setFormData(selected); // Update formData with the selected companion's data
-    onChange(selected); // Pass selected companion data to parent if needed
-  };
+          const passport = passenger.passports[0] || {};
+
+          setPassengerData({
+            number: passport.number || "",
+            passport_issued_country: passport.passport_issued_country || "",
+            passport_issued_date: passport.passport_issued_date || "",
+            passport_expiry_date: passport.passport_expiry_date || "",
+            passport_image: passport.passport_image || "",
+            status: "Active",
+            passport_id: passport.passport_id || "",
+          });
+
+          setFormData({
+            ...formData,
+            companion_id: passenger.companion_id,
+            passenger_id: passenger.passenger_id,
+            travel_requirement_id: passenger.travel_requirement_id,
+          });
+        } else {
+          setPassengerData({
+            number: "",
+            passport_issued_country: "",
+            passport_issued_date: "",
+            passport_expiry_date: "",
+            passport_image: "",
+            status: "Active",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching passenger data:", error);
+      }
+    };
+
+    fetchPassengerData();
+  }, [selectedCompanion]);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
 
     try {
-      const response = await privateRequest.post(
-        "/api/passenger_companions_details",
-        formData
+      if (!formData.travel_requirement_id) {
+        throw new Error("Travel requirement ID is missing");
+      }
+
+      const fetchResponse = await privateRequest.get(
+        `/api/passengers/${formData.travel_requirement_id}`
       );
 
-      if (response.data.success) {
+      if (!fetchResponse.data.success) {
+        throw new Error("Failed to fetch passenger data.");
+      }
+
+      const fetchedData = fetchResponse.data.data;
+
+      const updatedData = {
+        ...formData,
+      };
+
+      const flattenedData = {
+        status: "Active",
+        companion_id: updatedData.companion_id,
+        passenger_id: updatedData.passenger_id,
+        travel_requirement_id: updatedData.travel_requirement_id,
+        infant: formData.infant ? 1 : 0,
+        title: updatedData.title || "",
+        gender: updatedData.gender || "male",
+        number: updatedData.number,
+        passport_issued_country: updatedData.passport_issued_country,
+        passport_issued_date: updatedData.passport_issued_date,
+        passport_expiry_date: updatedData.passport_expiry_date,
+        passport_image: updatedData.passport_image,
+        ...updatedData.travel_requirement,
+      };
+
+      Object.keys(flattenedData).forEach(
+        (key) =>
+          (flattenedData[key] === undefined || flattenedData[key] === null) &&
+          delete flattenedData[key]
+      );
+
+      if (flattenedData.date_of_birth instanceof Date) {
+        flattenedData.date_of_birth = flattenedData.date_of_birth
+          .toISOString()
+          .split("T")[0];
+      }
+
+      const updateResponse = await privateRequest.put(
+        `/api/passengers/${flattenedData.travel_requirement_id}`,
+        flattenedData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (updateResponse.data.success) {
         setToast({
           message: "Companion information updated successfully!",
           type: "success",
         });
+        setEditMode(false);
       } else {
         setToast({
           message: "Failed to update companion information.",
@@ -123,228 +203,129 @@ const CompanionSelect = ({ onChange, value, editMode }) => {
         message: `An error occurred while submitting: ${error.message}`,
         type: "error",
       });
+      console.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleSubmitNewCompanion = async () => {
+    setIsSubmitting(true);
+
+    try {
+      const newCompanionData = {
+        status: "Active",
+        infant: formData.infant ? 1 : 0,
+        title: formData.title || "",
+        gender: formData.gender || "male",
+        companion_id: formData.companion_id,
+        passenger_id: formData.passenger_id,
+        travel_requirement_id: formData.travel_requirement_id,
+        number: passengerData.number,
+        passport_issued_country: passengerData.passport_issued_country,
+        passport_issued_date: passengerData.passport_issued_date,
+        passport_expiry_date: passengerData.passport_expiry_date,
+        passport_image: passengerData.passport_image,
+        ...formData.travel_requirement,
+      };
+
+      const response = await privateRequest.post(
+        "/api/passengers",
+        newCompanionData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.success) {
+        setToast({
+          message: "New companion added successfully!",
+          type: "success",
+        });
+        setIsAddingCompanion(false);
+        setEditMode(false);
+        setRefreshTrigger((prev) => prev + 1);
+      } else {
+        setToast({
+          message: "Failed to add new companion.",
+          type: "error",
+        });
+      }
+    } catch (error) {
+      setToast({
+        message: `An error occurred while adding: ${error.message}`,
+        type: "error",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleRefresh = () => setRefreshTrigger((prev) => prev + 1);
+
   if (loading) return <div className="text-center">Loading companions...</div>;
   if (error) return <div className="text-red-600">{error}</div>;
 
-  const hasData = passenger || companions.length > 0;
-
   return (
-    <div className="w-full mx-auto my-4">
-      <label
-        htmlFor="companion-select"
-        className="block text-sm font-medium text-gray-700 mb-2"
-      >
-        Select Companion
-      </label>
-      <select
-        id="companion-select"
-        value={selectedCompanion?.passenger_id || ""}
-        disabled={!editMode}
-        onChange={handleSelectChange}
-        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      >
-        {passenger && (
-          <option key={passenger.passenger_id} value={passenger.passenger_id}>
-            {passenger.travel_requirement.first_name}{" "}
-            {passenger.travel_requirement.last_name}
-          </option>
-        )}
-
-        {companions.map((companion) => (
-          <option key={companion.passenger_id} value={companion.passenger_id}>
-            {companion.travel_requirement.first_name}{" "}
-            {companion.travel_requirement.last_name}
-          </option>
-        ))}
-
-        {!hasData && <option value="">No companions available</option>}
-      </select>
-      {selectedCompanion && (
-        <div className="grid gap-4 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4">
-          <TextInput
-            label="First Name"
-            name="first_name"
-            disabled={!editMode}
-            value={formData.travel_requirement?.first_name || ""}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                travel_requirement: {
-                  ...formData.travel_requirement,
-                  first_name: e.target.value,
-                },
-              })
-            }
-            className="w-full"
-          />
-          <TextInput
-            label="Last Name"
-            name="last_name"
-            disabled={!editMode}
-            value={formData.travel_requirement?.last_name || ""}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                travel_requirement: {
-                  ...formData.travel_requirement,
-                  last_name: e.target.value,
-                },
-              })
-            }
-            className="w-full"
-          />
-          <DateInput
-            label="Date of Birth"
-            name="date_of_birth"
-            disabled={!editMode}
-            selected={
-              formData.travel_requirement?.date_of_birth
-                ? new Date(formData.travel_requirement.date_of_birth)
-                : null
-            }
-            onChange={(date) =>
-              setFormData({
-                ...formData,
-                travel_requirement: {
-                  ...formData.travel_requirement,
-                  date_of_birth: date,
-                },
-              })
-            }
-            className="w-full"
-          />
-          <div className="w-full">
-            <label className="block text-sm font-medium text-black">
-              Gender
-            </label>
-            <select
-              value={formData.travel_requirement?.gender || ""}
-              disabled={!editMode}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  travel_requirement: {
-                    ...formData.travel_requirement,
-                    gender: e.target.value,
-                  },
-                })
-              }
-              className="block w-full px-3 py-2 mt-5 border border-gray-300 rounded-md shadow-sm bg-white"
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div className="text-sm">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Nationality
-            </label>
-            <ReactFlagsSelect
-              searchPlaceholder="Select Nationality"
-              selected={getSelectedCountryCode(
-                formData.travel_requirement?.nationality
-              )}
-              onSelect={handleNationalityChange}
-              disabled={!editMode}
-              searchable
-              name="nationality"
-              className="w-full mt-5 text-black"
-              id="nationality"
-            />
-          </div>
-          <TextInput
-            label="Address"
-            name="address"
-            value={formData.travel_requirement?.address || ""}
-            disabled={!editMode}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                travel_requirement: {
-                  ...formData.travel_requirement,
-                  address: e.target.value,
-                },
-              })
-            }
-            className="w-full"
-          />
-          <TextInput
-            label="City"
-            name="city"
-            value={formData.travel_requirement?.city || ""}
-            disabled={!editMode}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                travel_requirement: {
-                  ...formData.travel_requirement,
-                  city: e.target.value,
-                },
-              })
-            }
-            className="w-full"
-          />
-          <div className="text-sm">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Country Of Residence
-            </label>
-            <ReactFlagsSelect
-              searchPlaceholder="Search countries"
-              //   selected={formData.travel_requirement?.country_of_residence || ""}
-              selected={getSelectedCountryCode(
-                formData.travel_requirement?.country_of_residence
-              )}
-              disabled={!editMode}
-              onSelect={handleCountryChange}
-              searchable
-              name="country_of_residence"
-              className="w-full mt-5 text-black"
-              id="country_of_residence"
-            />
-          </div>
-          <PhoneInputComponent
-            label="Mobile"
-            name="phone"
-            value={formData.travel_requirement?.mobile_during_travel || ""}
-            disabled={!editMode}
-            onChange={(phone) =>
-              setFormData({
-                ...formData,
-                travel_requirement: {
-                  ...formData.travel_requirement,
-                  mobile_during_travel: phone,
-                },
-              })
-            }
-            className="w-full"
-          />
-          {/* Add more fields as needed */}
+    <>
+      {isSubmitting && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+          <LoadingSpinner />
         </div>
       )}
-      {selectedCompanion && editMode && (
-        <button
-          onClick={handleSubmit}
-          disabled={isSubmitting}
-          className={`w-full py-2 mt-4 bg-blue-500 text-white text-lg rounded-md hover:bg-blue-600 transition duration-300"${
-            isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          Save
-        </button>
-      )}
-      {toast && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast(null)}
-        />
-      )}
-    </div>
+      <CompanionSelectDropdown
+        passenger={passenger}
+        companions={companions}
+        selectedCompanion={selectedCompanion}
+        setPassengerData={setPassengerData}
+        setSelectedCompanion={setSelectedCompanion}
+        setFormData={setFormData}
+        onChange={onChange}
+        handleRefresh={handleRefresh}
+        toggleEditMode={toggleEditMode}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        isAddingCompanion={isAddingCompanion}
+        setIsAddingCompanion={setIsAddingCompanion}
+      />
+
+      <CompanionForm
+        formData={formData}
+        setFormData={setFormData}
+        selectedCompanion={selectedCompanion}
+        setSelectedCompanion={setSelectedCompanion}
+        handleSubmit={handleSubmit}
+        editMode={editMode}
+        isSubmitting={isSubmitting}
+        isAddingCompanion={isAddingCompanion}
+        setIsAddingCompanion={setIsAddingCompanion}
+        handleSubmitNewCompanion={handleSubmitNewCompanion}
+        handleInfantChange={(value) =>
+          setFormData((prev) => ({ ...prev, infant: value }))
+        }
+        handleChange={handleChange}
+      />
+      <PassportForm
+        formData={formData}
+        setFormData={setFormData}
+        selectedCompanion={selectedCompanion}
+        setSelectedCompanion={setSelectedCompanion}
+        refreshTrigger={refreshTrigger}
+        setRefreshTrigger={setRefreshTrigger}
+        setImagePreview={setImagePreview}
+        editMode={editMode}
+        setEditMode={setEditMode}
+        isSubmitting={isSubmitting}
+        handleSubmitNewCompanion={handleSubmitNewCompanion}
+        isAddingCompanion={isAddingCompanion}
+        setIsAddingCompanion={setIsAddingCompanion}
+        passengerData={passengerData}
+        setPassengerData={setPassengerData}
+      />
+      {toast && <Toast message={toast.message} type={toast.type} />}
+    </>
   );
 };
 
