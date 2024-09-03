@@ -22,7 +22,7 @@ const Admin = () => {
     labels: statistics?.results?.clusters.map((el)=>{return el.size}),
     datasets: [
       {
-        label: "passengers number",
+        label: "passenger segmentation chart",
         data: statistics?.results?.clusters?.map((el)=>{
           return el.size
         }),

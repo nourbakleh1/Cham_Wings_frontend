@@ -22,7 +22,7 @@ import Update_emp from './Components/Update_emp';
 const Manage_employees = () => {
     const dispatch = useDispatch();
     const {employees,isLoading,isLoading_get,isLoading_search,searchEmp,Allroles,emp_info}=useSelector((state)=>state.admin);
-    const [page,setPage]=useState(1);
+    const [page,setPage]=useState(-1);
     const [search,setSearch]=useState("");
     const prev= usePrevious(search);
 

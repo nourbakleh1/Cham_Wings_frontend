@@ -11,7 +11,7 @@ const PieChart=({ chartData })=> {
           plugins: {
             title: {
               display: true,
-              text: "Passengers number"
+              text: "passenger segmentation chart"
             }
           }
         }}

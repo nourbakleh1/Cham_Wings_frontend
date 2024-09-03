@@ -19,7 +19,7 @@ import "./Manage_emp.css"
 const Manage_permissions = () => {
     const dispatch = useDispatch();
     const {employees,isLoading,isLoading_get,isLoading_search,searchEmp,Allroles,emp_info}=useSelector((state)=>state.admin);
-    const [page,setPage]=useState(1);
+    const [page,setPage]=useState(-1);
     const [search,setSearch]=useState("");
     const prev= usePrevious(search);
 
@@ -110,6 +110,7 @@ const Manage_permissions = () => {
     const handelDeleteRole=(id)=>{
 
         const data={roles,id}
+        console.log( roles)
           
         dispatch(delete_Roles_Employee(data)).unwrap().then((res)=>{
             setRoles([]);
@@ -165,7 +166,7 @@ const Manage_permissions = () => {
     }
     
 
-    console.log("emp info",emp_info)
+    // console.log("emp info",emp_info)
     
     
   return (

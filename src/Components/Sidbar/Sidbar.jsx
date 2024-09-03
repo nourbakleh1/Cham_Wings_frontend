@@ -1,4 +1,4 @@
-import { faBox, faChartPie, faChevronLeft, faCircleInfo, faCircleMinus, faFileCirclePlus, faFilePdf, faFilePen, faInfo, faListCheck, faMessage, faMinus, faNewspaper, faPersonWalkingArrowLoopLeft, faPlane, faPlus, faRightFromBracket, faWrench } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faChartPie, faChevronLeft, faCircleInfo, faCircleMinus, faFileCirclePlus, faFilePdf, faFilePen, faInfo, faListCheck, faMessage, faMinus, faNewspaper, faPeopleArrows, faPersonMilitaryPointing, faPersonWalkingArrowLoopLeft, faPlane, faPlus, faRightFromBracket, faRightLeft, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
@@ -24,7 +24,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
       document.getElementById("default-sidebar").classList.remove("-translate-x-[110%]");
       
     }
-    const [id,setId]=useState(0);
+    const [data,setData]=useState(null);
     const closeSide=()=>{
       document.getElementById("three").classList.remove("hidden");
       document.getElementById("default-sidebar").classList.add("-translate-x-[110%]");
@@ -113,7 +113,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
                   <FontAwesomeIcon icon={faFilePdf} className='text-off_white'/>
 
                      <span  className="flex items-center text-[12px] w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{el.filename.slice(0,20)}</span>
-                     <FontAwesomeIcon icon={faMinus} className='text-off_white cursor-pointer' onClick={()=>{ setOpen1(!open1);setId(el.id)}} />
+                     <FontAwesomeIcon icon={faMinus} className='text-off_white cursor-pointer' onClick={()=>{ setOpen1(!open1);setData({id:el.id,name:el.filename.slice(0,30)})}}/>
 
                   </li>
                  
@@ -169,9 +169,9 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
             <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
             <div className='flex flex-col justify-center items-center gap-6'>
 
-            <p className='font-bold'>do you want to delete this{id}</p>
+            <p className='font-bold'>do you want to delete <span className='text-secoundary_color font-extrabold'>{data?.name}</span></p>
             <div className='flex gap-3'>
-            <Button onClick={()=>handelDeletePdf(id)} color={"#00529B"} padding='5px'>Delete</Button>
+            <Button onClick={()=>handelDeletePdf(data?.id)} color={"#00529B"} padding='5px'>Delete</Button>
             <Button onClick={()=>setOpen1(!open1)} color={"#cf2e2e"} padding='5px'>Cancel</Button>
             </div>
            
@@ -181,44 +181,58 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
            </Modal>
         
          <li>
-            <NavLink to="/dashboard/employee/manage-offers" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/dashboard/employee/manage-offers" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faListCheck} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage offers</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/dashboard/employee/reservation" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/dashboard/employee/reservation" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faBox} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">view reservations</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/dashboard/employee/manage-flights" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <FontAwesomeIcon icon={faPlane} />
+            <NavLink to="/dashboard/employee/manage-flights" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faRightLeft} />
                
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage flights</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/dashboard/employee/answer-questions" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/dashboard/employee/manage-flights" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faPlane} />
+               
+               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage airplanes</span>
+            </NavLink>
+         </li>
+         <li>
+            <NavLink to="/dashboard/employee/manage-flights" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faPeopleArrows} />
+               
+               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage airports</span>
+            </NavLink>
+         </li>
+         <li>
+            <NavLink to="/dashboard/employee/answer-questions" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faMessage} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">answer the questions</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/dashboard/employee/view-history" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/dashboard/employee/view-history" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faNewspaper} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">view modication history</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/dashboard/employee/visa-information" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/dashboard/employee/visa-information" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faCircleInfo} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">visa and travel information</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faRightFromBracket} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">sign out</span>
             </NavLink>
