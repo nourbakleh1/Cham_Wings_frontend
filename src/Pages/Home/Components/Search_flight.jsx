@@ -28,9 +28,6 @@ const Search_flight = () => {
     const [departure_airport,setDeparture_airport]=useState(null);
     const [arrival_airport,setArrival_airport]=useState(null);
 
-
-    console.log("searchResult",resultSearch);
-
     useEffect(()=>{
         dispatch(getAirports())
     },[]);
