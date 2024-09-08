@@ -88,10 +88,20 @@ export const resetPassword=createAsyncThunk("auth/resetPassword",async(data,Thun
         return rejectWithValue(error)
     }
 });
+export const getUserRecommendations=createAsyncThunk("auth/getUserRecommendations",async(id,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+    try{
+        const res=await privateRequest.get(`/api/recommendations/${1}`);
+        return res.data
+    }
+    catch(err){
+        return rejectWithValue(err)
+    }
+})
 
 
 const initialState={
-    user:null,isLoading:false,error:null,verify_token:null
+    user:null,isLoading:false,error:null,verify_token:null,recommend:[]
 }
 
 
@@ -158,6 +168,17 @@ const authSlice=createSlice({
             state.isLoading = false;
         })
         .addCase(resetPassword.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.error=action.payload
+        })
+        .addCase(getUserRecommendations.pending,(state)=>{
+            state.isLoading = true;
+        })
+        .addCase(getUserRecommendations.fulfilled,(state,action)=>{
+            state.isLoading = false;
+            state.recommend=action.payload
+        })
+        .addCase(getUserRecommendations.rejected,(state,action)=>{
             state.isLoading = false;
             state.error=action.payload
         })

@@ -33,6 +33,7 @@
 .Rota{
     perspective: 500px;
     transform-style: preserve-3d;
+    background: #e8e8e81a;
     
     
 }
@@ -52,3 +53,60 @@
     background: #f9f9f97d;
     color: #00529B;
 }
+
+
+
+.body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  
+}
+
+.swiper {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: 300px;
+  height: 300px;
+}
+
+  
+.swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+.swiper-pagination-bullet {
+    
+    text-align: center;
+    line-height: 1.5%;
+    font-size: 12px;
+    color: #000;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    cursor: pointer;
+  }
+  .swiper-pagination{
+    margin: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap
+    
+  }
+  .swiper-pagination-bullet-active {
+    color: #fff;
+    background: #00529B;
+    box-shadow: 0 0 2px 4px #ae8a3b;
+  }
+  

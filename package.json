@@ -39,9 +39,11 @@
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.8.0",
+    "react-swiper": "^0.1.5",
     "react-toastify": "^10.0.5",
     "react-typed": "^2.0.12",
     "redux-persist": "^6.0.0",
+    "swiper": "^11.1.12",
     "web-vitals": "^2.1.4",
     "world-countries": "^5.0.0",
     "yup": "^1.4.0"
