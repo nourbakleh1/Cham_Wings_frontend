@@ -131,7 +131,7 @@ export const add_Roles_Employee=createAsyncThunk("admin/add_Roles_Employee",asyn
 export const delete_Roles_Employee=createAsyncThunk("admin/delete_Roles_Employee",async(data,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
     try{
-        const res=await privateRequest.delete(`/api/employees/roles/${data.id}`,{roles:data.roles});
+        const res=await privateRequest.post(`/api/employees/roles/del/${data.id}?roles=${data.roles}/`,{});
         return res.data
     }
     catch(error){

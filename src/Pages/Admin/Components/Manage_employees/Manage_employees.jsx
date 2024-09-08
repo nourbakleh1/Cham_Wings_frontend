@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import Headings from '../../../../Components/Headings/Headings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronRight, faEye, faImage, faImages, faPersonCirclePlus, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faChevronDown, faChevronRight, faEye, faImage, faImages, faPersonCirclePlus, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../../../Components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { activateEmployee, AddEmployee, deleteEmployee, getEmployees, getEmployees_info, getRoles, SearchEmployees, updateEmployee } from '../../../../Redux/ApiSlices/admin/adminSlice';
@@ -17,12 +17,13 @@ import "./Manage_emp.css"
 import Add_emp from './Components/Add_emp';
 import VerifyEmail_epm from './Components/VerifyEmail_epm';
 import Update_emp from './Components/Update_emp';
+import CustomPagination from '../../../../Components/Pagination/CustomPagination';
 
 
 const Manage_employees = () => {
     const dispatch = useDispatch();
     const {employees,isLoading,isLoading_get,isLoading_search,searchEmp,Allroles,emp_info}=useSelector((state)=>state.admin);
-    const [page,setPage]=useState(-1);
+    const [page,setPage]=useState(1);
     const [search,setSearch]=useState("");
     const prev= usePrevious(search);
 
@@ -280,7 +281,7 @@ const Manage_employees = () => {
             <tbody>
         
         {isLoading_search ?  <tr> <td className=' p-5  rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className='  p-5  rounded-xl z-[99999]  '><Loading3/></td></tr>:
-            searchEmp?.data?.data.map((employee)=>{
+            searchEmp?.data?.data.length != 0 ? searchEmp?.data?.data.map((employee)=>{
                 if(employee?.roles[0]?.role_id == 4){
                     return
                 }
@@ -323,7 +324,11 @@ const Manage_employees = () => {
             </td>
         </tr>
                 )
-            })
+            }):<tr> <td className=' p-1  rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className=' rounded-xl z-[99999] px-6 py-5 text-center align-middle'> 
+        <div className="">
+         <div className="text-base  flex justify-start items-start  my-5 shadow-xl shadow-black/60 w-fit p-2"> 
+        <FontAwesomeIcon icon={faBoxOpen} className='text-primary_color text-[25px] sm:text-[35px]'/><span className='text-nowrap text-secoundary_color font-semibold'>No results found</span>
+          </div></div></td></tr>
         }    
     </tbody>:null
         }
@@ -331,7 +336,7 @@ const Manage_employees = () => {
     </table>
      <div>
         {
-            search.trim() == "" ? <Pagination page={page} setPage={setPage} totalElement={employees?.data?.total} perPage={employees?.data?.per_page}/>:null
+            search.trim() == "" ? <CustomPagination isLoading={isLoading_get} page={page} setPage={setPage} totalElement={employees?.data?.total} perPage={employees?.data?.per_page}/>:null
         }
            
         </div>

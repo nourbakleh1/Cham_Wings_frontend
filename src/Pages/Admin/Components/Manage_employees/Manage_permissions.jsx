@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import Headings from '../../../../Components/Headings/Headings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronRight, faCircleMinus, faCirclePlus, faEye, faHandHoldingMedical, faHandshake, faHandshakeSlash, faHeartCircleMinus, faImage, faImages, faPersonBooth, faPersonCirclePlus, faPersonCircleQuestion, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faChevronDown, faChevronRight, faCircleMinus, faCirclePlus, faEye, faHandHoldingMedical, faHandshake, faHandshakeSlash, faHeartCircleMinus, faImage, faImages, faPersonBooth, faPersonCirclePlus, faPersonCircleQuestion, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../../../Components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { activateEmployee, add_Roles_Employee, AddEmployee, delete_Roles_Employee, deleteEmployee, getEmployees, getEmployees_info, getRoles, SearchEmployees, updateEmployee } from '../../../../Redux/ApiSlices/admin/adminSlice';
@@ -14,12 +14,13 @@ import { usePrevious } from '../../../../Hooks/usePrevious';
 import LargeModal from '../../../../Components/Modal/LargeModal';
 import Modal from '../../../../Components/Modal/Modal';
 import "./Manage_emp.css"
+import CustomPagination from '../../../../Components/Pagination/CustomPagination';
 
 
 const Manage_permissions = () => {
     const dispatch = useDispatch();
     const {employees,isLoading,isLoading_get,isLoading_search,searchEmp,Allroles,emp_info}=useSelector((state)=>state.admin);
-    const [page,setPage]=useState(-1);
+    const [page,setPage]=useState(1);
     const [search,setSearch]=useState("");
     const prev= usePrevious(search);
 
@@ -173,8 +174,8 @@ const Manage_permissions = () => {
     <div className='relative flex flex-col justify-start items-start mt-[78px] lg:mt-[85px] h-auto w-full  lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
         
        
-        <Modal open={open1} setOpen={setOpen1}>
-        <div className='w-full mx-auto flex justify-center items-center gap-3 flex-col'><Headings element={"h2"} color='gray'>delete permissions</Headings>
+        <LargeModal open={open1} setOpen={setOpen1}>
+        <div className='w-full mx-auto flex justify-center items-center gap-3 flex-col'><Headings element={"h1"} >delete permissions</Headings>
          <div className="flex justify-center items-start gap-5 flex-col">
      
   
@@ -183,7 +184,7 @@ const Manage_permissions = () => {
         :<div className='w-full relative mb-2 flex justify-start items-start flex-col gap-1'>
     <div className=' w-full text-center py-1 rounded-md border-b-4 border-solid border-primary_color text-gray_color font-bold'>Employee permissions</div>
        
-       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[80%] mx-auto items-center gap-3 rounded-xl p-2 shadow-md shadow-black_color/90'>
+       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[60%] mx-auto items-center gap-5 rounded-xl p-5 shadow-md shadow-black_color/90'>
        {
         isLoading?<div className='flex justify-center items-center w-[100%]'><Loading1/></div> : attr?.map((role)=>{
             {/* if(role.role_id == 4 || role.role_id == 13 || role.role_id == 14){
@@ -232,19 +233,19 @@ const Manage_permissions = () => {
   
     </div></div>
             
-           </Modal>
+           </LargeModal>
 
-           <Modal open={open2} setOpen={setOpen2}>
-           <div className='w-full mx-auto flex justify-center items-center gap-3 flex-col'><Headings element={"h2"} color='gray'>add permissions</Headings>
+           <LargeModal open={open2} setOpen={setOpen2}>
+           <div className='w-full mx-auto flex justify-center items-center gap-6 flex-col'><Headings element={"h1"} >add permissions</Headings>
          <div className="flex justify-center items-start gap-5 flex-col">
      
   
     {
         emp_info?.roles[0]?.role_id == 4 ?null
         :<div className='w-full relative mb-2 flex justify-start items-start flex-col gap-1'>
-    <div className=' w-full text-center py-1 rounded-md border-b-4 border-solid border-primary_color text-gray_color font-bold'>Employee permissions</div>
+    <div className=' w-full text-center py-1 rounded-md border-b-4 border-solid border-primary_color text-gray_color font-bold'>Available permissions</div>
        
-       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[80%] mx-auto items-center gap-3 rounded-xl p-2 shadow-md shadow-black_color/90'>
+       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[60%] mx-auto items-center gap-5 rounded-xl p-5 shadow-md shadow-black_color/90'>
        {
         isLoading?<div className='flex justify-center items-center w-[100%]'><Loading1/></div> : Allroles?.data?.data?.map((role)=>{
             if(role.role_id == 4 || role.role_id == 13 || role.role_id == 14){
@@ -292,7 +293,7 @@ const Manage_permissions = () => {
   
     </div></div>
            
-           </Modal>
+           </LargeModal>
         
         <div className='h-auto bg-gradient-to-t  p-2 md:p-8 w-full '>
         <div className="flex items-center justify-between flex-column rounded-t-2xl p-4 flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4  bg-black/20">
@@ -343,8 +344,8 @@ const Manage_permissions = () => {
                   return
                 }
                 return (
-                    <tr key={employee?.employee_id} className="bg-white_color/80 border-b  border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-200">
-            <th scope="row" className="flex items-center px-6 py-4 text-secoundary_color whitespace-nowrap ">
+                    <tr key={employee?.employee_id} className="bg-white_color/80 border-b align-middle  border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-200">
+            <th scope="row" className="flex items-center px-6 py-12 text-secoundary_color whitespace-nowrap">
                 <img className="w-10 h-10 rounded-full" src={employee?.user?.image != null ? `http://127.0.0.1:8000/${employee?.user?.image}` : image_emp} />
                 <div className="ps-3">
                     <div className="text-base font-semibold">{employee?.name}</div>
@@ -388,7 +389,7 @@ const Manage_permissions = () => {
             <tbody>
         
         {isLoading_search ? <tr> <td className=' p-5   rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className='  p-5  rounded-xl z-[99999]  '><Loading3/></td></tr>:
-            searchEmp?.data?.data.map((employee)=>{
+            searchEmp?.data?.data.length != 0 ? searchEmp?.data?.data.map((employee)=>{
                 if(employee?.roles[0]?.role_id == 4){
                     return
                 }
@@ -428,7 +429,11 @@ const Manage_permissions = () => {
             </td>
         </tr>
                 )
-            })
+            }):<tr> <td className=' p-1  rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className=' rounded-xl z-[99999] px-6 py-5 text-center align-middle'> 
+        <div className="">
+         <div className="text-base  flex justify-start items-start  my-5 shadow-xl shadow-black/60 w-fit p-2"> 
+        <FontAwesomeIcon icon={faBoxOpen} className='text-primary_color text-[25px] sm:text-[35px]'/><span className='text-nowrap text-secoundary_color font-semibold'>No results found</span>
+          </div></div></td></tr>
         }    
     </tbody>:null
         }
@@ -436,7 +441,7 @@ const Manage_permissions = () => {
     </table>
     <div>
         {
-            search.trim() == "" ? <Pagination page={page} setPage={setPage} totalElement={employees?.data?.total} perPage={employees?.data?.per_page}/>:null
+            search.trim() == "" ? <CustomPagination isLoading={isLoading_get} page={page} setPage={setPage} totalElement={employees?.data?.total} perPage={employees?.data?.per_page}/>:null
         }
            
         </div>
