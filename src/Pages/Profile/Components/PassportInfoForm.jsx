@@ -13,6 +13,7 @@ import LoadingSpinner from "../Loading/LoadingSpinner.jsx";
 import Toast from "../Toast/Toast.jsx";
 import PropTypes from "prop-types";
 import PassportImageUpload from "./PassportImageUpload";
+import Button from "../../../Components/Button/Button.jsx";
 
 const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
   const dispatch = useDispatch();
@@ -56,11 +57,10 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
     return entry ? entry.code : "";
   };
 
-  const handlePassportDateChange = (name, date) => {
-    const formattedDate = date ? date.toISOString().split("T")[0] : "";
+  const handlePassportDateChange = (name, value) => {
     setFormDataPassport((prevData) => ({
       ...prevData,
-      [name]: formattedDate,
+      [name]: value,
     }));
   };
 
@@ -170,7 +170,7 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
             </p>
           )}
         </div>
-        <DateInput
+        {/* <DateInput
           label="Passport Issued Date"
           name="passport_issued_date"
           type="event"
@@ -180,27 +180,46 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
           }
           disabled={!editModePassport || isLoading}
           error={errors.passport_issued_date}
-        />
-        <DateInput
-          label="Passport Expiry Date"
-          name="passport_expiry_date"
-          type="event"
-          selected={
-            formDataPassport.passport_expiry_date
-              ? new Date(formDataPassport.passport_expiry_date)
-              : null
-          }
-          minDate={
-            formDataPassport.passport_issued_date
-              ? new Date(formDataPassport.passport_issued_date)
-              : null
-          }
-          onChange={(date) =>
-            handlePassportDateChange("passport_expiry_date", date)
-          }
-          disabled={!editModePassport || isLoading}
-          error={errors.passport_expiry_date}
-        />
+        /> */}
+
+        <div className="w-full">
+          <label htmlFor="passport_issued_date" className="text-black text-sm">
+            Passport Issued Date
+          </label>
+          <input
+            type="date"
+            id="passport_issued_date"
+            name="passport_issued_date"
+            disabled={!editModePassport || isLoading}
+            value={formDataPassport.passport_issued_date || ""}
+            onChange={(e) =>
+              handlePassportDateChange("passport_issued_date", e.target.value)
+            }
+            max={new Date().toISOString().split("T")[0]}
+            className="input-field rounded-md mt-4"
+          />
+        </div>
+        <div className="w-full">
+          <label htmlFor="passport_expiry_date" className="text-black text-sm">
+            Passport Expiry Date
+          </label>
+          <input
+            type="date"
+            id="passport_expiry_date"
+            name="passport_expiry_date"
+            disabled={!editModePassport || isLoading}
+            value={formDataPassport.passport_expiry_date || ""}
+            onChange={(e) =>
+              handlePassportDateChange("passport_expiry_date", e.target.value)
+            }
+            min={
+              formDataPassport.passport_issued_date
+                ? formDataPassport.passport_issued_date
+                : new Date().toISOString().split("T")[0]
+            }
+            className="input-field rounded-md mt-4"
+          />
+        </div>
         <PassportImageUpload
           imagePreview={imagePreview}
           passportImage={formDataPassport.passport_image}
@@ -218,14 +237,16 @@ const PassportInfoForm = ({ editModePassport, toggleEditMode }) => {
       )}
 
       {!buttonHidden && editModePassport && (
-        <div className="relative">
-          <button
+        <div className="relative flex justify-center items-center">
+          <Button
             type="submit"
-            className="w-full py-2 mt-4 bg-blue-500 text-white text-lg rounded-md hover:bg-blue-600 transition duration-300"
+            color={"#00529B"}
+            padding="12px"
+            width="100%"
             disabled={isLoading}
           >
             Save Passport Changes
-          </button>
+          </Button>
         </div>
       )}
 

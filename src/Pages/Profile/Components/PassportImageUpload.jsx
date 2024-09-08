@@ -40,7 +40,8 @@ const PassportImageUpload = ({
           />
         ) : passportImage ? (
           <img
-            src={`http://127.0.0.1:8000/${passportImage}`}
+            // src={`http://127.0.0.1:8000/${passportImage}`}
+            src={passportImage}
             alt="Passport"
             className="w-36 h-36 rounded-full shadow-2xl object-cover border-4 border-white group-hover:border-blue-500 transition duration-300 ease-in-out"
           />

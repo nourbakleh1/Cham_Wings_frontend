@@ -10,6 +10,8 @@ const initialState = {
   fetchPassportStatus: "idle",
   updatePassportStatus: "idle",
   error: null,
+  toastMessage: null,
+  toastType: null,
 };
 
 // Thunks
@@ -40,7 +42,7 @@ export const updateProfile = createAsyncThunk(
           formData.append(key, profile[key]);
         }
       }
-      
+
       if (profileImage) {
         formData.append("image", profileImage);
       }
@@ -52,7 +54,10 @@ export const updateProfile = createAsyncThunk(
       });
 
       if (response.data && response.data.success) {
-        return response.data.data;
+        return {
+          success: response.data.success,
+          data: response.data.data,
+        };
       } else {
         return rejectWithValue("Failed to update profile");
       }
@@ -66,6 +71,45 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+export const updateEmpProfile = createAsyncThunk(
+  "profile/updateEmpProfile",
+  async ({ profile, profileImage }, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      // Append all profile fields
+      for (const key in profile) {
+        if (profile.hasOwnProperty(key)) {
+          formData.append(key, profile[key]);
+        }
+      }
+
+      if (profileImage) {
+        formData.append("image", profileImage);
+      }
+
+      const response = await privateRequest.post("/api/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data && response.data.success) {
+        return {
+          success: response.data.success,
+          data: response.data.data,
+        };
+      } else {
+        return rejectWithValue("Failed to update profile");
+      }
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message ||
+          error.message ||
+          "Failed to update profile"
+      );
+    }
+  }
+);
 
 export const fetchPassportInfo = createAsyncThunk(
   "passportInfo/fetchPassportInfo",
@@ -73,9 +117,6 @@ export const fetchPassportInfo = createAsyncThunk(
     try {
       const state = getState();
       const passport_id = state?.profile?.passportInfo?.passport_id;
-      // if (!passport_id) {
-      //   throw new Error("Passport ID not found");
-      // }
       const response = await privateRequest.get(`/api/passports`);
       return response.data.data;
     } catch (error) {
@@ -120,7 +161,12 @@ export const updatePassportInfo = createAsyncThunk(
 const profileSlice = createSlice({
   name: "profile",
   initialState,
-  reducers: {},
+  reducers: {
+    clearToast: (state) => {
+      state.toastMessage = null;
+      state.toastType = null;
+    },
+  },
   extraReducers: (builder) => {
     // Handle fetchProfile actions
     builder
@@ -135,6 +181,8 @@ const profileSlice = createSlice({
       .addCase(fetchProfile.rejected, (state, action) => {
         state.fetchStatus = "failed";
         state.error = action.payload || "Failed to fetch profile";
+        state.toastMessage = state.error;
+        state.toastType = "error";
       });
 
     // Handle updateProfile actions
@@ -145,11 +193,34 @@ const profileSlice = createSlice({
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.updateStatus = "succeeded";
-        state.profile = action.payload;
+        state.profile = action.payload.data;
+        state.toastMessage = `${action.payload.success}: ${action.payload.data}`;
+        state.toastType = "success";
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.updateStatus = "failed";
         state.error = action.payload || "Failed to update profile";
+        state.toastMessage = state.error;
+        state.toastType = "error";
+      });
+
+    // Handle updateEmpProfile actions
+    builder
+      .addCase(updateEmpProfile.pending, (state) => {
+        state.updateStatus = "loading";
+        state.error = null;
+      })
+      .addCase(updateEmpProfile.fulfilled, (state, action) => {
+        state.updateStatus = "succeeded";
+        state.profile = action.payload.data;
+        state.toastMessage = `${action.payload.success}: ${action.payload.data}`;
+        state.toastType = "success";
+      })
+      .addCase(updateEmpProfile.rejected, (state, action) => {
+        state.updateStatus = "failed";
+        state.error = action.payload || "Failed to update profile";
+        state.toastMessage = state.error;
+        state.toastType = "error";
       });
 
     // Handle fetchPassportInfo actions
@@ -165,6 +236,8 @@ const profileSlice = createSlice({
       .addCase(fetchPassportInfo.rejected, (state, action) => {
         state.fetchPassportStatus = "failed";
         state.error = action.payload || "Failed to fetch passport info";
+        state.toastMessage = state.error;
+        state.toastType = "error";
       });
 
     // Handle updatePassportInfo actions
@@ -176,12 +249,17 @@ const profileSlice = createSlice({
       .addCase(updatePassportInfo.fulfilled, (state, action) => {
         state.updatePassportStatus = "succeeded";
         state.passportInfo = action.payload;
+        state.toastMessage = "Passport info updated successfully";
+        state.toastType = "success";
       })
       .addCase(updatePassportInfo.rejected, (state, action) => {
         state.updatePassportStatus = "failed";
         state.error = action.payload || "Failed to update passport info";
+        state.toastMessage = state.error;
+        state.toastType = "error";
       });
   },
 });
 
+export const { clearToast } = profileSlice.actions;
 export default profileSlice.reducer;

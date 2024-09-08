@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProfile,
@@ -12,6 +13,8 @@ import { validatePersonalInfo } from "../validation.js";
 import { countryList } from "../Countries/countryList.js";
 import LoadingSpinner from "../Loading/LoadingSpinner.jsx";
 import Toast from "../Toast/Toast.jsx";
+import Button from "../../../Components/Button/Button.jsx";
+import "../Profile.css";
 
 const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
   const dispatch = useDispatch();
@@ -39,6 +42,7 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
   const [toast, setToast] = useState(null);
   const [buttonHidden, setButtonHidden] = useState(false);
   const [profileImagePreview, setProfileImagePreview] = useState(null);
+  const API_BASE_URL = "http://127.0.0.1:8000";
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -67,7 +71,8 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
         image: profile.image ?? "",
       }));
       setProfileImagePreview(
-        profile.image ? `http://127.0.0.1:8000/${profile.image}` : null
+        // profile.image ? `${API_BASE_URL}/${profile.image}` : null
+        profile.image ? `${profile.image}` : null
       );
     }
   }, [profile]);
@@ -85,11 +90,11 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
     }));
   };
 
-  const handleDateChange = (name, date) => {
-    const formattedDate = date ? date.toISOString().split("T")[0] : "";
+  const handleInputDateChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: formattedDate,
+      [name]: value,
     }));
   };
 
@@ -145,7 +150,11 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
             message: "Profile updated successfully!",
             type: "success",
           });
-          toggleEditMode(false);
+          if (typeof toggleEditMode === "function") {
+            toggleEditMode(false);
+          } else {
+            console.error("toggleEditMode is not a function");
+          }
         })
         .catch((error) => {
           console.error("Update Failed:", error);
@@ -178,7 +187,8 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
             />
           ) : profile?.image ? (
             <img
-              src={`http://127.0.0.1:8000/${profile?.image}`}
+              // src={`${API_BASE_URL}/${profile.image}`}
+              src={profile.image}
               alt="Profile"
               className="w-36 h-36 rounded-full shadow-2xl object-cover border-4 border-white group-hover:border-blue-500 transition duration-300 ease-in-out"
             />
@@ -255,15 +265,21 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
             disabled={!editMode}
             error={errors.last_name}
           />
-          <DateInput
-            label="Date of Birth"
-            name="date_of_birth"
-            type="date_of_birth"
-            selected={formData.date_of_birth}
-            onChange={(date) => handleDateChange("date_of_birth", date)}
-            disabled={!editMode}
-            error={errors.date_of_birth}
-          />
+          <div className="w-full">
+            <label htmlFor="date_of_birth" className="text-black text-sm">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              id="date_of_birth"
+              name="date_of_birth"
+              disabled={!editMode}
+              value={formData.date_of_birth || ""}
+              onChange={handleInputDateChange}
+              max={new Date().toISOString().split("T")[0]}
+              className="input-field rounded-md mt-4"
+            />
+          </div>
           <TextInput
             label="Age"
             name="age"
@@ -292,6 +308,7 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
               </option>
               <option value="male">Male</option>
               <option value="female">Female</option>
+              <option value="other">Other</option>
             </select>
             {errors.gender && (
               <p className="text-red-500 text-sm">{errors.gender}</p>
@@ -344,7 +361,7 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
               searchable
               name="country_of_residence"
               disabled={!editMode}
-              className="w-full mt-5 text-black"
+              className="w-full mt-5 text-black custom-flags-select input-placeholder"
               id="country_of_residence"
             />
             {errors.country_of_residence && (
@@ -381,7 +398,7 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
             error={errors.email}
           />
         </div>
-        {!buttonHidden && editMode && (
+        {/* {!buttonHidden && editMode && (
           <button
             type="submit"
             className="w-full py-2 mt-4 bg-blue-500 text-white text-lg rounded-md hover:bg-blue-600 transition duration-300"
@@ -389,6 +406,19 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
           >
             Save Changes
           </button>
+        )} */}
+        {!buttonHidden && editMode && (
+          <div className="relative flex justify-center items-center">
+            <Button
+              type="submit"
+              color={"#00529B"}
+              padding="12px"
+              width="100%"
+              disabled={isLoading}
+            >
+              Save Changes
+            </Button>
+          </div>
         )}
       </div>
 
@@ -402,6 +432,11 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
       )}
     </form>
   );
+};
+
+PersonalInfoForm.propTypes = {
+  editMode: PropTypes.bool.isRequired,
+  toggleEditMode: PropTypes.func.isRequired,
 };
 
 export default PersonalInfoForm;
