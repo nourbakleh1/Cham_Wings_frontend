@@ -7,10 +7,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Responsibilty.css"
 import { useDispatch, useSelector } from 'react-redux'
-import { getAirports } from '../../../Redux/ApiSlices/airportSlice'
 import { searchFlights } from '../../../Redux/ApiSlices/flightSlice'
 import useDateFormat from '../../../utilities/useDateFormat'
 import { toast } from 'react-toastify'
+import { getAirports } from '../../../Redux/ApiSlices/employee/airportSlice'
 
 const Search_flight = () => {
     const dispatch=useDispatch();
@@ -194,7 +194,7 @@ const Search_flight = () => {
             dateFormat="yyyy-MM-dd"
             placeholderText="departure_time"
             minDate={new Date()}
-            maxDate={`${startDate.getFullYear()+1}-${startDate.getMonth()}-${startDate.getDate()}`}
+            maxDate={`${startDate?.getFullYear()+1}-${startDate?.getMonth()}-${startDate?.getDate()}`}
             
             
                  />
@@ -210,7 +210,7 @@ const Search_flight = () => {
             dateFormat="yyyy-MM-dd"
             placeholderText="arrival_time"
             minDate={startDate}
-            maxDate={`${startDate.getFullYear()+1}-${startDate.getMonth()}-${startDate.getDate()}`}
+            maxDate={`${startDate?.getFullYear()+1}-${startDate?.getMonth()}-${startDate?.getDate()}`}
             
                  /></>:null
            } 
