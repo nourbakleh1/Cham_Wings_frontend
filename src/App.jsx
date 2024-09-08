@@ -18,9 +18,8 @@ import ChairMan from './Pages/AboutUs/ChairMan';
 import Manage_Offer from './Pages/Employee/Components/Manage_Offer';
 import Manage_flights from './Pages/Employee/Manage_flights/Manage_flights';
 import Answer_Questions from './Pages/Employee/Components/Answer_Questions';
-import View_history from './Pages/Employee/Components/View_history';
+import View_history from './Pages/Admin/Components/View_history';
 import Visa_information from './Pages/Employee/Components/Visa_information';
-import Reservation from './Pages/Employee/Components/Reservation';
 import Admin from './Pages/Admin/Admin';
 import Manage_employees from './Pages/Admin/Components/Manage_employees/Manage_employees';
 import Manage_permissions from './Pages/Admin/Components/Manage_employees/Manage_permissions';
@@ -38,6 +37,9 @@ import Reset_password from './Pages/Reset_Password/Reset_password';
 import { useSelector } from 'react-redux';
 import Verify_email_pass from './Pages/Verify-email/Verify_email_pass';
 import ProfilePage from './Pages/Profile/profile';
+import Manage_airplanes from './Pages/Employee/Manage_airplanes/Manage_airplanes';
+import Manage_airports from './Pages/Employee/Manage_airports/Manage_airports';
+import Read_reservation from './Pages/Employee/Read_reservation/Read_reservation';
 
 const App = () => {
   const ref=useRef(null);
@@ -106,10 +108,11 @@ const App = () => {
                     <Route index element={role != 4 && role != undefined ?<Employee/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="manage-offers" element={role != 4 && role != undefined ?<Manage_Offer/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="chatbot_emp" element={role != 4 && role != undefined ?<Chatbot_emp/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
-                    <Route path="reservation" element={role != 4 && role != undefined ?<Reservation/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="reservation" element={role != 4 && role != undefined ?<Read_reservation/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="manage-flights" element={role != 4 && role != undefined ?<Manage_flights/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="manage-airplanes" element={role != 4 && role != undefined ?<Manage_airplanes/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="manage-airports" element={role != 4 && role != undefined ?<Manage_airports/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="answer-questions" element={role != 4 && role != undefined ?<Answer_Questions/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
-                    <Route path="view-history" element={role != 4 && role != undefined ?<View_history/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="visa-information" element={role != 4 && role != undefined ?<Visa_information/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     
                     </Route>
@@ -120,6 +123,8 @@ const App = () => {
                     <Route index element={role == 4 ? <Admin/>:<Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
                      <Route path='manage-employees' element={role == 4 ? <Manage_employees/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
                     <Route path='manage-permissions' element={role == 4 ? <Manage_permissions/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+                    <Route path="view-history" element={role == 4 ? <View_history/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+
                     
                     </Route>
 
