@@ -105,7 +105,8 @@ const Add_emp = ({setOpen2,open2}) => {
     <div className="relative  z-0 w-full mb-1 lg:mb-4 group">
   
   <input  onChange={(e)=>setImage(e.target.files[0])}  class="hidden w-full text-sm text-black  rounded-lg cursor-pointer bg-transparent outline-none" aria-describedby="user_avatar_help" id="user_avatar" type="file"/>
-  <div class=" font-bold text-primary_color   py-2  my-1 rounded-lg cursor-pointer bg-transparent outline-none border-b-4 border-dashed border-secoundary_color/50 shadow-sm shadow-primary_color  focus:outline-none" ><label htmlFor="user_avatar" className="flex justify-center gap-5 items-center"> {image ? image?.name :<Headings element={"p"}>upload your image</Headings>}<Headings element={"p"}></Headings> <FontAwesomeIcon icon={faImages}className='text-[25px] text-secoundary_color bg-white rounded-[50%]  ' /></label></div></div>
+  <div class=" font-bold text-primary_color   py-2  my-1 rounded-lg cursor-pointer bg-transparent outline-none border-b-4 border-dashed border-secoundary_color/50 shadow-sm shadow-primary_color  focus:outline-none" ><label htmlFor="user_avatar" className="flex justify-center gap-5 items-center"> {image ? image?.name :<Headings element={"p"}>upload your image</Headings>}<Headings element={"p"}></Headings> <FontAwesomeIcon icon={faImages}className='text-[25px] text-secoundary_color bg-white rounded-[50%]  ' /></label></div>
+  </div>
     </div>
   
 
