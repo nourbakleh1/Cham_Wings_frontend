@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Controller, EffectCoverflow, EffectFade, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import 'swiper/css/effect-fade';
-
+import Loading4 from '../../../Components/Loading/Loading4';
 import 'swiper/css';
 // import 'swiper/css/navigation';
 import "./Responsibilty.css"
@@ -21,39 +21,7 @@ const Slider = () => {
 
     useEffect(()=>{
       dispatch(getUserRecommendations(user?.data?.user?.user_id))
-    },[]);
-    const [image,setImage]=useState([
-      {
-        img:"/assets/images/Offers-images/offer-1.webp",
-      }
-      ,
-      {
-        img:"/assets/images/Offers-images/offer-2.webp",
-      }
-      ,{
-        img:"/assets/images/Offers-images/offer-3.webp",
-      },
-      {
-        img:"/assets/images/Offers-images/offer-4.webp",
-      },
-      {
-        img:"/assets/images/Offers-images/offer-5.webp",
-      }
-      ,
-      {
-        img:"/assets/images/Offers-images/offer-2.webp",
-      }
-      ,{
-        img:"/assets/images/Offers-images/offer-3.webp",
-      },
-      {
-        img:"/assets/images/Offers-images/offer-4.webp",
-      },
-      {
-        img:"/assets/images/Offers-images/offer-5.webp",
-      }
-    ])
-    
+    },[]); 
       const pagination = {
         clickable: true,
         renderBullet: function (index, className) {
@@ -70,30 +38,31 @@ const Slider = () => {
     </div>
     
 
-    <Swiper
+   {
+    isLoading ? <div className="lg:flex justify-center items-center hidden  w-full"><Loading4/></div>:
+   <Swiper
         effect={'coverflow'}
         grabCursor={true}
-        spaceBetween={50}
-
+        spaceBetween={100}
         centeredSlides={true}
         autoHeight={true}
         slidesPerView={3}
           coverflowEffect={{
-          rotate: 45,
-          stretch: 10,
-          depth: 250,
+          rotate: 0,
+          stretch: 20,
+          depth: 700,
           modifier: 1,
           slideShadows: true,
         }}
         pagination={pagination}
         modules={[EffectCoverflow, Pagination]}
-        className="mySwiper"
+        className="mySwiper hidden lg:flex lg:flex-col"
       >
-  {recommend?.recommendations?.map((el) => (
-    <SwiperSlide key={el?.flight_id} className='relative bg-black/15  flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
+  {recommend?.recommendations?.map((el,index) => (
+    <SwiperSlide key={index} className='relative bg-black/15 lg:!w-[320px] xl:!w-[370px] 2xl:!w-[450px] flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
     <p className='bg-secoundary_color/90 text-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{"Economy"}</p>
 
-      <img src={`http://127.0.0.1:8000${el?.image}`} />
+     <img src={`http://127.0.0.1:8000${el?.image}`}  className='w-full'/>
       <div className='flex  flex-col w-full'>
       <div className='flex justify-center items-center gap-3'>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faHashtag} />{el?.flight_number}</p>
@@ -105,7 +74,32 @@ const Slider = () => {
       </div>
     </SwiperSlide>
   ))}
-</Swiper>
+  
+</Swiper>}
+{
+  isLoading ? <div className="flex justify-center lg:hidden items-center w-full"><Loading4/></div>:
+  <div className='flex w-full justify-center lg:hidden  gap-5 items-center flex-col p-2'>
+      {
+        recommend?.recommendations?.map((el,index) => (
+    <div key={index} className='relative bg-black/15 !w-[180px] sm:!w-[220px] md:!w-[280px]  flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
+    <p className='bg-secoundary_color/90 text-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{"Economy"}</p>
+
+      <img src={`http://127.0.0.1:8000${el?.image}`}  className='w-full'/>
+      <div className='flex  flex-col w-full'>
+      <div className='flex justify-center items-center gap-3'>
+        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faHashtag} />{el?.flight_number}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{el?.price}$</p>
+        </div>
+        <div className='flex justify-center items-center gap-3'>
+        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>{el?.departure_date}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneArrival} className='px-2 text-[20px] text-secoundary_color' />{el?.arrival_date}</p></div>
+      </div>
+    </div>
+  ))
+      }
+    </div>
+}
+
    </div>
 
   )
