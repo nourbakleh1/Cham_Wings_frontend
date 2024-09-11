@@ -44,7 +44,7 @@
     }
     
     .Rota form:hover{
-        transform: rotateX(3deg)   translateZ(-70px);
+        transform: rotateX(1deg)   translateZ(-70px);
     }
     
 }

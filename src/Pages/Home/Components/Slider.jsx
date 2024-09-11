@@ -39,7 +39,7 @@ const Slider = () => {
     
 
    {
-    isLoading ? <div className="lg:flex justify-center items-center hidden  w-full"><Loading4/></div>:
+    isLoading ? <div className="xl:flex justify-center items-center hidden  w-full"><Loading4/></div>:
    <Swiper
         effect={'coverflow'}
         grabCursor={true}
@@ -56,7 +56,7 @@ const Slider = () => {
         }}
         pagination={pagination}
         modules={[EffectCoverflow, Pagination]}
-        className="mySwiper hidden lg:flex lg:flex-col"
+        className="mySwiper hidden xl:flex lg:flex-col"
       >
   {recommend?.recommendations?.map((el,index) => (
     <SwiperSlide key={index} className='relative bg-black/15 lg:!w-[320px] xl:!w-[370px] 2xl:!w-[450px] flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
@@ -77,8 +77,8 @@ const Slider = () => {
   
 </Swiper>}
 {
-  isLoading ? <div className="flex justify-center lg:hidden items-center w-full"><Loading4/></div>:
-  <div className='flex w-full justify-center lg:hidden  gap-5 items-center flex-col p-2'>
+  isLoading ? <div className="flex justify-center xl:hidden items-center w-full"><Loading4/></div>:
+  <div className='flex w-[80%] mx-auto justify-evenly xl:hidden  gap-5 items-center flex-wrap  p-2'>
       {
         recommend?.recommendations?.map((el,index) => (
     <div key={index} className='relative bg-black/15 !w-[180px] sm:!w-[220px] md:!w-[280px]  flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
@@ -107,8 +107,4 @@ const Slider = () => {
 
 export default Slider
 
-// {isLoading ? <Loading1/>: recommend?.recommendations?.map((image) => (
-//   <SwiperSlide key={recommend?.flight_id}>
-//     <img src={`http://127.0.0.1:8000${recommend?.image}`}/>
-//   </SwiperSlide>
-// ))}
+

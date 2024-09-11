@@ -75,7 +75,7 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
               </div>
             </div>
             <div className="text-center sm:text-right">
-              <div className="font-bold text-xl">{flight.arrivalAirport}</div>
+              <div className="font-bold text-xl">{flight.arrival_airport_name}</div>
               <div className="text-gray-600">
                 {flight.arrivalTime}
               </div>

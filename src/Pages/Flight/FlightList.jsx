@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchFlights,
-  sendSelectedFlights,
-} from "../../Redux/ApiSlices/flightSlice.js";
+import {sendSelectedFlights} from "../../Redux/ApiSlices/flightSlice.js";
 import FlightCard from "./components/FlightCard";
 import { FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -14,39 +11,35 @@ import "./style.css";
 const FlightList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const flights = useSelector((state) => state.flights.list);
   const status = useSelector((state) => state.flights.status);
-
+  const {resultSearch:flights}=useSelector(state=>state.flights);
   const [selectedOutbound, setSelectedOutbound] = useState(null);
   const [selectedInbound, setSelectedInbound] = useState(null);
   const [selectedDepartureDate, setSelectedDepartureDate] = useState(null);
   const [selectedArrivalDate, setSelectedArrivalDate] = useState(null);
   const [animationClass, setAnimationClass] = useState("");
-  const [departureAirport, setDepartureAirport] = useState("");
-  const [arrivalAirport, setArrivalAirport] = useState("");
+  const [departure_airport_name, setDeparture_airport] = useState("");
+  const [arrival_airport_name, setArrivalAirport] = useState("");
+  console.log(flights)
+  
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchFlights());
-    }
-  }, [status, dispatch]);
-
-  useEffect(() => {
-    if (status === "succeeded" && flights.length > 0) {
-      const outboundFlights = flights.filter(
-        (flight) => flight.type === "outbound"
+    if (status === "succeeded" && flights?.departure_flights?.length > 0) {
+      console.log("first")
+      const outboundFlights = flights?.departure_flights?.filter(
+        (flight) => flight.trip_type === "outbound"
       );
-      const inboundFlights = flights.filter(
-        (flight) => flight.type === "inbound"
+      const inboundFlights = flights?.departure_flights?.filter(
+        (flight) => flight.trip_type === "inbound"
       );
       const outboundDates = getUniqueDates(outboundFlights);
       const inboundDates = getUniqueDates(inboundFlights);
 
       if (outboundFlights.length > 0) {
-        setDepartureAirport(outboundFlights[0].departureAirport);
+        setDeparture_airport(outboundFlights[0].departure_airport_name);
       }
       if (inboundFlights.length > 0) {
-        setArrivalAirport(outboundFlights[0].arrivalAirport);
+        setArrivalAirport(outboundFlights[0].arrival_airport_name);
       }
 
       if (outboundDates.length > 0) {
@@ -54,7 +47,7 @@ const FlightList = () => {
         setSelectedDepartureDate(firstDate);
 
         const firstAvailableOutboundFlight = outboundFlights.find(
-          (flight) => flight.departureDate === firstDate
+          (flight) => flight.departure_date === firstDate
         );
         if (firstAvailableOutboundFlight) {
           setSelectedOutbound(firstAvailableOutboundFlight);
@@ -66,7 +59,7 @@ const FlightList = () => {
         setSelectedArrivalDate(firstDate);
 
         const firstAvailableInboundFlight = inboundFlights.find(
-          (flight) => flight.departureDate === firstDate
+          (flight) => flight.departure_date === firstDate
         );
         if (firstAvailableInboundFlight) {
           setSelectedInbound(firstAvailableInboundFlight);
@@ -87,20 +80,20 @@ const FlightList = () => {
     selectedArrivalDate,
   ]);
 
-  const handleFlightSelect = (flight, type) => {
-    if (type === "outbound") {
+  const handleFlightSelect = (flight, trip_type) => {
+    if (trip_type === "outbound") {
       setSelectedOutbound(flight);
       setAnimationClass("animate-slide-out");
 
       setTimeout(() => {
-        const inboundFlights = flights.filter((f) => f.type === "inbound");
+        const inboundFlights = flights?.filter((f) => f.trip_type === "inbound");
         const availableInboundDates = getUniqueDates(inboundFlights);
         if (availableInboundDates.length > 0) {
           const firstAvailableInboundDate = availableInboundDates[0];
           setSelectedArrivalDate(firstAvailableInboundDate);
 
           const firstAvailableInboundFlight = inboundFlights.find(
-            (f) => f.departureDate === firstAvailableInboundDate
+            (f) => f.departure_date === firstAvailableInboundDate
           );
           setSelectedInbound(firstAvailableInboundFlight);
         }
@@ -113,8 +106,8 @@ const FlightList = () => {
   const handleDepartureDateClick = (date) => {
     setSelectedDepartureDate(date);
 
-    const newOutboundFlights = flights.filter(
-      (flight) => flight.type === "outbound" && flight.departureDate === date
+    const newOutboundFlights = flights?.departure_flights?.filter(
+      (flight) => flight.trip_type === "outbound" && flight.departure_date === date
     );
 
     if (!selectedOutbound && newOutboundFlights.length > 0) {
@@ -125,8 +118,8 @@ const FlightList = () => {
   const handleArrivalDateClick = (date) => {
     setSelectedArrivalDate(date);
 
-    const newInboundFlights = flights.filter(
-      (flight) => flight.type === "inbound" && flight.departureDate === date
+    const newInboundFlights = flights?.departure_flights?.filter(
+      (flight) => flight.trip_type === "inbound" && flight.departure_date === date
     );
 
     if (!selectedInbound && newInboundFlights.length > 0) {
@@ -135,13 +128,13 @@ const FlightList = () => {
   };
 
   const getUniqueDates = (flights) => {
-    const dates = flights.map((flight) => flight.departureDate);
+    const dates = flights?.departure_flights?.map((flight) => flight.departure_date);
     return [...new Set(dates)];
   };
 
   const handleContinue = async () => {
-    const inboundFlights = flights.filter(
-      (flight) => flight.type === "inbound"
+    const inboundFlights = flights?.departure_flights?.filter(
+      (flight) => flight.trip_type === "inbound"
     );
     if (!selectedOutbound || (inboundFlights.length > 0 && !selectedInbound)) {
       toast.error(
@@ -163,20 +156,20 @@ const FlightList = () => {
     }
   };
 
-  const outboundFlights = flights.filter(
-    (flight) => flight.type === "outbound"
+  const outboundFlights = flights?.departure_flights?.filter(
+    (flight) => flight.trip_type === "outbound"
   );
-  const inboundFlights = flights.filter((flight) => flight.type === "inbound");
+  const inboundFlights = flights?.departure_flights?.filter((flight) => flight.trip_type === "inbound");
 
   const filteredOutboundFlights = selectedDepartureDate
-    ? outboundFlights.filter(
-        (flight) => flight.departureDate === selectedDepartureDate
+    ? outboundFlights?.departure_flights?.filter(
+        (flight) => flight.departure_date === selectedDepartureDate
       )
     : outboundFlights;
 
   const filteredInboundFlights = selectedArrivalDate
-    ? inboundFlights.filter(
-        (flight) => flight.departureDate === selectedArrivalDate
+    ? inboundFlights?.departure_flights?.filter(
+        (flight) => flight.departure_date === selectedArrivalDate
       )
     : inboundFlights;
 
@@ -324,21 +317,21 @@ const FlightList = () => {
               size={20}
             />
             <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
-              Departure Airport - {departureAirport}
+              Departure Airport - {departure_airport_name}
             </h3>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
             {selectedDepartureDate}
           </h3>
-          {filteredOutboundFlights.map((flight) => (
+          {/* {filteredOutboundFlights.map((flight) => (
             <FlightCard
               key={flight.id}
               flight={flight}
               isSelected={selectedOutbound && selectedOutbound.id === flight.id}
               onSelect={() => handleFlightSelect(flight, "outbound")}
             />
-          ))}
+          ))} */}
         </section>
       )}
 
@@ -348,21 +341,21 @@ const FlightList = () => {
             <div className="flex-1 border-t border-gray-300"></div>
             <FaPlaneArrival className="text-green-600 mx-2 sm:mx-4" size={20} />
             <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
-              Arrival Airport - {arrivalAirport}
+              Arrival Airport - {arrival_airport_name}
             </h3>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
             {selectedArrivalDate}
           </h3>
-          {filteredInboundFlights.map((flight) => (
+          {/* {filteredInboundFlights.map((flight) => (
             <FlightCard
               key={flight.id}
               flight={flight}
               isSelected={selectedInbound && selectedInbound.id === flight.id}
               onSelect={() => handleFlightSelect(flight, "inbound")}
             />
-          ))}
+          ))} */}
         </section>
       )}
 

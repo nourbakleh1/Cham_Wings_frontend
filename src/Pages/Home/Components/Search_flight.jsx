@@ -11,11 +11,13 @@ import { searchFlights } from '../../../Redux/ApiSlices/flightSlice'
 import useDateFormat from '../../../utilities/useDateFormat'
 import { toast } from 'react-toastify'
 import { getAirports } from '../../../Redux/ApiSlices/employee/airportSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Search_flight = () => {
     const dispatch=useDispatch();
     const{All_airports}=useSelector(state=>state.airports);
-    const{resultSearch}=useSelector(state=>state.flights);
+    const navigate=useNavigate()
+    
   
     // state 
     const [startDate, setStartDate] = useState(new Date());
@@ -69,13 +71,17 @@ const Search_flight = () => {
             data.return_date=useDateFormat(startDate_return)
         }
         console.log("data",data)
-        dispatch((searchFlights(data)))
+        dispatch((searchFlights(data))).unwrap().then((res)=>{
+            navigate('/flight');
+        }).catch((rej)=>{
+            return toast.error(rej?.response?.data?.message)
+        })
     }
 
   return (
     <div className='Rota'>
     <form onSubmit={handelSearch}>
-    <section className='h-[1100px] sm:h-[700px] rounded-2xl lg:h-[450px] xl:h-[420px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1200px] p-5 bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px]  xl:translate-y-[-160px] shadow-black_color/50 shadow-xl '>
+    <section className='h-[1100px] sm:h-[700px]  lg:h-[450px] xl:h-[420px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1200px] p-5 bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px]  xl:translate-y-[-160px] shadow-black_color/50 shadow-xl '>
         <div className='border-solid border-b-2 bg-white/50 border-primary_color flex justify-center items-center p-2 rounded-sm '>
         <FontAwesomeIcon icon={faPlane} className='text-secoundary_color px-3 text-[20px] '/>
             <span className='font-bold'>Flights</span>
