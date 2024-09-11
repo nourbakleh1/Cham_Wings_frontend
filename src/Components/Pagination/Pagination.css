@@ -46,12 +46,11 @@
     box-shadow: 0px 0px 2px 0px #000;
     border-radius: 10px;
 }
-.pageActive{
+.pageActive,.active_page{
     /* background-color: #ae8a3bb1; */
     border-radius: 10px;
     padding: 4px;
     box-shadow: 0 0 5px 5px #ae8a3b51;
-   
 }
 .scrollll::-webkit-scrollbar{
     width: 0 !important;
@@ -63,3 +62,4 @@
 .conainerPAGE::-webkit-scrollbar{
     width: 0;
 }
+

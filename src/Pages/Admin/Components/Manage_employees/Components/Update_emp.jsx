@@ -22,15 +22,11 @@ const Update_emp = ({isLoading,open,setOpen,setOpen4,setSearch,page,image,setPas
         e.preventDefault();
         const formdata=new FormData();
 
-        // if(perm.length == []){
-        //     return toast.error("Permissions is required")
-        // }
+       
         if(name.trim() == ""){
             return toast.error("Name is required")
         }
-        // if(!image){
-        //     return toast.error("Image is required")
-        // }
+        
         if(image){
             formdata.append("image",image);
         }

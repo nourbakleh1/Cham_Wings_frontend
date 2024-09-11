@@ -1,4 +1,4 @@
-import { faBox, faChartPie, faChevronLeft, faCircleInfo, faCircleMinus, faFileCirclePlus, faFilePdf, faFilePen, faInfo, faListCheck, faMessage, faMinus, faNewspaper, faPeopleArrows, faPersonMilitaryPointing, faPersonWalkingArrowLoopLeft, faPlane, faPlus, faRightFromBracket, faRightLeft, faWrench } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faChartColumn, faChartPie, faChevronLeft, faCircleInfo, faCircleMinus, faFileCirclePlus, faFilePdf, faFilePen, faHatWizard, faInfo, faListCheck, faMessage, faMinus, faNewspaper, faPeopleArrows, faPersonMilitaryPointing, faPersonWalkingArrowLoopLeft, faPlane, faPlus, faRightFromBracket, faRightLeft, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deletePdf, getpdfs, uploadPdf } from '../../Redux/ApiSlices/employee/chatbotSlice';
 import { toast } from 'react-toastify';
 import Loading1 from '../Loading/Loading1';
-
+import { logout } from '../../Redux/ApiSlices/authSlice';
 const Sidbar = (displaySidebar,setDisplaySidebar) => {
    const dispatch=useDispatch();
    const {Pdf_file,Pdf_file_sorted,isLoading,error}=useSelector((state)=>{return state.chatbot});
@@ -30,9 +30,12 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
       document.getElementById("default-sidebar").classList.add("-translate-x-[110%]");
     }
 
-    useEffect(()=>{
+   const GetPdf=()=>{
       dispatch(getpdfs());
-    },[]);
+
+   }
+
+    
 
     const Loading= <Loading1/>
 
@@ -95,10 +98,10 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
                     <FontAwesomeIcon icon={faWrench} />
                    
                   <span className="flex-1  ms-3 text-left rtl:text-right whitespace-nowrap  text-[11px] md:text-[14px]">Emp chatBot files</span>
-                  <svg onClick={()=>setOpenpdf(!openpdf)}  className="mr-2 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                  <svg onClick={()=>{setOpenpdf(!openpdf);GetPdf()}}  className="mr-2 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
                   </svg>
-                  <FontAwesomeIcon icon={faPlus} onClick={()=>{setOpen(!open);dispatch(getpdfs())}}/>
+                  <FontAwesomeIcon icon={faPlus} onClick={()=>{setOpen(!open);}}/>
                   </NavLink>
                   
                   
@@ -179,17 +182,10 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
 
             </div>
            </Modal>
-        
-         <li>
-            <NavLink to="/dashboard/employee/manage-offers" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <FontAwesomeIcon icon={faListCheck} />
-               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage offers</span>
-            </NavLink>
-         </li>
-         <li>
+           <li>
             <NavLink to="/dashboard/employee/reservation" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faBox} />
-               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">view reservations</span>
+               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">reservations</span>
             </NavLink>
          </li>
          <li>
@@ -200,17 +196,23 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
             </NavLink>
          </li>
          <li>
-            <NavLink to="/dashboard/employee/manage-flights" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/dashboard/employee/manage-airplanes" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faPlane} />
                
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage airplanes</span>
             </NavLink>
          </li>
          <li>
-            <NavLink to="/dashboard/employee/manage-flights" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <NavLink to="/dashboard/employee/manage-airports" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faPeopleArrows} />
                
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage airports</span>
+            </NavLink>
+         </li>
+         <li>
+            <NavLink to="/dashboard/employee/manage-offers" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faChartColumn} />
+               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">manage offers</span>
             </NavLink>
          </li>
          <li>
@@ -219,12 +221,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">answer the questions</span>
             </NavLink>
          </li>
-         <li>
-            <NavLink to="/dashboard/employee/view-history" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <FontAwesomeIcon icon={faNewspaper} />
-               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">view modication history</span>
-            </NavLink>
-         </li>
+         
          <li>
             <NavLink to="/dashboard/employee/visa-information" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faCircleInfo} />
@@ -232,10 +229,10 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
             </NavLink>
          </li>
          <li>
-            <NavLink to="/" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <button   onClick={()=>dispatch(logout()).unwrap().then((res)=>toast.success(res?.data))} className="flex items-center w-full text-left p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faRightFromBracket} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">sign out</span>
-            </NavLink>
+            </button>
          </li>
       </ul>
    </div>

@@ -12,7 +12,7 @@ const LargeModal = ({open,setOpen,children}) => {
         
         <div className="animate__animated animate__zoomInDown removeScroll fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] h-[80%]  overflow-y-scroll xl:h-[82%] w-[80%]  mt-[100px] bg-white  shadow-2xl shadow-black">
             
-            <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <div className="flex items-center justify-between p-2   rounded-t ">
                 <h3 className="text-xl font-medium text-gray-900 dark:text-white">
                   
                 </h3>

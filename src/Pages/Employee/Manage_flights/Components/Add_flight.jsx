@@ -4,13 +4,11 @@ import { toast } from 'react-toastify';
 import LargeModal from '../../../../Components/Modal/LargeModal';
 import Headings from '../../../../Components/Headings/Headings';
 import Button from '../../../../Components/Button/Button';
-import { getAirplanes } from '../../../../Redux/ApiSlices/employee/ManageAirplanesSlice';
-import { getAirports } from '../../../../Redux/ApiSlices/airportSlice';
 import { AddFlight, getFlights } from '../../../../Redux/ApiSlices/employee/manageFlightsSlice';
 // import "./../Manage_emp.css"
 
 
-const Add_Flight = ({setOpen2,open2,airplanes,All_airports}) => {
+const Add_Flight = ({setOpen2,open2,airplanes,All_airports,setSearch}) => {
     const dispatch = useDispatch();
     
 
@@ -63,6 +61,7 @@ const Add_Flight = ({setOpen2,open2,airplanes,All_airports}) => {
        
        
         dispatch(AddFlight(data)).unwrap().then((res)=>{
+            setSearch("");
             setOpen2(!open2);
             setAirplane_id(null);
             setArrival_airport(null);

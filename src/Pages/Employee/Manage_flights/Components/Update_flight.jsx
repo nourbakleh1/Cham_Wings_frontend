@@ -6,14 +6,12 @@ import LargeModal from '../../../../Components/Modal/LargeModal';
 import Headings from '../../../../Components/Headings/Headings';
 import Loading1 from '../../../../Components/Loading/Loading1';
 import Button from '../../../../Components/Button/Button';
-import { getAirplanes } from '../../../../Redux/ApiSlices/employee/ManageAirplanesSlice';
-import { getAirports } from '../../../../Redux/ApiSlices/airportSlice';
 import { getFlights, updateFlights } from '../../../../Redux/ApiSlices/employee/manageFlightsSlice';
 
 
 
 const Update_flight = ({airplanes,All_airports,isLoading,open,setOpen,page,departure_airport,setDeparture_airport,arrival_airport,setArrival_airport,arrival_terminal,setArrival_terminal,departure_terminal,
-    setDeparture_terminal,miles,setMiles,airplane_id,setAirplane_id,flight_number,setFlight_number,price,setPrice,flight_info}) => {
+    setDeparture_terminal,miles,setMiles,airplane_id,setAirplane_id,flight_number,setFlight_number,price,setPrice,flight_info,setSearch}) => {
         const dispatch = useDispatch();
        
         
@@ -59,6 +57,7 @@ const Update_flight = ({airplanes,All_airports,isLoading,open,setOpen,page,depar
         const flight = {id:flight_info?.data.flight_id,data}
 
         dispatch(updateFlights(flight)).unwrap().then((res)=>{
+            setSearch("");
             setAirplane_id(null);
             setArrival_airport(null);
             setDeparture_airport(null);

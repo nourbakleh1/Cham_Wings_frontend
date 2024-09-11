@@ -3,30 +3,7 @@ import { mockFlights } from "../../../src/Pages/Flight/mockFlightData";
 import { publicRequest } from "../../lib/publicRequest";
 import { privateRequest } from "../../lib/privateRequest";
 
-// Thunk for fetching flight data from the API
-export const fetchFlights = createAsyncThunk(
-  "flights/fetchFlights",
-  async (_, { rejectWithValue }) => {
-    try {
-      console.log("Fetching flights from /api/flight...");
-      const response = await privateRequest.get("/api/flight-search");
-      console.log("Fetched flights data:", response.data.data);
-      return response.data.data; // Assuming the response structure is { data: { data: [] } }
-    } catch (error) {
-      console.error(
-        "Error fetching flights:",
-        error.response?.data?.message || error.message
-      );
-      return rejectWithValue(
-        error.response?.data?.message ||
-          error.message ||
-          "Failed to fetch flights"
-      );
-    }
-  }
-);
 
-// Thunk for sending selected flights data to the API
 export const sendSelectedFlights = createAsyncThunk(
   "flights/sendSelectedFlights",
   async (selectedFlights, { rejectWithValue }) => {
@@ -98,23 +75,6 @@ const flightSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Handle the fetchFlights thunk
-      .addCase(fetchFlights.pending, (state) => {
-        console.log("fetchFlights pending...");
-        state.status = "loading";
-        state.error = null;
-      })
-      .addCase(fetchFlights.fulfilled, (state, action) => {
-        console.log("fetchFlights succeeded:", action.payload);
-        state.status = "succeeded";
-        state.list = action.payload;
-      })
-      .addCase(fetchFlights.rejected, (state, action) => {
-        console.error("fetchFlights failed:", action.payload);
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      // Handle the sendSelectedFlights thunk
       .addCase(sendSelectedFlights.pending, (state) => {
         console.log("sendSelectedFlights pending...");
         state.status = "sending";
@@ -135,7 +95,7 @@ const flightSlice = createSlice({
       })
       .addCase(searchFlights.fulfilled, (state,action) => {
         state.isLoading=false;
-        state.resultSearch=action.payload
+        state.resultSearch=action.payload;
       })
       .addCase(searchFlights.rejected, (state, action) => {
         state.isLoading=false

@@ -8,8 +8,10 @@ import statisticsSlice from "./ApiSlices/statisticsSlice";
 import chatbotSlice from "./ApiSlices/employee/chatbotSlice";
 import adminSlice from "./ApiSlices/admin/adminSlice";
 import manageFlightsSlice from "./ApiSlices/employee/manageFlightsSlice";
-import airportSlice from "./ApiSlices/airportSlice";
+import airportSlice from "./ApiSlices/employee/airportSlice";
 import ManageAirplanesSlice from "./ApiSlices/employee/ManageAirplanesSlice";
+import readReservationSlice from "./ApiSlices/employee/readReservationSlice";
+import sessionStorage from 'redux-persist/lib/storage/session'
 
 
 const persistAuthConfig = {
@@ -17,19 +19,26 @@ const persistAuthConfig = {
   storage,
   whitelist: ["user"],
 };
+const persistFlightConfig = {
+  key: "flight",
+  storage:sessionStorage,
+  whitelist: ["resultSearch"],
+};
 
 const persistedAuthReducer = persistReducer(persistAuthConfig, authSlice);
+const persistedFlightReducer = persistReducer(persistFlightConfig, flightSlice);
 
 const rootReducer = combineReducers({
   auth: persistedAuthReducer,
   profile: profileSlice,
-  flights: flightSlice,
+  flights: persistedFlightReducer,
   statistics:statisticsSlice,
   chatbot:chatbotSlice,
   admin:adminSlice,
   manage_flights:manageFlightsSlice,
   airports:airportSlice,
-  airplanes:ManageAirplanesSlice
+  airplanes:ManageAirplanesSlice,
+  read_reservation:readReservationSlice
 });
 
 export const store = configureStore({
