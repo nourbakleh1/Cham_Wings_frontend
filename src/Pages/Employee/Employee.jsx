@@ -224,137 +224,36 @@ const chartData4 = {
     
   return (
     <div className='pt-[80px] w-full  lg:w-[calc(100%-360px)] ml-0 sm:ml-auto p-5 mt-3'>
-        {/* <div className="p-4 sm:ml-64 pt-[80px]">
-   <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-      <div className="grid grid-cols-3 gap-4 mb-4">
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-      </div>
-      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p className="text-2xl text-gray-400 dark:text-gray-500">
-            <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
-      </div>
-      <div className="grid grid-cols-2 gap-4 mb-4">
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-      </div>
-      <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p className="text-2xl text-gray-400 dark:text-gray-500">
-            <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-               <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-      </div>
-   </div>
-        </div> */}
         <div className='flex justify-evenly flex-wrap  gap-[40px] sm:gap-5'>
-          <div className='w-[210px] sm:w-[300px] md:w-[300px] lg:w-[340px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <PieChart chartData={chartData} />
 
           </div>
-          <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <LineChart chartData={chartData1}/>
 
           </div>
-          <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <BarChart chartData={chartData2}/>
 
           </div>
-          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <PolarAreaChart chartData={chartData3}/>
 
           </div>
-          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <DoughnutCharts chartData={chartData4}/>
 
           </div>
-          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <RadarChart chartData={chartData5}/>
 
           </div>
-          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <RadarChart chartData={chartData6}/>
 
           </div>
-          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[400px] shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <RadarChart chartData={chartData7}/>
 
           </div>
