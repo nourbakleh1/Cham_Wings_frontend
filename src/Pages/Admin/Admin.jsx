@@ -157,7 +157,7 @@ datasets: [
    <div className='pt-[80px] w-full  lg:w-[calc(100%-360px)] ml-0 sm:ml-auto p-5 mt-3'>
         
         <div className='flex justify-evenly flex-wrap  gap-[40px] sm:gap-5'>
-          <div className='w-[210px] sm:w-[300px] md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-1 shadow-secoundary_color/80'>
+          <div className='w-[210px] sm:w-[270px] md:w-[300px] lg:w-[380px] shadow-lg rounded-lg p-1 shadow-secoundary_color/80'>
           <PieChart chartData={chartData} />
 
           </div>

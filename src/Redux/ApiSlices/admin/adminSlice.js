@@ -139,7 +139,28 @@ export const delete_Roles_Employee=createAsyncThunk("admin/delete_Roles_Employee
         return rejectWithValue(error)
     }
 });
+export const getLogs=createAsyncThunk("admin/getLogs",async(id,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
 
+    try{
+        const res=await privateRequest.get(`/api/logs?page=${id}`);
+        return res.data
+    }
+    catch(error){
+        return rejectWithValue(error)
+    }
+});
+export const getLogs_search=createAsyncThunk("admin/getLogs_search",async(search,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+
+    try{
+        const res=await privateRequest.get(`/api/logs?search=${search}`);
+        return res.data
+    }
+    catch(error){
+        return rejectWithValue(error)
+    }
+});
 const initialState={
     employees:[],
     searchEmp:[],
@@ -148,7 +169,9 @@ const initialState={
     isLoading:false,
     isLoading_get:false,
     isLoading_search:false,
-    error:null
+    error:null,
+    logs:null,
+    logs_Search:null,
 }
 
 
@@ -276,7 +299,28 @@ const adminSlice=createSlice({
             state.isLoading = false;
             state.error=action.payload
         })
-        
+         .addCase(getLogs.pending,(state)=>{
+            state.isLoading = true;
+        })
+        .addCase(getLogs.fulfilled,(state,action)=>{
+            state.isLoading = false;
+            state.logs=action.payload
+        })
+        .addCase(getLogs.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.error=action.payload
+        })
+        .addCase(getLogs_search.pending,(state)=>{
+            state.isLoading_search = true;
+        })
+        .addCase(getLogs_search.fulfilled,(state,action)=>{
+            state.isLoading_search = false;
+            state.logs_Search=action.payload
+        })
+        .addCase(getLogs_search.rejected,(state,action)=>{
+            state.isLoading_search = false;
+            state.error=action.payload
+        })
         
         
 
