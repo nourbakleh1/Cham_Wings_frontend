@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import Headings from '../../../../Components/Headings/Headings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faChevronDown, faChevronRight, faCircleMinus, faCirclePlus, faEye, faHandHoldingMedical, faHandshake, faHandshakeSlash, faHeartCircleMinus, faImage, faImages, faPersonBooth, faPersonCirclePlus, faPersonCircleQuestion, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faChevronDown, faChevronRight, faCircleMinus, faCirclePlus, faEye, faHandHoldingMedical, faHandshake, faHandshakeSlash, faHeartCircleMinus, faImage, faImages, faMicrophone, faPersonBooth, faPersonCirclePlus, faPersonCircleQuestion, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../../../Components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { activateEmployee, add_Roles_Employee, AddEmployee, delete_Roles_Employee, deleteEmployee, getEmployees, getEmployees_info, getRoles, SearchEmployees, updateEmployee } from '../../../../Redux/ApiSlices/admin/adminSlice';
@@ -15,6 +15,7 @@ import LargeModal from '../../../../Components/Modal/LargeModal';
 import Modal from '../../../../Components/Modal/Modal';
 import "./Manage_emp.css"
 import CustomPagination from '../../../../Components/Pagination/CustomPagination';
+import SpeachToText from '../../../../Components/Voice_Modal/SpeachToText';
 
 
 const Manage_permissions = () => {
@@ -33,6 +34,7 @@ const Manage_permissions = () => {
     const [open2,setOpen2]=useState(false);
     const [open3,setOpen3]=useState(false);
     const [open4,setOpen4]=useState(false);
+    const [open5,setOpen5]=useState(false);
 
 
     // state save convert
@@ -70,6 +72,7 @@ const Manage_permissions = () => {
         if(window.sessionStorage.getItem("page")){
             window.sessionStorage.removeItem("page")
         }
+        setSearch("")
       }
     },[]);
     const handelGetRoles=()=>{
@@ -174,8 +177,11 @@ const Manage_permissions = () => {
     <div className='relative flex flex-col justify-start items-start mt-[78px] lg:mt-[85px] h-auto w-full  lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
         
        
-        <LargeModal open={open1} setOpen={setOpen1}>
-        <div className='w-full mx-auto flex justify-center items-center gap-3 flex-col'><Headings element={"h1"} >delete permissions</Headings>
+        <Modal open={open1} setOpen={setOpen1}>
+        <div className='w-full mx-auto flex justify-center items-center gap-3 flex-col'>
+        <div className=' w-fit mx-auto mb-3'>
+            <Headings element={"h3"} color='#00529B' >delete permissions</Headings>
+            </div>
          <div className="flex justify-center items-start gap-5 flex-col">
      
   
@@ -184,7 +190,7 @@ const Manage_permissions = () => {
         :<div className='w-full relative mb-2 flex justify-start items-start flex-col gap-1'>
     <div className=' w-full text-center py-1 rounded-md border-b-4 border-solid border-primary_color text-gray_color font-bold'>Employee permissions</div>
        
-       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[60%] mx-auto items-center gap-5 rounded-xl p-5 shadow-md shadow-black_color/90'>
+       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[100%] mx-auto items-center gap-3  p-1 shadow-md shadow-black_color/20'>
        {
         isLoading?<div className='flex justify-center items-center w-[100%]'><Loading1/></div> : attr?.map((role)=>{
             {/* if(role.role_id == 4 || role.role_id == 13 || role.role_id == 14){
@@ -197,7 +203,7 @@ const Manage_permissions = () => {
               return;
             } */}
             return (
-                <div key={role.role_id}  className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[150px] sm:w-[200px]'>
+                <div key={role.role_id}  className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[180px]'>
                 <input type='checkbox' disabled={save ? true:false}  className='disabled:cursor-not-allowed Checkboxes' value={role?.role_id} onChange={()=>setPerm((prev)=>{
                if(perm?.includes(role?.role_id)){
              
@@ -213,7 +219,7 @@ const Manage_permissions = () => {
              
               
                 
-                })} id={"chack"+role?.role_id}/><label htmlFor={"chack"+role?.role_id} className='font-bold  text-secoundary_color_1/70'>{role?.name}</label></div>
+                })} id={"chack"+role?.role_id}/><label htmlFor={"chack"+role?.role_id} className='font-bold  text-nowrap text-secoundary_color_1/70'>{role?.name}</label></div>
             )
          }
 
@@ -233,10 +239,14 @@ const Manage_permissions = () => {
   
     </div></div>
             
-           </LargeModal>
+           </Modal>
 
-           <LargeModal open={open2} setOpen={setOpen2}>
-           <div className='w-full mx-auto flex justify-center items-center gap-6 flex-col'><Headings element={"h1"} >add permissions</Headings>
+           <Modal open={open2} setOpen={setOpen2}>
+           
+           <div className='w-full mx-auto flex justify-center items-center gap-6 flex-col'>
+           <div className=' w-fit mx-auto mb-3'>
+            <Headings element={"h3"} color='#00529B' >add permissions</Headings>
+            </div>
          <div className="flex justify-center items-start gap-5 flex-col">
      
   
@@ -245,7 +255,7 @@ const Manage_permissions = () => {
         :<div className='w-full relative mb-2 flex justify-start items-start flex-col gap-1'>
     <div className=' w-full text-center py-1 rounded-md border-b-4 border-solid border-primary_color text-gray_color font-bold'>Available permissions</div>
        
-       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[60%] mx-auto items-center gap-5 rounded-xl p-5 shadow-md shadow-black_color/90'>
+       <div className=' bg-black/5  flex-wrap flex justify-evenly w-[100%] mx-auto items-center gap-3  p-1 shadow-md shadow-black_color/20'>
        {
         isLoading?<div className='flex justify-center items-center w-[100%]'><Loading1/></div> : Allroles?.data?.data?.map((role)=>{
             if(role.role_id == 4 || role.role_id == 13 || role.role_id == 14){
@@ -256,7 +266,7 @@ const Manage_permissions = () => {
             }
             
             return (
-                <div key={role.role_id}  className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[150px] sm:w-[200px]'>
+                <div key={role.role_id}  className='flex justify-start  border-solid border-b-2 border-black/20  items-center gap-2 w-[180px]'>
                 <input type='checkbox' disabled={save ? true:false} className='disabled:cursor-not-allowed Checkboxes'  value={role?.role_id} onChange={()=>setPerm((prev)=>{
                if(perm?.includes(role?.role_id)){
              
@@ -272,7 +282,7 @@ const Manage_permissions = () => {
              
               
                 
-                })} id={"chack"+role?.role_id}/><label htmlFor={"chack"+role?.role_id} className='font-bold  text-secoundary_color_1/70'>{role?.name}</label></div>
+                })} id={"chack"+role?.role_id}/><label htmlFor={"chack"+role?.role_id} className='font-bold text-nowrap text-secoundary_color_1/70'>{role?.name}</label></div>
             )
          }
 
@@ -293,7 +303,9 @@ const Manage_permissions = () => {
   
     </div></div>
            
-           </LargeModal>
+           </Modal>
+           {/* Vice Modal */}
+           <SpeachToText open5={open5} setOpen5={setOpen5} search={search} setSearch={setSearch}/>
         
         <div className='h-auto bg-gradient-to-t  p-2 md:p-8 w-full '>
         <div className="flex items-center justify-between flex-column rounded-t-2xl p-4 flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4  bg-black/20">
@@ -301,15 +313,16 @@ const Manage_permissions = () => {
         <Headings element={"h3"}>manage permissions</Headings>
         </div>
         <label htmlFor="table-search" className="sr-only">Search</label>
-        <div className="relative">
+        <div className="relative flex justify-center items-center">
             <div className="absolute  inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg className="w-5 h-5 text-primary_color" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="text" id="table-search-users" value={search} onChange={(e)=>setSearch(e.target.value)} className="block p-2 ps-10 text-lg shadow-xl shadow-black_color/40 text-white_color border border-gray-300 rounded-lg w-[180px] sm:w-[200px] lg:w-80 bg-black/5 focus:ring-blue-500 focus:border-blue-500   placeholder:text-secoundary_color dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for employees"/>
+            <input type="text" id="table-search-users" value={search} onChange={(e)=>setSearch(e.target.value)} className="block p-2 ps-10 text-lg shadow-xl border-r-0 shadow-black_color/40 text-white_color border border-gray-300 rounded-l-lg w-[180px] sm:w-[200px] lg:w-80 bg-black/5 focus:ring-blue-500 focus:border-blue-500   placeholder:text-secoundary_color dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for employees"/>
+            <FontAwesomeIcon icon={faMicrophone} onClick={()=>setOpen5(true)} className='text-white/90  bg-primary_color/70 w-[20px] h-[44.4px]  lg:h-[44px] px-1 shadow-xl rounded-r-lg border-[0.5px] border-l-0 border-gray-300 shadow-black_color/40'/>
         </div>
-    </div>
+        </div>
         <div className="relative overflow-x-auto   shadow-2xl shadow-black_color/50  lg:rounded-b-lg">
         
    

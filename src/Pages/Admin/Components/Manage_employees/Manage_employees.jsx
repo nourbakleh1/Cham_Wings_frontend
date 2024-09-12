@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import Headings from '../../../../Components/Headings/Headings';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faChevronDown, faChevronRight, faEye, faImage, faImages, faPersonCirclePlus, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faChevronDown, faChevronRight, faEye, faImage, faImages, faMicrophone, faMicrophoneSlash, faPersonCirclePlus, faPersonWalkingDashedLineArrowRight, faPhotoFilm, faPowerOff, faTrashArrowUp, faUserPen, faUserPlus, faUserXmark } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../../../Components/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { activateEmployee, AddEmployee, deleteEmployee, getEmployees, getEmployees_info, getRoles, SearchEmployees, updateEmployee } from '../../../../Redux/ApiSlices/admin/adminSlice';
@@ -18,6 +18,8 @@ import Add_emp from './Components/Add_emp';
 import VerifyEmail_epm from './Components/VerifyEmail_epm';
 import Update_emp from './Components/Update_emp';
 import CustomPagination from '../../../../Components/Pagination/CustomPagination';
+import SpeachToText from '../../../../Components/Voice_Modal/SpeachToText';
+
 
 
 const Manage_employees = () => {
@@ -27,8 +29,7 @@ const Manage_employees = () => {
     const [search,setSearch]=useState("");
     const prev= usePrevious(search);
 
-   
-
+    
 
     // modal state
     const [open,setOpen]=useState(false);
@@ -36,6 +37,7 @@ const Manage_employees = () => {
     const [open2,setOpen2]=useState(false);
     const [open3,setOpen3]=useState(false);
     const [open4,setOpen4]=useState(false);
+    const [open5,setOpen5]=useState(false);
 
 
 
@@ -67,6 +69,7 @@ const Manage_employees = () => {
         if(window.sessionStorage.getItem("page")){
             window.sessionStorage.removeItem("page")
         }
+        setSearch("")
       }
     },[]);
 
@@ -83,6 +86,8 @@ const Manage_employees = () => {
         }, 1500);
         return ()=>{
             clearTimeout(debounce)
+            
+              
         }
     },[search]);
 
@@ -181,6 +186,7 @@ const Manage_employees = () => {
 
             </div>
            </Modal>
+           
             <Add_emp open2={open2} setOpen2={setOpen2} />
             <VerifyEmail_epm open4={open4} setOpen4={setOpen4} email={email} id={emp_info?.employee_id} page={page}/>
         
@@ -194,16 +200,19 @@ const Manage_employees = () => {
             <div className="shadow-xl shadow-black_color/40 rounded-xl border-[1px] border-solid border-white/30">
             <Button onClick={()=>{setOpen2(true);handelGetRoles();setRoles([])}}> <FontAwesomeIcon icon={faUserPlus} className='text-[20px] font-bold text-primary_color/80 pr-2'/>Add employyee</Button>
             </div>
-            
+            {/* Vice Modal */}
+            <SpeachToText open5={open5} setOpen5={setOpen5} search={search} setSearch={setSearch}/>
             
         </div>
-        <div className="relative">
-            <div className="absolute  inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+        <div className="relative flex justify-center items-center">
+            <div className="absolute  inset-y-0 rtl:inset-r-0 start-0 flex !border-r-0 items-center ps-3 pointer-events-none">
                 <svg className="w-5 h-5 text-primary_color" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="text" id="table-search-users" value={search} onChange={(e)=>setSearch(e.target.value)} className="block p-2 ps-10 text-lg shadow-xl shadow-black_color/40 text-white_color border border-gray-300 rounded-lg w-[180px] sm:w-[200px] lg:w-80 bg-black/5 focus:ring-blue-500 focus:border-blue-500   placeholder:text-secoundary_color dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for employees"/>
+            <input type="search" id="table-search-users" value={search} onChange={(e)=>setSearch(e.target.value)} className="block p-2 ps-10 text-lg shadow-xl border-r-0 shadow-black_color/40 text-white_color border border-gray-300 rounded-l-lg w-[180px] sm:w-[200px] lg:w-80 bg-black/5 focus:ring-blue-500 focus:border-blue-500   placeholder:text-secoundary_color dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for employees"/>
+            <FontAwesomeIcon icon={faMicrophone} onClick={()=>setOpen5(true)} className='text-white/90  bg-primary_color/70 w-[20px] h-[44.4px]  lg:h-[44px] px-1 shadow-xl rounded-r-lg border-[0.5px] border-l-0 border-gray-300 shadow-black_color/40'/>
+
         </div>
     </div>
         <div className="relative overflow-x-auto   shadow-2xl shadow-black_color/50  lg:rounded-b-lg">
@@ -231,7 +240,7 @@ const Manage_employees = () => {
         {search.trim() == ""  ?
             <tbody>
         
-        {isLoading_get ?  <tr> <td className=' p-5  rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className='  p-5  rounded-xl z-[99999]  '><Loading1/></td></tr>:
+        {isLoading_get ?  <tr> <td className=' p-5  rounded-xl z-[99999]  '></td><td className='hidden sm:block p-5  rounded-xl z-[99999]  '></td><td className='p-5 rounded-xl z-[99999]  '><Loading1/></td></tr>:
             employees?.data?.data.map((employee)=>{
                 if(employee?.roles[0]?.role_id == 4){
                     return

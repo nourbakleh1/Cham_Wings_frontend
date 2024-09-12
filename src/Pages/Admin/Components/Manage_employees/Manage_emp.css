@@ -11,8 +11,8 @@ select::-webkit-scrollbar{
     margin: 0;
     font: inherit;
     color: currentColor;
-    width: 1.40em;
-    height: 1.40em;
+    width: 1.20em;
+    height: 1.20em;
     border: 0.15em solid currentColor;
     border-radius: 0.15em;
     transform: translateY(-0.075em);

@@ -4,13 +4,14 @@ import Headings from '../../../Components/Headings/Headings';
 import Loading1 from '../../../Components/Loading/Loading1';
 import CustomPagination from '../../../Components/Pagination/CustomPagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBoxOpen, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faBoxOpen, faMicrophone, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { activateReservation, deleteReservation, getReservation, SearchForReservation } from '../../../Redux/ApiSlices/employee/readReservationSlice';
 import { usePrevious } from '../../../Hooks/usePrevious';
 import Loading3 from '../../../Components/Loading/Loading3';
 import Modal from '../../../Components/Modal/Modal';
 import Button from '../../../Components/Button/Button';
 import { toast } from 'react-toastify';
+import SpeachToText from '../../../Components/Voice_Modal/SpeachToText';
 
 const Read_reservation = () => {
     const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const Read_reservation = () => {
   const [open,setOpen]=useState(false);
   const [open1,setOpen1]=useState(false);
   const [open2,setOpen2]=useState(false);
+  const [open5,setOpen5]=useState(false);
+
 
    // helper data
    const [data,setData]=useState(null);
@@ -36,6 +39,8 @@ const Read_reservation = () => {
       if(window.sessionStorage.getItem("page")){
           window.sessionStorage.removeItem("page")
       }
+      setSearch("")
+
     }
   },[]);
 
@@ -121,6 +126,8 @@ const handelDeleteReservation=(id)=>{
 
             </div>
            </Modal>
+           {/* Vice Modal */}
+           <SpeachToText open5={open5} setOpen5={setOpen5} search={search} setSearch={setSearch}/>
 
 <div className='h-auto bg-gradient-to-t  p-2 md:p-8 w-full '>
     <div className="flex items-center justify-between flex-column p-4 flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 rounded-t-2xl  bg-black/20">
@@ -128,13 +135,14 @@ const handelDeleteReservation=(id)=>{
     <Headings element={"h3"}>manage reservation</Headings>
     </div>
     
-    <div className="relative">
+    <div className="relative flex justify-center items-center">
         <div className="absolute  inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg className="w-5 h-5 text-primary_color" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
         </div>
-        <input type="text" id="table-search-users" value={search} onChange={(e)=>setSearch(e.target.value)} className="block p-2 ps-10 text-lg shadow-xl shadow-black_color/40 text-white_color border border-gray-300 rounded-lg w-[180px] sm:w-[200px] lg:w-80 bg-black/5 focus:ring-blue-500 focus:border-blue-500   placeholder:text-secoundary_color dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for reservation"/>
+        <input type="text" id="table-search-users" value={search} onChange={(e)=>setSearch(e.target.value)} className="block p-2 ps-10 text-lg shadow-xl border-r-0 shadow-black_color/40 text-white_color border border-gray-300 rounded-l-lg w-[180px] sm:w-[200px] lg:w-80 bg-black/5 focus:ring-blue-500 focus:border-blue-500   placeholder:text-secoundary_color dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for reservation"/>
+            <FontAwesomeIcon icon={faMicrophone} onClick={()=>setOpen5(true)} className='text-white/90  bg-primary_color/70 w-[20px] h-[44.4px]  lg:h-[44px] px-1 shadow-xl rounded-r-lg border-[0.5px] border-l-0 border-gray-300 shadow-black_color/40'/>
     </div>
 </div>
     <div className="relative overflow-x-auto   shadow-2xl shadow-black_color/50  lg:rounded-b-lg">
