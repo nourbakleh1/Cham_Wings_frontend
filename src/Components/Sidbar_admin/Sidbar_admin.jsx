@@ -72,7 +72,7 @@ const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
          <li>
             <NavLink to="/admin_dashboard/view-history" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faNewspaper} />
-               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">view modication history</span>
+               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">view activities log</span>
             </NavLink>
          </li>
          
