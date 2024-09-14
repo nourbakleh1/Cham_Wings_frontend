@@ -15,8 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Slider = () => {
     const {user,recommend,error,isLoading}=useSelector(state=>state.auth);
-    console.log((user?.data?.user?.user_id));
-    console.log(recommend)
+    
     const dispatch=useDispatch();
 
     useEffect(()=>{
