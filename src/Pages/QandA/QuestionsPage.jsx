@@ -110,114 +110,126 @@ const QuestionsPage = () => {
           <span className="text-blue-500">Cham Wings Team</span> will Answer
           you.
         </h1>
-        {questions.length > 0 ? (
-          questions.map((q) => (
-            <div
-              key={q.faq_id}
-              className="bg-white p-6 shadow-lg rounded-xl transition duration-300 hover:shadow-xl"
-            >
-              <div className="mb-6">
-                {editingQuestionId === q.faq_id ? (
+        {questions.length > 0
+          ? questions.map((q) => (
+              <div
+                key={q.faq_id}
+                className="bg-white p-6 shadow-lg rounded-xl transition duration-300 hover:shadow-xl"
+              >
+                <div className="mb-6">
+                  {editingQuestionId === q.faq_id ? (
+                    <div>
+                      <input
+                        type="text"
+                        value={editQuestionText}
+                        onChange={(e) => setEditQuestionText(e.target.value)}
+                        className="p-2 border border-gray-300 rounded-lg"
+                      />
+                      <button
+                        onClick={() => handleEditQuestion(q.faq_id)}
+                        className="ml-4 bg-blue-500 text-white p-2 rounded-lg"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => {
+                          setEditingQuestionId(null);
+                          setEditQuestionText("");
+                        }}
+                        className="ml-2 bg-gray-500 text-white p-2 rounded-lg"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-gray-600 pl-2 py-2 text-sm">
+                        Asked by: {q.passenger.travel_requirement.first_name}{" "}
+                        {q.passenger.travel_requirement.last_name}
+                      </p>
+                      <p className="text-gray-600 pr-2 py-2 text-sm">
+                        {q.created_at
+                          ? `${new Date(q.created_at).toLocaleDateString('en-GB')} ${new Date(q.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                          : "Unknown"}
+                      </p>
+                    </div>
+                      <Question
+                        question={q.question}
+                        faq_id={q.faq_id}
+                        onEdit={
+                          (employeeIds.length === 0 ||
+                            !employeeIds.includes(q.employee?.employee_id)) &&
+                          passengerId === q.passenger_id
+                            ? () => {
+                                setEditingQuestionId(q.faq_id);
+                                setEditQuestionText(q.question);
+                              }
+                            : null
+                        }
+                        onDelete={
+                          role === 5 && q.answer === null
+                            ? () => handleDeleteQuestion(q.faq_id)
+                            : null
+                        }
+                        fetchQuestions={fetchQuestions}
+                      />
+                    </div>
+                  )}
+                </div>
+                {q.answer ? (
                   <div>
-                    <input
-                      type="text"
-                      value={editQuestionText}
-                      onChange={(e) => setEditQuestionText(e.target.value)}
-                      className="p-2 border border-gray-300 rounded-lg"
-                    />
-                    <button
-                      onClick={() => handleEditQuestion(q.faq_id)}
-                      className="ml-4 bg-blue-500 text-white p-2 rounded-lg"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={() => {
-                        setEditingQuestionId(null);
-                        setEditQuestionText("");
-                      }}
-                      className="ml-2 bg-gray-500 text-white p-2 rounded-lg"
-                    >
-                      Cancel
-                    </button>
+                    <div className="bg-gradient-to-r from-green-200 to-green-300 text-green-900 p-5 rounded-lg shadow-md">
+                      <p className="font-semibold">A: {q.answer}</p>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-gray-600 pl-2 py-2 text-sm">
+                        Answered by: {q.employee?.name || "Unknown"}
+                      </p>
+                      <p className="text-gray-600 pr-2 py-2 text-sm">
+                        {q.employee?.created_at
+                          ? `${new Date(q.employee.created_at).toLocaleDateString('en-GB')} ${new Date(q.employee.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                          : "Unknown"}
+                      </p>
+                    </div>
                   </div>
+                ) : replyingTo === q.faq_id ? (
+                  <Answer
+                    faq_id={q.faq_id}
+                    refreshQuestions={fetchQuestions}
+                    onCancel={() => setReplyingTo(null)}
+                  />
                 ) : (
-                  <div>
-                    <p className="text-gray-600 pl-2 py-2 text-sm">
-                      Asked by: {q.passenger.travel_requirement.first_name}{" "}
-                      {q.passenger.travel_requirement.last_name}
-                    </p>
-                    <Question
-                      question={q.question}
-                      faq_id={q.faq_id}
-                      onEdit={
-                        (employeeIds.length === 0 ||
-                          !employeeIds.includes(q.employee?.employee_id)) &&
-                        passengerId === q.passenger_id
-                          ? () => {
-                              setEditingQuestionId(q.faq_id);
-                              setEditQuestionText(q.question);
-                            }
-                          : null
-                      }
-                      onDelete={
-                        role === 4 && q.answer === null
-                          ? () => handleDeleteQuestion(q.faq_id)
-                          : null
-                      }
-                      fetchQuestions={fetchQuestions}
-                    />
-                  </div>
+                  role === 5 && (
+                    <button
+                      onClick={() => setReplyingTo(q.faq_id)}
+                      className="flex items-center text-blue-600 hover:text-blue-800 transition duration-200"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-5 h-5 mr-2"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
+                        />
+                      </svg>
+                      Reply
+                    </button>
+                  )
                 )}
               </div>
-              {q.answer ? (
-                <div>
-                  <div className="bg-gradient-to-r from-green-200 to-green-300 text-green-900 p-5 rounded-lg shadow-md">
-                    <p className="font-semibold">A: {q.answer}</p>
-                  </div>
-                  <p className="text-gray-600 pl-2 py-2 text-sm">
-                    Answered by: {q.employee?.name || "Unknown"}
-                  </p>
-                </div>
-              ) : replyingTo === q.faq_id ? (
-                <Answer
-                  faq_id={q.faq_id}
-                  refreshQuestions={fetchQuestions}
-                  onCancel={() => setReplyingTo(null)}
-                />
-              ) : (
-                role === 4 && (
-                  <button
-                    onClick={() => setReplyingTo(q.faq_id)}
-                    className="flex items-center text-blue-600 hover:text-blue-800 transition duration-200"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5 mr-2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"
-                      />
-                    </svg>
-                    Reply
-                  </button>
-                )
-              )}
-            </div>
-          ))
-        ) : (
-          page <= totalPages && (
-            <p className="text-gray-600 text-center text-lg font-medium">
-              No questions available on this page.
-            </p>
-          )
-        )}
+            ))
+          : page <= totalPages && (
+              <p className="text-gray-600 text-center text-lg font-medium">
+                No questions available on this page.
+              </p>
+            )}
       </div>
 
       {/* Pagination Component */}
@@ -228,7 +240,7 @@ const QuestionsPage = () => {
         perPage={perPage}
       />
 
-      {role !== 4 && (
+      {role !== 5 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg rounded-t-lg p-4 z-50">
           <QuestionForm refreshQuestions={fetchQuestions} />
         </div>
