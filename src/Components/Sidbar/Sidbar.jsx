@@ -222,12 +222,7 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
             </NavLink>
          </li>
          
-         <li>
-            <NavLink to="/dashboard/employee/visa-information" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <FontAwesomeIcon icon={faCircleInfo} />
-               <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">visa and travel information</span>
-            </NavLink>
-         </li>
+        
          <li>
             <button   onClick={()=>dispatch(logout()).unwrap().then((res)=>toast.success(res?.data))} className="flex items-center w-full text-left p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faRightFromBracket} />
