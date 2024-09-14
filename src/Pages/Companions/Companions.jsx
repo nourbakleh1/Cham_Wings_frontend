@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfile } from "../../Redux/ApiSlices/profileSlice.js";
-import { privateRequest } from "../../lib/privateRequest.js";
-import axios from "axios";
+import { savePassengerData } from "../../Redux/ApiSlices/flightSlice.js";
+import { useNavigate } from "react-router-dom";
 import PassengerInfo from "./PassengerInfo.jsx";
 import CompanionSelect from "./CompanionSelect.jsx";
 import CompaniesDetails from "./components/CompaniesDetails.jsx";
+import Headings from "../../Components/Headings/Headings";
+import Button from "../../Components/Button/Button";
 
 const Companions = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const profile = useSelector((state) => state.profile.profile);
+  const flights = useSelector((state) => state.flights.resultSearch);
+
   const [formData, setFormData] = useState({});
   const [formDataPassport, setFormDataPassport] = useState({});
   const [companions, setCompanions] = useState([]);
@@ -17,39 +22,32 @@ const Companions = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showPassengerInfo, setShowPassengerInfo] = useState(false);
-  const [selectedCompanion, setSelectedCompanion] = useState("");
+  const [selectedCompanions, setSelectedCompanions] = useState([]);
   const [companiesDetailsData, setCompaniesDetailsData] = useState([]);
 
+  // Calculate the number of passengers (adults + infants)
+  const totalCompanions = (flights?.adults || 0) + (flights?.infants || 0);
+
   useEffect(() => {
+    console.log("Dispatching fetchProfile...");
     dispatch(fetchProfile());
   }, [dispatch]);
 
   useEffect(() => {
-    const fetchPassengerStatus = async () => {
-      try {
-        const response = await privateRequest.get(
-          "/api/passenger_companions_details"
-        );
-        if (response.data && response.data.booking_preference) {
-          const bookingPreference = response.data.booking_preference;
-          setShowPassengerInfo(
-            bookingPreference === "a" || bookingPreference === "b"
-          );
-        } else {
-          console.error("Unexpected API response format:", response.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch passenger status:", error);
-      }
-    };
-
-    fetchPassengerStatus();
-  }, []);
+    if (flights && flights.booking_preference) {
+      const bookingPreference = flights.booking_preference;
+      setShowPassengerInfo(
+        bookingPreference === "a" || bookingPreference === "b"
+      );
+    }
+  }, [flights]);
 
   useEffect(() => {
     if (profile) {
       setFormData((prevData) => ({
         ...prevData,
+        user_id: profile?.user_id,
+        passenger_id: profile.passenger?.passenger_id,
         title: profile.passenger?.travel_requirement?.title ?? "",
         first_name: profile.passenger?.travel_requirement?.first_name ?? "",
         last_name: profile.passenger?.travel_requirement?.last_name ?? "",
@@ -74,43 +72,54 @@ const Companions = () => {
         passport_id: passportInfo?.passport_id ?? "",
         number: passportInfo?.number ?? "",
         passport_expiry_date: passportInfo?.passport_expiry_date ?? "",
+        passport_issued_date: passportInfo?.passport_issued_date ?? "",
       });
 
       setCompanions(profile.companions || []);
+      console.log("Companions data:", profile.companions);
     }
   }, [profile]);
 
   const handleAccordionToggle = (section) => {
     setActiveAccordion(activeAccordion === section ? null : section);
+    console.log("Toggled accordion:", section);
   };
 
-  const handleCompanionChange = (companionId) => {
-    setSelectedCompanion(companionId);
+  const handleCompanionChange = (index, companionData) => {
+    setSelectedCompanions((prevCompanions) => {
+      const updatedCompanions = [...prevCompanions];
+      updatedCompanions[index] = companionData?.companion_id || null;
+      return updatedCompanions;
+    });
+
+    if (companionData) {
+      setCompaniesDetailsData((prevData) => {
+        const updatedDetails = [...prevData];
+        updatedDetails[index] = companionData;
+        return updatedDetails;
+      });
+    }
   };
 
-  const handleCompaniesDetailsChange = (data) => {
-    setCompaniesDetailsData(data);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const validationErrors = {}; // Add your validation logic here
     if (Object.keys(validationErrors).length === 0) {
-      try {
-        const payload = {
-          passengerInfo: { ...formData, ...formDataPassport },
-          selectedCompanion,
-          companions,
-          companiesDetails: companiesDetailsData, // Include CompaniesDetails data
-        };
-        await axios.post("/api/submitProfile", payload);
-        // Optionally handle response or redirect
-      } catch (error) {
-        console.error("Error submitting profile:", error);
-        // Optionally handle error state
-      }
+      const payload = {
+        passengerInfo: { ...formData, ...formDataPassport },
+        selectedCompanions, // Send selected companions data
+        companiesDetails: companiesDetailsData, // Include CompaniesDetails data
+      };
+
+      console.log("Submitting payload:", payload);
+
+      // Dispatch the payload to Redux
+      dispatch(savePassengerData(payload));
+
+      navigate("/reservation_seats");
     } else {
+      console.log("Validation errors:", validationErrors);
       setErrors(validationErrors);
     }
   };
@@ -119,7 +128,7 @@ const Companions = () => {
     <div className="bg-gray-200 bg-opacity-50 py-2 min-h-screen flex flex-col">
       <div className="flex-grow mx-auto sm:p-2 md:p-2 my-8 bg-white rounded-lg shadow-md w-full max-w-screen-md sm:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
         <h1 className="md:text-3xl xs:text-xl font-bold mb-8 py-4 xs:pt-16 text-center border-b-2 border-gray-300">
-          Enter Passenger Details
+          <Headings element={"h1"}>Enter Passenger Details</Headings>
         </h1>
         {showPassengerInfo && (
           <PassengerInfo
@@ -132,27 +141,30 @@ const Companions = () => {
             handleDateChange={() => {}} // Define this method
             handleAccordionToggle={handleAccordionToggle}
             activeAccordion={activeAccordion}
-            selectedCompanion={selectedCompanion}
-            companions={companions}
-            handleCompanionChange={handleCompanionChange}
-            handleSubmit={handleSubmit}
           />
         )}
-        <CompanionSelect
-          companions={companions}
-          selectedCompanion={selectedCompanion}
-          handleCompanionChange={handleCompanionChange}
-        />
-        <CompaniesDetails onChange={handleCompaniesDetailsChange} />{" "}
-        {/* Pass callback to CompaniesDetails */}
-        {/* Submit Button */}
+        <h1 className="w-full p-6 md:text-xl xs:text-sm text-left rounded-t-md bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-lg">
+          Your Adults {flights?.adults} and Infants {flights?.infants}
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+          {[...Array(totalCompanions)].map((_, index) => (
+            <CompanionSelect
+              key={index}
+              onChange={(companionData) =>
+                handleCompanionChange(index, companionData)
+              }
+              value={selectedCompanions[index]}
+              selectedCompanions={selectedCompanions}
+            />
+          ))}
+        </div>
+
         <div className="flex justify-center mt-8">
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-          >
-            Submit
-          </button>
+          <div className="relative flex justify-center items-center">
+            <Button color={"#00529B"} padding="12px" onClick={handleSubmit}>
+              Save Changes
+            </Button>
+          </div>
         </div>
       </div>
     </div>
