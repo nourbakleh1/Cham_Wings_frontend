@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { mockFlights } from "../../../src/Pages/Flight/mockFlightData";
 import { publicRequest } from "../../lib/publicRequest";
 import { privateRequest } from "../../lib/privateRequest";
 
@@ -35,14 +34,25 @@ export const  searchFlights=createAsyncThunk("flights/searchFlights",async (data
 
     // data.departure_date="2024-09-17";
       const res=await publicRequest.post("/api/flight-search",data);
-      return res.data
-   }
+      return res.data   }
    catch(err){
     return rejectWithValue(err)
    }
    
   }
 );
+
+export const passengerSlice = createSlice({
+  name: "passenger",
+  initialState: {
+    passengerData: {},
+  },
+  reducers: {
+    savePassengerData: (state, action) => {
+      state.passengerData = action.payload;
+    },
+  },
+});
 
 const flightSlice = createSlice({
   name: "flights",
@@ -104,6 +114,7 @@ const flightSlice = createSlice({
   },
 });
 
+export const { savePassengerData } = passengerSlice.actions;
 export const { selectFlight, deselectFlight, clearSelectedFlights } =
   flightSlice.actions;
 export default flightSlice.reducer;

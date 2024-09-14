@@ -141,7 +141,6 @@ const CompanionSelect = ({ onChange }) => {
       if (!fetchResponse.data.success) {
         throw new Error("Failed to fetch passenger data.");
       }
-
       const fetchedData = fetchResponse.data.data;
 
       const updatedData = {
@@ -163,6 +162,7 @@ const CompanionSelect = ({ onChange }) => {
         passport_image: updatedData.passport_image,
         ...updatedData.travel_requirement,
       };
+
 
       Object.keys(flattenedData).forEach(
         (key) =>
@@ -191,6 +191,7 @@ const CompanionSelect = ({ onChange }) => {
           message: "Companion information updated successfully!",
           type: "success",
         });
+        handleRefresh(); // Refresh after successful update
         setEditMode(false);
       } else {
         setToast({
@@ -244,9 +245,9 @@ const CompanionSelect = ({ onChange }) => {
           message: "New companion added successfully!",
           type: "success",
         });
+        handleRefresh(); // Refresh after successful addition
         setIsAddingCompanion(false);
         setEditMode(false);
-        setRefreshTrigger((prev) => prev + 1);
       } else {
         setToast({
           message: "Failed to add new companion.",
