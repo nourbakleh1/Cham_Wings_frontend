@@ -17,12 +17,22 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     onSelect(flight, classType);
     setExpandedClass(null);
   };
+  const economyPriceTotal =
+    flight?.economyPrice && flight?.price
+      ? flight.economyPrice * flight.price
+      : 0;
+
+  const businessPriceTotal =
+    flight?.businessPrice && flight?.price
+      ? flight.businessPrice * flight.price
+      : 0;
 
   const classTypes = [
     {
       name: "Economy",
       color: "green",
-      price: `SYP ${flight.economyPrice}`,
+      // price: `USD ${flight.economyPrice}`,
+      price: `USD ${economyPriceTotal}`,
       weight: flight.economyWeight,
       meal: `Meal x${flight.economyMeals}`,
       cabinBaggage: flight.economyCabinBaggage,
@@ -32,7 +42,8 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     {
       name: "Business",
       color: "blue",
-      price: `SYP ${flight.businessPrice}`,
+      // price: `USD ${flight.businessPrice}`,
+      price: `USD ${businessPriceTotal}`,
       weight: flight.businessWeight,
       meal: `Meal x${flight.businessMeals}`,
       cabinBaggage: flight.businessCabinBaggage,
@@ -49,17 +60,19 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     >
       <div className="flex flex-col lg:flex-row">
         {/* Left section */}
-        <div className="p-4 border-b lg:border-b-0 lg:border-r border-gray-400 lg:w-2/5">
+        <div className="p-4 border-b lg:border-b-0 lg:border-r border-gray-400 lg:w-3/5">
           <div className="flex justify-between items-center mb-2">
-            <span className="font-bold text-lg">{flight.number}</span>
+            <span className="font-bold text-lg">{flight.flight_number}</span>
             <div>
-              <span className="text-sm mr-2">{flight.aircraft}</span>
+              <span className="text-sm mr-2">{flight.model}</span>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <div className="text-center sm:text-left mb-2 sm:mb-0">
-              <div className="font-bold text-xl">{flight.departureAirport}</div>
-              <div className="text-gray-600">{flight.departureTime}</div>
+              <div className="font-bold text-lg">
+                {flight.departure_airport_name}
+              </div>
+              <div className="text-gray-600">{flight.departure_time}</div>
             </div>
             <div className="text-center mb-2 sm:mb-0">
               <div className="text-gray-500 text-sm mb-1">
@@ -71,14 +84,15 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
                 <div className="h-px bg-gray-300 w-16"></div>
               </div>
               <div className="text-center text-gray-500 mt-2">
-                <div>{flight.date}</div>
+                {/* <div>{flight.date}</div> */}
+                <div>{flight.departure_date}</div>
               </div>
             </div>
             <div className="text-center sm:text-right">
-              <div className="font-bold text-xl">{flight.arrival_airport_name}</div>
-              <div className="text-gray-600">
-                {flight.arrivalTime}
+              <div className="font-bold text-lg">
+                {flight.arrival_airport_name}
               </div>
+              <div className="text-gray-600">{flight.arrival_time}</div>
             </div>
           </div>
         </div>
@@ -102,7 +116,7 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
                   >
                     {classType.name}
                   </div>
-                  <div className="text-sm text-gray-500">from SYP</div>
+                  <div className="text-sm text-gray-500">from USD</div>
                   <div className="font-bold text-lg">{classType.price}</div>
                   {classType.name === "Economy" && (
                     <div className="text-xs text-red-600">Lowest price</div>

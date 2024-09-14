@@ -39,20 +39,20 @@ const PassengerInfo = ({ formData, formDataPassport, isOpen, setIsOpen }) => (
           className="w-full"
         />
         <div className="w-full">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-5">
             Gender
           </label>
           <select
             value={formData.gender}
             disabled
-            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-700 cursor-not-allowed"
+            className="block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm bg-gray-100 text-gray-700 cursor-not-allowed"
           >
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </div>
         <div className="w-full">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-5">
             Nationality
           </label>
           <ReactFlagsSelect
