@@ -96,13 +96,63 @@ export const activateAirport=createAsyncThunk("airport/activateAirport",async(id
         return rejectWithValue(error)
     }
 });
+// visa 
+
+export const AddVisa=createAsyncThunk("airport/AddVisa",async(data,ThunkApi)=>{
+    const {rejectWithValue,dispatch}=ThunkApi;
+
+    try{
+        const res=await privateRequest.post(`/api/visa/airport/${data?.id}`,data?.visa);
+        return res.data
+    }
+    catch(error){
+        return rejectWithValue(error)
+    }
+});
+
+export const getVisaInSpecificAirport=createAsyncThunk("airport/getVisaInSpecificAirport",async(id,ThunkApi)=>{
+    const {rejectWithValue,dispatch}=ThunkApi;
+
+    try{
+        const res= await privateRequest.get(`/api/visa/airport/${id}`)
+        return res.data
+    }
+    catch(err){
+        return rejectWithValue(err)
+    }
+});
+export const updateVisa=createAsyncThunk("airport/updateVisa",async(data,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+
+    try{
+        const res=await privateRequest.put(`/api/visa/${data?.id}`,data?.visa);
+        return res.data
+    }
+    catch(error){
+        return rejectWithValue(error)
+    }
+});
+export const deleteVisa=createAsyncThunk("airport/deleteVisa",async(id,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+
+    try{
+        const res=await privateRequest.delete(`/api/visa/${id}`);
+        return res.data
+    }
+    catch(error){
+        return rejectWithValue(error)
+    }
+});
 
 const initialState={
     All_airports:null,
     Paginat_airports:null,
-    isLoading:false,
+    isLoading_visa:false,
     airport_info:null,
     error:null,
+    visaInfo:null,
+    isLoading_visa:false
+
 }
 
 
@@ -192,6 +242,52 @@ const airportSlice=createSlice({
         })
         .addCase(activateAirport.rejected,(state,action)=>{
             state.isLoading = false;
+            state.error=action.payload
+        })
+       
+        .addCase(AddVisa.fulfilled,(state,action)=>{
+            state.isLoading = false;
+        
+
+        })
+        .addCase(AddVisa.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.error=action.payload
+        })
+       
+        .addCase(updateVisa.fulfilled,(state)=>{
+            state.isLoading = false;
+        
+
+        })
+        .addCase(updateVisa.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.error=action.payload
+        })
+        
+        .addCase(deleteVisa.fulfilled,(state,action)=>{
+            state.isLoading = false;
+        
+
+        })
+        .addCase(deleteVisa.rejected,(state,action)=>{
+            state.isLoading = false;
+            state.error=action.payload
+        })
+        .addCase(getVisaInSpecificAirport.pending,(state,action)=>{
+            state.isLoading_visa = true;
+          
+        
+
+        })
+        .addCase(getVisaInSpecificAirport.fulfilled,(state,action)=>{
+            state.isLoading_visa = false;
+            state.visaInfo=action.payload;
+        
+
+        })
+        .addCase(getVisaInSpecificAirport.rejected,(state,action)=>{
+            state.isLoading_visa = false;
             state.error=action.payload
         })
 

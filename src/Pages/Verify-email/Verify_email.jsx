@@ -26,7 +26,7 @@ const Verify_email = () => {
       const data={code:{code},email}
       dispatch(checkVerify(data)).unwrap().then((res)=>{
         navigate("/login",{replace:true});
-        return toast.success(res.data);
+        return toast.success(res.success);
       }).catch((rej)=>{
         return toast.error(rej?.response?.data?.errors)
       })

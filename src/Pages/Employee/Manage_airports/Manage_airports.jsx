@@ -1,11 +1,11 @@
-import { faPenToSquare,faPlus, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faPenToSquare,faPlus, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../../Components/Button/Button';
 import Headings from '../../../Components/Headings/Headings';
 import Loading1 from '../../../Components/Loading/Loading1';
-import { activateAirport, deleteAirport, getAirport_info, getAirports, getALLAirports } from '../../../Redux/ApiSlices/employee/airportSlice';
+import { activateAirport, AddVisa, deleteAirport, deleteVisa, getAirport_info, getAirports, getALLAirports, getVisaInSpecificAirport, updateVisa } from '../../../Redux/ApiSlices/employee/airportSlice';
 import Pagination from '../../../Components/Pagination/Pagination';
 import Add_airport from './Components/Add_airport';
 import Update_airport from './Components/Update_airport';
@@ -13,13 +13,14 @@ import Modal from '../../../Components/Modal/Modal';
 import { toast } from 'react-toastify';
 import CustomPagination from '../../../Components/Pagination/CustomPagination';
 import select_image from "/assets/images/select_image.png";
+import Loading4 from '../../../Components/Loading/Loading4';
 
 
 
 
 const Manage_airports = () => {
   const dispatch = useDispatch();
-  const {All_airports,Paginat_airports,isLoading,error,airport_info}=useSelector(state=>state.airports);
+  const {All_airports,Paginat_airports,isLoading,error,airport_info,visaInfo,isLoading_visa}=useSelector(state=>state.airports);
   const [page,setPage]=useState(1);
 
   // modal state
@@ -28,7 +29,8 @@ const Manage_airports = () => {
   const [open2,setOpen2]=useState(false);
   const [open3,setOpen3]=useState(false);
   const [open4,setOpen4]=useState(false);
-
+  const [open5,setOpen5]=useState(false);
+  const [open6,setOpen6]=useState(false);
 
    //  state adding airport
     
@@ -40,6 +42,7 @@ const Manage_airports = () => {
 
  // helper data
  const [data,setData]=useState(null);
+ const [visa,setVisa]=useState(null);
 
  useEffect(()=>{
   if(window.sessionStorage.getItem("page")){
@@ -98,7 +101,78 @@ const handelActiveAirport=(id)=>{
   })
 }
 
+const get_Visa_Info=(id)=>{
+    dispatch(getVisaInSpecificAirport(id)).unwrap().then((res)=>{
+      setVisa_and_residence(res?.data?.data[0]?.visa_and_residence);
+      setOrigin(res?.data?.data[0]?.origin);
+      setDestination(res?.data?.data[0]?.destination);
+    });
+    setData({id:id});
+}
     
+  const [visa_and_residence,setVisa_and_residence]=useState("");
+  const [origin,setOrigin]=useState("");
+  const [destination,setDestination]=useState("");
+
+    const handelAddVisa=(id)=>{
+      if(visa_and_residence.trim() == ""){
+        return toast.error("Visa and residence is required")
+    }
+    if(origin.trim() == ""){
+        return toast.error("Origin is required")
+    }
+  
+    if(destination.trim() == ""){
+        return toast.error("Destination is required")
+    }
+    const visa={visa_and_residence,origin,destination}
+    const data={
+      visa,id
+    }
+    dispatch(AddVisa(data)).unwrap().then((res)=>{
+      dispatch(getVisaInSpecificAirport(id));
+      setOpen5(false)
+      setDestination("");
+      setVisa_and_residence("");
+      setOrigin("");
+      return toast.success(res?.success);
+    }).catch((rej)=>{
+      return toast.error(rej?.response?.data?.message)
+    })
+    }
+
+    const handelUpdateVisa=(id)=>{
+      if(visa_and_residence.trim() == ""){
+        return toast.error("Visa and residence is required")
+    }
+    if(origin.trim() == ""){
+        return toast.error("Origin is required")
+    }
+  
+    if(destination.trim() == ""){
+        return toast.error("Destination is required")
+    }
+    const visa={visa_and_residence,origin,destination}
+    const data={
+      visa,id
+    }
+    dispatch(updateVisa(data)).unwrap().then((res)=>{
+      dispatch(getVisaInSpecificAirport(id));
+      setOpen6(false)
+     
+      return toast.success(res?.success);
+    }).catch((rej)=>{
+      return toast.error(rej?.response?.data?.message)
+    })
+    }
+    const handelDeletevisa=(id)=>{
+      dispatch(deleteVisa(id)).unwrap().then((res)=>{
+        dispatch(getVisaInSpecificAirport(id));
+        return toast.success(res?.success)
+    }).catch((rej)=>{
+        return toast.error(rej?.response?.data?.message)
+    })
+    }
   return (
     <div className='relative flex flex-col justify-start items-start mt-[78px] lg:mt-[85px] h-auto w-full  lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
 
@@ -108,7 +182,7 @@ const handelActiveAirport=(id)=>{
     />
     
 
-
+    {/* delete airport */}
     <Modal open={open1} setOpen={setOpen1}>
             <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
             <div className='flex flex-col justify-center items-center gap-6'>
@@ -123,6 +197,120 @@ const handelActiveAirport=(id)=>{
 
             </div>
            </Modal>
+           {/* manage visa */}
+    <Modal open={open3} setOpen={setOpen3}>
+      
+            <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
+            <div className='flex flex-col justify-center items-center gap-6'>
+            <div className='border-b-2 border-solid border-primary_color w-fit mx-auto mb-6'>
+            <Headings element={"h2"} color='#00529B' >Visa info</Headings>
+            </div>
+
+            {
+              isLoading_visa ? <Loading1/>:
+                  <div key={visaInfo?.data?.data[0]?.visainfo_id}>
+                  <div className='flex justify-center items-center flex-col text-center text-[15px]  text-black gap-5'>
+                    <p className='p-2 shadow-sm shadow-primary_color w-[200px] md:w-[250px] font-bold text-nowrap'>visa_and_residence : <span className='text-primary_color'>{visaInfo?.data?.data[0]?.visa_and_residence}</span> </p>
+                    <p className='p-2 shadow-sm shadow-primary_color w-[200px] md:w-[250px] font-bold text-nowrap'>origin : <span className='text-primary_color'>{visaInfo?.data?.data[0]?.origin}</span></p>
+                    <p className='p-2 shadow-sm shadow-primary_color w-[200px] md:w-[250px] font-bold text-nowrap'>destination : <span className='text-primary_color'>{visaInfo?.data?.data[0]?.destination}</span></p>
+                    </div>
+                    {visaInfo?.data?.data[0] == null  ?  <div className='flex justify-center items-center mt-10 gap-3'><Button onClick={()=>setOpen5(true)} color={"#00529B"}>Add visa</Button></div>: <div className='flex mt-10 justify-center items-center gap-3'>
+                    <Button onClick={()=>{handelDeletevisa(visaInfo?.data?.data[0]?.visainfo_id)}} color={"#cf2e2e"} padding='5px'>Delete</Button>
+                    <Button onClick={()=>{setOpen6(!open6);setVisa({id:visaInfo?.data?.data[0]?.visainfo_id});get_Visa_Info(data?.id)}} color={"#00529B"} padding='5px'>Update</Button>
+                    </div> }
+                  </div>
+            }
+            </div>
+            </div>
+           </Modal>
+
+            {/*  add visa  */}
+            <Modal open={open5} setOpen={setOpen5}>
+            <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
+            <div className='flex flex-col justify-center items-center gap-6'>
+            <div className='border-b-2 border-solid border-primary_color w-fit mx-auto mb-6'>
+            <Headings element={"h3"} color='#00529B' >add visa</Headings>
+            </div>
+            <div className="grid md:grid-cols-1 md:gap-6">
+   
+              <div className="relative z-0 w-full mb-1 lg:mb-4 group">
+                  <input type="text" value={visa_and_residence} onChange={(e)=>setVisa_and_residence(e.target.value)}  name="floating_name" id="visa" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="visa" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Visa and residence</label>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-1 md:gap-6">
+            
+              <div className="relative z-0 w-full mb-1 lg:mb-4 group">
+                  <input type="text" value={origin} onChange={(e)=>setOrigin(e.target.value)}  name="floating_name" id="origin" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="origin" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Origin</label>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-1 md:gap-6">
+            
+              <div className="relative z-0 w-full mb-1 lg:mb-4 group">
+                  <input type="text" value={destination} onChange={(e)=>setDestination(e.target.value)}  name="floating_name" id="des" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="des" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Destination</label>
+              </div>
+            </div>
+            <div className='flex gap-3'>
+            <Button onClick={()=>handelAddVisa(data?.id)} color={"#00529B"} padding='5px'>create</Button>
+            </div>
+           
+            </div>
+
+            </div>
+           </Modal>
+           {/*  update visa  */}
+           <Modal open={open6} setOpen={setOpen6}>
+            <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
+            <div className='flex flex-col justify-center items-center gap-6'>
+            <div className='border-b-2 border-solid border-primary_color w-fit mx-auto mb-6'>
+            <Headings element={"h3"} color='#00529B' >Edit visa</Headings>
+            </div>
+            <div className="grid md:grid-cols-1 md:gap-6">
+   
+              <div className="relative z-0 w-full mb-1 lg:mb-4 group">
+                  <input type="text" value={visa_and_residence} onChange={(e)=>setVisa_and_residence(e.target.value)}  name="floating_name" id="visa" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="visa" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Visa and residence</label>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-1 md:gap-6">
+            
+              <div className="relative z-0 w-full mb-1 lg:mb-4 group">
+                  <input type="text" value={origin} onChange={(e)=>setOrigin(e.target.value)}  name="floating_name" id="origin" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="origin" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Origin</label>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-1 md:gap-6">
+            
+              <div className="relative z-0 w-full mb-1 lg:mb-4 group">
+                  <input type="text" value={destination} onChange={(e)=>setDestination(e.target.value)}  name="floating_name" id="des" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                  <label htmlFor="des" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Destination</label>
+              </div>
+            </div>
+            <div className='flex gap-3'>
+            <Button onClick={()=>handelUpdateVisa(visa?.id)} color={"#00529B"} padding='5px'>Update</Button>
+            </div>
+           
+            </div>
+
+            </div>
+           </Modal>
+           {/* delete visa */}
+       {/* <Modal open={open7} setOpen={setOpen7}>
+            <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
+            <div className='flex flex-col justify-center items-center gap-6'>
+
+            <p className='font-bold text-gray_color'>do you want to delete <span className='font-extrabold text-secoundary_color/80'>visa</span></p>
+            <div className='flex gap-3'>
+            <Button onClick={()=>handelDeletevisa(visa?.id)} color={"#cf2e2e"} padding='5px'>Delete</Button>
+            </div>
+           
+            </div>
+
+            </div>
+           </Modal> */}
+           {/* manage visa */}
            {/* activate airport  */}
            <Modal open={open4} setOpen={setOpen4}>
             <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
@@ -192,10 +380,10 @@ const handelActiveAirport=(id)=>{
           Paginat_airports?.data?.data?.map((airport)=>{
             return (
                 <tr key={airport?.airport_id} className="bg-white_color/80 border-b  border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-200">
-        <td scope="row" className="flex items-center px-6 py-10 text-primary_color_1 whitespace-nowrap ">
+        <td scope="row" className="flex items-center px-6 py-10 text-primary_color_1 flex-col xl:flex-row">
          <img className="w-[120px] h-[100px] p-1 object-contain rounded-md bg-black/15" src={airport?.image != "" ? `http://127.0.0.1:8000${airport?.image}` : select_image} />
             <div className="ps-3">
-                <div className="text-[14px] font-bold w-[150px] text-wrap">{airport?.airport_name}</div>
+                <div className="text-[13px] font-bold w-[120px] text-wrap">{airport?.airport_name}</div>
             </div> 
         </td>
         <td className="px-6 py-2">
@@ -228,7 +416,7 @@ const handelActiveAirport=(id)=>{
             {airport?.deleted_at == null ?<> <div className="h-2.5 w-2.5 rounded-full bg-green-400 me-2"></div> Active</>:<><div className="h-2.5 w-2.5 rounded-full bg-gray-500 me-2"></div> Inactive</>}
             </div>
         </td>
-        <td className=" text-center  align-middle">
+        <td className=" text-center  align-middle text-nowrap">
            {
             airport?.deleted_at == null ?<button  onClick={()=>{setOpen1(true);setData({id:airport?.airport_id,name:airport?.airport_code})}} className="font-bold text-[22px] m-2 text-red_color/80 disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
             <FontAwesomeIcon icon={faTrashCan} />
@@ -245,6 +433,13 @@ const handelActiveAirport=(id)=>{
             <FontAwesomeIcon icon={faPenToSquare} />
             </button>
            } 
+           {
+            airport?.deleted_at != null ? <button disabled="true" className="font-bold text-[20px] m-2 text-primary_color_1/80 disabled:cursor-not-allowed disabled:text-gray_color   hover:underline">
+            <FontAwesomeIcon icon={faEye} /></button>:
+            <button onClick={()=>{setOpen3(true); get_Visa_Info(airport?.airport_id)}} className="font-bold text-[20px] text-primary_color_1/80  m-2  hover:underline">
+            <FontAwesomeIcon icon={faEye} />
+            </button>
+           }
         </td>
     </tr>
             )
