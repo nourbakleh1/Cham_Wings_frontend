@@ -67,17 +67,21 @@ const CompanionSelect = ({ onChange, value, selectedCompanions }) => {
         onChange={handleSelectChange}
         className="block w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-200"
       >
-        <option value="" disabled>Select a companion</option>
+        <option value="" disabled>
+          Select a companion
+        </option>
 
-        {filteredCompanions.map((companion) => (
-          <option
-            key={`companion-${companion?.companion_id}`}
-            value={companion.companion_id}
-          >
-            {companion.travel_requirement.first_name}{" "}
-            {companion.travel_requirement.last_name}
-          </option>
-        ))}
+        {filteredCompanions.map((companion) =>
+          companion?.travel_requirement ? ( // Only display if travel_requirement exists
+            <option
+              key={`companion-${companion?.companion_id}`}
+              value={companion.companion_id}
+            >
+              {companion.travel_requirement.first_name}{" "}
+              {companion.travel_requirement.last_name}
+            </option>
+          ) : null
+        )}
       </select>
     </div>
   );
