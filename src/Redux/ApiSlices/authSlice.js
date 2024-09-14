@@ -91,7 +91,7 @@ export const resetPassword=createAsyncThunk("auth/resetPassword",async(data,Thun
 export const getUserRecommendations=createAsyncThunk("auth/getUserRecommendations",async(id,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
     try{
-        const res=await privateRequest.get(`/api/recommendations/${1}`);
+        const res=await privateRequest.get(`/api/recommendations/${id}`);
         return res.data
     }
     catch(err){
