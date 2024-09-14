@@ -143,17 +143,22 @@ const QuestionsPage = () => {
                     </div>
                   ) : (
                     <div>
-                    <div className="flex justify-between items-center">
-                      <p className="text-gray-600 pl-2 py-2 text-sm">
-                        Asked by: {q.passenger.travel_requirement.first_name}{" "}
-                        {q.passenger.travel_requirement.last_name}
-                      </p>
-                      <p className="text-gray-600 pr-2 py-2 text-sm">
-                        {q.created_at
-                          ? `${new Date(q.created_at).toLocaleDateString('en-GB')} ${new Date(q.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-                          : "Unknown"}
-                      </p>
-                    </div>
+                      <div className="flex justify-between items-center">
+                        <p className="text-gray-600 pl-2 py-2 text-sm">
+                          Asked by: {q.passenger.travel_requirement.first_name}{" "}
+                          {q.passenger.travel_requirement.last_name}
+                        </p>
+                        <p className="text-gray-600 pr-2 py-2 text-sm">
+                          {q.created_at
+                            ? `${new Date(q.created_at).toLocaleDateString(
+                                "en-GB"
+                              )} ${new Date(q.created_at).toLocaleTimeString(
+                                [],
+                                { hour: "2-digit", minute: "2-digit" }
+                              )}`
+                            : "Unknown"}
+                        </p>
+                      </div>
                       <Question
                         question={q.question}
                         faq_id={q.faq_id}
@@ -188,7 +193,14 @@ const QuestionsPage = () => {
                       </p>
                       <p className="text-gray-600 pr-2 py-2 text-sm">
                         {q.employee?.created_at
-                          ? `${new Date(q.employee.created_at).toLocaleDateString('en-GB')} ${new Date(q.employee.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+                          ? `${new Date(
+                              q.employee.created_at
+                            ).toLocaleDateString("en-GB")} ${new Date(
+                              q.employee.created_at
+                            ).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}`
                           : "Unknown"}
                       </p>
                     </div>
@@ -233,12 +245,14 @@ const QuestionsPage = () => {
       </div>
 
       {/* Pagination Component */}
-      <Pagination
-        page={page - 1} // Pass 0-based index to the Pagination component
-        setPage={setPage}
-        totalElement={totalQuestions}
-        perPage={perPage}
-      />
+      {totalQuestions > 0 && (
+        <Pagination
+          page={page - 1}
+          setPage={setPage}
+          totalElement={totalQuestions}
+          perPage={perPage}
+        />
+      )}
 
       {role !== 5 && (
         <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg rounded-t-lg p-4 z-50">
