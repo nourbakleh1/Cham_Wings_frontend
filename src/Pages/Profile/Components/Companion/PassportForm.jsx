@@ -98,13 +98,12 @@ const PassportForm = ({
             `/api/passengers/${selectedCompanion.travel_requirement_id}`
           );
           const passenger = response.data.data;
-
           // Assuming the first passport is the relevant one
           const passport = passenger.passports[0] || {};
 
           setPassengerData({
             status: "Active",
-            passport_id: passport.passport_id || "",
+            passport_id: passport[0]?.passport_id || "",
             number: passport.number || "",
             passport_issued_country: passport.passport_issued_country || "",
             passport_issued_date: passport.passport_issued_date || "",

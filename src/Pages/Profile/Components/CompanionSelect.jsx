@@ -101,11 +101,11 @@ const CompanionSelect = ({ onChange }) => {
             status: "Active",
             passport_id: passport.passport_id || "",
           });
-
+          console.log("passenger",passenger)
           setFormData({
             ...formData,
-            companion_id: passenger.companion_id,
-            passenger_id: passenger.passenger_id,
+            companion_id: passenger.companion?.companion_id,
+            passenger_id: passenger.companion?.passenger_id,
             travel_requirement_id: passenger.travel_requirement_id,
           });
         } else {
