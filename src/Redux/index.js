@@ -12,6 +12,7 @@ import airportSlice from "./ApiSlices/employee/airportSlice";
 import ManageAirplanesSlice from "./ApiSlices/employee/ManageAirplanesSlice";
 import readReservationSlice from "./ApiSlices/employee/readReservationSlice";
 import sessionStorage from 'redux-persist/lib/storage/session'
+import ManageOffersSlice from "./ApiSlices/employee/ManageOffersSlice";
 
 
 const persistAuthConfig = {
@@ -22,7 +23,7 @@ const persistAuthConfig = {
 const persistFlightConfig = {
   key: "flight",
   storage:sessionStorage,
-  whitelist: ["resultSearch"],
+  whitelist: ["resultSearch","selectedFlights"],
 };
 
 const persistedAuthReducer = persistReducer(persistAuthConfig, authSlice);
@@ -38,8 +39,10 @@ const rootReducer = combineReducers({
   manage_flights:manageFlightsSlice,
   airports:airportSlice,
   airplanes:ManageAirplanesSlice,
-  read_reservation:readReservationSlice
+  read_reservation:readReservationSlice,
+  offers:ManageOffersSlice
 });
+
 
 export const store = configureStore({
   reducer: rootReducer,

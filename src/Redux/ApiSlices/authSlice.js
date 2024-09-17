@@ -156,10 +156,9 @@ const authSlice=createSlice({
         })
         .addCase(logout.fulfilled,(state)=>{
             state.user= null;
-            localStorage.removeItem("token");
         })
         .addCase(checkVerifyPass.fulfilled,(state,action)=>{
-            state.verify_token = action.payload.data.slice(3);
+            state.verify_token = action.payload.data;
         })
         .addCase(resetPassword.pending,(state)=>{
             state.isLoading = true;

@@ -19,6 +19,8 @@ const ProfilePage = () => {
     setTimeout(() => {
       setLoading(false);
     }, 2000);
+    window.scrollTo(0,0);
+
   }, []);
 
   const toggleEditMode = () => {
