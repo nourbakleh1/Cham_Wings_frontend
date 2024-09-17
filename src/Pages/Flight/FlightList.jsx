@@ -24,6 +24,7 @@ const FlightList = () => {
   const [animationClass, setAnimationClass] = useState("");
   const [departureAirportName, setDepartureAirport] = useState("");
   const [arrivalAirportName, setArrivalAirport] = useState("");
+  const [selectedDepartureClass, setSelectedDepartureClass] = useState(null);
 
   useEffect(() => {
     if (status === "idle" && flights?.departure_flights?.length > 0) {
@@ -91,9 +92,10 @@ const FlightList = () => {
     return uniqueDates;
   };
 
-  const handleFlightSelect = (flight, type) => {
+  const handleFlightSelect = (flight, type, classType) => {
     if (type === "departure_flights") {
       setSelectedDeparture(flight);
+      setSelectedDepartureClass(classType);
       setAnimationClass("animate-slide-out");
 
       setTimeout(() => {
@@ -175,6 +177,9 @@ const FlightList = () => {
       )
     : returnFlights;
 
+  const showContinueButton =
+    filteredDepartureFlights.length > 0 || filteredArrivalFlights.length > 0;
+
   if (status === "loading") {
     return (
       <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-b from-blue-100 to-white">
@@ -240,7 +245,7 @@ const FlightList = () => {
 
   return (
     <div
-      className={`full-width-container md:py-28 xs:py-20 mx-4 sm:mx-8 lg:mx-32 ${animationClass}`}
+      className={`full-width-container h-full md:py-28 xs:py-20 mx-4 sm:mx-8 lg:mx-32 ${animationClass}`}
     >
       <ToastContainer
         className="toast-container"
@@ -259,30 +264,57 @@ const FlightList = () => {
         draggable
         pauseOnHover
       />
-      <div className="flight-date-section md:mb-8 xs:mb-2 flex flex-col md:gap-8 sm:gap-2 sm:flex-row">
-        <div className="date-box flex-1 shadow-lg border-gray-300 border-t-2">
-          <h4 className="text-xl font-semibold text-gray-800 flex items-center">
-            <FaPlaneDeparture className="text-blue-600 mr-2" size={24} />
-            Departure Airport
-          </h4>
-          <div className="date-filter mt-4">
-            <div className="flex flex-wrap md:gap-2 xs:gap-2 overflow-x-auto whitespace-nowrap">
-              {getUniqueDates(departureFlights).map((date, index) => (
-                <div
-                  key={index}
-                  className={`date-item cursor-pointer rounded-full py-1 px-4 text-center font-medium ${
-                    date === selectedDepartureDate
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-800"
-                  }`}
-                  onClick={() => handleDepartureDateClick(date)}
-                >
-                  {date}
-                </div>
-              ))}
+
+      {/* Back Button */}
+      {!showContinueButton && (
+        <div className="mb-4 mt-4 md:mt-2 flex justify-start">
+          <button
+            className="flex items-center px-4 py-2 text-white bg-[#00529B] rounded-lg hover:bg-[#003d73] transition-colors duration-300"
+            onClick={() => navigate(-1)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Back
+          </button>
+        </div>
+      )}
+
+      <div className="date-section md:mb-8 xs:mb-2 flex flex-col md:gap-8 sm:gap-2 sm:flex-row">
+        {departureFlights.length > 0 && (
+          <div className="date-box flex-1 shadow-lg border-gray-300 border-t-2">
+            <h4 className="text-xl font-semibold text-gray-800 flex items-center">
+              <FaPlaneDeparture className="text-blue-600 mr-2" size={24} />
+              Departure Airport
+            </h4>
+            <div className="date-filter mt-4">
+              <div className="flex flex-wrap md:gap-2 xs:gap-2 overflow-x-auto whitespace-nowrap">
+                {getUniqueDates(departureFlights).map((date, index) => (
+                  <div
+                    key={index}
+                    className={`date-item cursor-pointer rounded-full py-1 px-4 text-center font-medium ${
+                      date === selectedDepartureDate
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200 text-gray-800"
+                    }`}
+                    onClick={() => handleDepartureDateClick(date)}
+                  >
+                    {date}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
         {returnFlights.length > 0 && (
           <div className="date-box flex-1 shadow-lg border-gray-300 border-t-2">
             <h4 className="text-xl font-semibold text-gray-800 flex items-center">
@@ -334,14 +366,17 @@ const FlightList = () => {
               isSelected={
                 selectedDeparture && selectedDeparture.id === flight.id
               }
-              onSelect={() => handleFlightSelect(flight, "departure_flights")}
+              onSelect={(flight, classType) =>
+                handleFlightSelect(flight, "departure_flights", classType)
+              }
+              showOnlyClass={null}
             />
           ))}
         </section>
       )}
 
-      {/* {filteredArrivalFlights.length > 0 && ( */}
-      {selectedArrivalDate && filteredArrivalFlights.length > 0 && (
+      {/* {selectedArrivalDate && filteredArrivalFlights.length > 0 && ( */}
+      {filteredArrivalFlights.length > 0 && (
         <section>
           <div className="flex items-center mb-4 sm:mb-6">
             <div className="flex-1 border-t border-gray-300"></div>
@@ -359,34 +394,52 @@ const FlightList = () => {
               key={`arrival-${flight.id}`}
               flight={flight}
               isSelected={selectedArrival && selectedArrival.id === flight.id}
-              onSelect={() => handleFlightSelect(flight, "return_flights")}
+              onSelect={(flight, classType) =>
+                handleFlightSelect(flight, "return_flights", classType)
+              }
+              showOnlyClass={selectedDepartureClass}
             />
           ))}
         </section>
       )}
 
+      {/* There is no flights */}
       {filteredDepartureFlights.length === 0 &&
         filteredArrivalFlights.length === 0 && (
-          <div className="text-xl text-gray-600 text-center mt-6">
-            No Flights Available
+          <div className="no-flights-container flex flex-col items-center justify-center h-[60vh] mx-auto text-center bg-gradient-to-r from-gray-200 to-white">
+            <svg
+              className="no-flights-icon text-red-400 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mb-4 animate-bounce"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M18 12c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2s.9 2 2 2h8c1.1 0 2-.9 2-2zM12 2v20"></path>
+            </svg>
+            <h2 className="no-flights-text text-lg sm:text-xl md:text-2xl text-gray-800 font-bold mb-2">
+              No Flights Available
+            </h2>
+            <p className="no-flights-subtext text-xs sm:text-sm md:text-base text-gray-600 px-2">
+              Try adjusting your search criteria or check back later.
+            </p>
           </div>
         )}
-      <div className="mt-4 sm:mt-8 flex justify-center">
-        {/* <button
-          onClick={handleContinue}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 sm:px-4 w-full sm:w-1/3 rounded"
-        >
-          Continue
-        </button> */}
-        <Button
-          color={"#00529B"}
-          padding="12px"
-          onClick={handleContinue}
-          width="35%"
-        >
-          Continue
-        </Button>
-      </div>
+
+      {showContinueButton && (
+        <div className="mt-4 sm:mt-8 flex justify-center">
+          <Button
+            color={"#00529B"}
+            padding="12px"
+            onClick={handleContinue}
+            width="35%"
+          >
+            Continue
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

@@ -4,8 +4,9 @@ import { selectFlight } from "../../../Redux/ApiSlices/flightSlice";
 import { FaPlane, FaChevronDown } from "react-icons/fa";
 import ClassDetails from "./ClassDetails";
 
-const FlightCard = ({ flight, isSelected, onSelect }) => {
+const FlightCard = ({ flight, isSelected, onSelect, showOnlyClass }) => {
   const [expandedClass, setExpandedClass] = useState(null);
+  const [selectedClass, setSelectedClass] = useState(null);
   const dispatch = useDispatch();
 
   const handleClassSelect = (classType) => {
@@ -13,10 +14,12 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
   };
 
   const handleSelectButtonClick = (classType) => {
-    dispatch(selectFlight({ flightId: flight.id, classType }));
+    dispatch(selectFlight({ flightId: flight?.flight_id, classType }));
     onSelect(flight, classType);
+    setSelectedClass(classType);
     setExpandedClass(null);
   };
+
   const economyPriceTotal =
     flight?.economyPrice && flight?.price
       ? flight.economyPrice * flight.price
@@ -27,11 +30,10 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
       ? flight.businessPrice * flight.price
       : 0;
 
-  const classTypes = [
+  const allClassTypes = [
     {
       name: "Economy",
       color: "green",
-      // price: `USD ${flight.economyPrice}`,
       price: `USD ${economyPriceTotal}`,
       weight: flight.economyWeight,
       meal: `Meal x${flight.economyMeals}`,
@@ -42,7 +44,6 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
     {
       name: "Business",
       color: "blue",
-      // price: `USD ${flight.businessPrice}`,
       price: `USD ${businessPriceTotal}`,
       weight: flight.businessWeight,
       meal: `Meal x${flight.businessMeals}`,
@@ -51,6 +52,13 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
       refundFee: flight.businessRefundFee,
     },
   ];
+
+  const classTypes = showOnlyClass
+    ? allClassTypes.filter(
+        (classType) =>
+          classType.name.toLowerCase() === showOnlyClass.toLowerCase()
+      )
+    : allClassTypes;
 
   return (
     <div
@@ -84,7 +92,6 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
                 <div className="h-px bg-gray-300 w-16"></div>
               </div>
               <div className="text-center text-gray-500 mt-2">
-                {/* <div>{flight.date}</div> */}
                 <div>{flight.departure_date}</div>
               </div>
             </div>
@@ -103,29 +110,68 @@ const FlightCard = ({ flight, isSelected, onSelect }) => {
             {classTypes.map((classType) => (
               <div
                 key={classType.name}
-                className="relative border-b sm:border-b-0 sm:border-r last:border-r-0 border-gray-400"
+                className={`relative border-b sm:border-b-0 sm:border-r last:border-r-0 border-gray-400 
+                ${
+                  expandedClass === classType.name.toLowerCase() ||
+                  selectedClass === classType.name.toLowerCase() // Check if selectedClass is the same
+                    ? "bg-blue-400 text-white"
+                    : ""
+                }`} // Keep the background blue and text white if the class is selected
               >
                 <button
                   onClick={() =>
                     handleClassSelect(classType.name.toLowerCase())
                   }
-                  className="w-full h-full p-4 text-left hover:bg-gray-100"
+                  className="w-full h-full p-4 py-8 text-left"
                 >
                   <div
-                    className={`font-semibold text-${classType.color}-700 border-t-${classType.color}-800`}
+                    className={`font-semibold ${
+                      expandedClass === classType.name.toLowerCase() ||
+                      selectedClass === classType.name.toLowerCase()
+                        ? "text-white"
+                        : `text-${classType.color}-700`
+                    }`}
                   >
                     {classType.name}
                   </div>
-                  <div className="text-sm text-gray-500">from USD</div>
-                  <div className="font-bold text-lg">{classType.price}</div>
+                  <div
+                    className={`text-sm ${
+                      expandedClass === classType.name.toLowerCase() ||
+                      selectedClass === classType.name.toLowerCase()
+                        ? "text-white"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    from USD
+                  </div>
+                  <div
+                    className={`font-bold text-lg ${
+                      expandedClass === classType.name.toLowerCase() ||
+                      selectedClass === classType.name.toLowerCase()
+                        ? "text-white"
+                        : ""
+                    }`}
+                  >
+                    {classType.price}
+                  </div>
                   {classType.name === "Economy" && (
-                    <div className="text-xs text-red-600">Lowest price</div>
+                    <div
+                      className={`text-xs ${
+                        expandedClass === classType.name.toLowerCase() ||
+                        selectedClass === classType.name.toLowerCase()
+                          ? "text-white"
+                          : "text-red-600"
+                      }`}
+                    >
+                      Lowest price
+                    </div>
                   )}
                   <FaChevronDown
-                    className={`mt-2 text-gray-400 transition-transform ${
-                      expandedClass === classType.name.toLowerCase()
-                        ? "rotate-180"
-                        : ""
+                    className={`mt-2 transition-transform ${
+                      expandedClass === classType.name.toLowerCase() ||
+                      selectedClass === classType.name.toLowerCase()
+                        ? "text-white rotate-180"
+                        : "text-gray-400"
                     }`}
                   />
                 </button>
