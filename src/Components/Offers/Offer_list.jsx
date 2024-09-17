@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Headings from '../Headings/Headings';
 import Offer_item from './Offer_item';
 import Button from '../Button/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { getaOffersUser } from '../../Redux/ApiSlices/employee/ManageOffersSlice';
 
 const Offer_list = ({offers}) => {
+  const dispatch=useDispatch();
+  const {user_offers}=useSelector(state=>state.offers);
+ console.log(user_offers)
+  useEffect(()=>{
+    dispatch(getaOffersUser())
+  },[])
   return (
     
     <>
