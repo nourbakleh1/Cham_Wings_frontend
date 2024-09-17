@@ -57,7 +57,8 @@ const Chatbot_emp = () => {
   ref.current?.scrollIntoView({behavior :'smooth',block:"end"})
   },[newChat])
 
-  const handelstate=()=>{
+  const handelstate=(e)=>{
+    e.preventDefault();
     if(input_text.trim() == ""){
       return toast.error("input field is required")
     }
@@ -133,7 +134,7 @@ const Chatbot_emp = () => {
     </div>
     {
       view ?<><section className='w-[70%] mx-auto'>
-    <div className='my-[50px] text-[20px] sm:text-[30px] md:text-[40px] lg:text-[50px] text-[#c4c7c5] p-5'>
+    <div className='my-[50px] text-[20px] sm:text-[30px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#c4c7c5] p-0 2xl:p-5'>
       <p className='animate__myself'>
         <span className=" multe">Hello, {user?.data?.user?.employee.name}</span>
       </p>
@@ -142,11 +143,11 @@ const Chatbot_emp = () => {
     </section>
 
     <div className='cards w-[70%] mx-auto flex    justify-center text-[11px] gap-5    items-center text-white_color'>
-      <div className='card bg-brown_color/50 p-2 h-[150px] flex flex-col justify-between items-start animate__myself cursor-pointer' onClick={()=>setInput_text(oneCard)}>
+      <div className='card bg-brown_color/50 p-2 m-2 sm:m-0 h-[100px] md:h-[150px]  flex flex-col justify-between items-start animate__myself cursor-pointer' onClick={()=>setInput_text(oneCard)}>
         <p>Help me find the latest trends</p>
         <FontAwesomeIcon icon={faCompass} className='bg-black p-1 rounded-xl'/>
       </div>
-      <div className='card bg-brown_color/50 p-2 h-[150px] flex flex-col justify-between items-start animate__myself cursor-pointer' onClick={()=>setInput_text(twoCard)}>
+      <div className='card bg-brown_color/50 p-2 h-[150px]  flex-col justify-between hidden md:flex items-start animate__myself cursor-pointer' onClick={()=>setInput_text(twoCard)}>
         <p>Create an image & bedtime story</p>
         <FontAwesomeIcon icon={faPenToSquare} className='bg-black p-1 rounded-xl'/>
       </div>
@@ -231,9 +232,9 @@ const Chatbot_emp = () => {
     <div className='w-[70%] mx-auto bg-transparent absolute bottom-[2%] left-[15%]'>
     <div className='animate__myself flex items-center justify-between relative gap-5 bg-black/10 px-5 py-2 rounded-[50px]'>
    
-      <input id="search" type='text' required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full resize-none max-h-[150px] h-[40px] bg-transparent border-none outline-none p-2 text-[18px] text-white'  placeholder='Enter a prompt here'/>
+      <input id="search" type='text' required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full  resize-none  h-[30px] sm:h-[40px] bg-transparent border-none outline-none p-0 sm:p-2 text-[12px] md:text-[18px] text-white placeholder:text-[10px]'  placeholder='Enter a prompt here'/>
       <div>
-      <button type='submit'><FontAwesomeIcon icon={faLocationArrow}  className='text-white absolute right-[10px] bottom-[5px] translate-y-[-50%]  text-[25px] w-[35px] border-transparent rotate-45'/></button>
+      <button type='submit'><FontAwesomeIcon icon={faLocationArrow}  className='text-white absolute right-[10px] bottom-[5px] translate-y-[-50%] text-[20px] sm:text-[25px] w-[35px] border-transparent rotate-45'/></button>
       </div>
      
     </div>
