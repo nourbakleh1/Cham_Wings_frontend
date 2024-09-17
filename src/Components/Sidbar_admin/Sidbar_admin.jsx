@@ -70,6 +70,13 @@ const Sidbar_admin = (displaySidebar,setDisplaySidebar) => {
             </NavLink>
          </li>
          <li>
+            <NavLink end to="/admin_dashboard/manage-policies" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faGears} />
+               
+               <span className="flex-1 ms-3 whitespace-nowrap md:text-[14px] text-[11px] ">manage policies</span>
+            </NavLink>
+         </li>
+         <li>
             <NavLink to="/admin_dashboard/view-history" className="flex items-center p-3 my-5 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faNewspaper} />
                <span className="flex-1 ms-3 whitespace-nowrap text-[11px] md:text-[14px]">view activities log</span>

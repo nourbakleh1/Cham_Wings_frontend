@@ -1,4 +1,4 @@
-import { faBox, faChartColumn, faChartPie, faChevronLeft, faCircleInfo, faCircleMinus, faFileCirclePlus, faFilePdf, faFilePen, faHatWizard, faInfo, faListCheck, faMessage, faMinus, faNewspaper, faPeopleArrows, faPersonMilitaryPointing, faPersonWalkingArrowLoopLeft, faPlane, faPlus, faRightFromBracket, faRightLeft, faWrench } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faChartColumn, faChartPie, faChevronLeft, faCircleInfo, faCircleMinus, faDownload, faFileCirclePlus, faFilePdf, faFilePen, faHatWizard, faInfo, faListCheck, faMessage, faMinus, faNewspaper, faPeopleArrows, faPersonMilitaryPointing, faPersonWalkingArrowLoopLeft, faPlane, faPlus, faRightFromBracket, faRightLeft, faTrash, faWrench } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
@@ -7,7 +7,7 @@ import Modal from '../Modal/Modal';
 import Button from '../Button/Button';
 import Headings from '../Headings/Headings';
 import { useDispatch, useSelector } from 'react-redux';
-import { deletePdf, getpdfs, uploadPdf } from '../../Redux/ApiSlices/employee/chatbotSlice';
+import { deletePdf, downloadPDF, getpdfs, uploadPdf } from '../../Redux/ApiSlices/employee/chatbotSlice';
 import { toast } from 'react-toastify';
 import Loading1 from '../Loading/Loading1';
 import { logout } from '../../Redux/ApiSlices/authSlice';
@@ -71,6 +71,10 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
         return toast.error(rej)
       })
     }
+    const handelDownload=(id)=>{
+      dispatch(downloadPDF(id)).unwrap().then((res)=>
+         {return toast.success(res?.message)})
+    }
   return (
     
     <>
@@ -81,64 +85,32 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
    <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
    </svg>
 </button>
+{/* delete pdf */}
+<Modal open={open1} setOpen={setOpen1}>
+            <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
+            <div className='flex flex-col justify-center items-center gap-6 text-center'>
 
-    
-        <aside id="default-sidebar" className="fixed top-[80px]  md:top-[78px] lg:top-[84px]  left-0 transition-transform lg:translate-x-0 -translate-x-[110%] z-[40] w-56 sm:w-[286px] lg:w-[360px] h-screen " aria-label="Sidebar">
-        <FontAwesomeIcon onClick={closeSide} icon={faChevronLeft} className='absolute top-[20%] left-[91%]  lg:hidden text-[20px] text-white_color bg-secoundary_color'/>
-   <div className="h-full px-1 sm:px-3 py-4 w-[210px] sm:w-[296px]  overflow-y-auto bg-gray-50 dark:bg-gray-800">
-      <ul className="space-y-2 font-medium">
-         <li>
-            <NavLink end to="/dashboard/employee" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-            <FontAwesomeIcon icon={faChartPie} />
-               <span className="ms-3 text-[11px] md:text-[14px]">Dashboard</span>
-            </NavLink>
-         </li>
-         <li>
-         <NavLink end to="/dashboard/employee/chatbot_emp" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <FontAwesomeIcon icon={faWrench} />
-                   
-                  <span className="flex-1  ms-3 text-left rtl:text-right whitespace-nowrap  text-[11px] md:text-[14px]">Emp chatBot files</span>
-                  <svg onClick={()=>{setOpenpdf(!openpdf);GetPdf()}}  className="mr-2 w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
-                  </svg>
-                  <FontAwesomeIcon icon={faPlus} onClick={()=>{setOpen(!open);}}/>
-                  </NavLink>
-                  
-                  
-                      
-                  
-         {openpdf &&
-            <ul id="dropdown-example" className="p-2 space-y-2">
-            {Pdf_file_sorted?.map((el)=>{
-               return (
-                  <div key={el.id}>
-                  <li className='flex gap-3 sm:gap-0 justify-center sm:justify-evenly items-center text-[11px] md:text-[14px] border-primary_color/40 border-b-2 border-solid' >
-                  <FontAwesomeIcon icon={faFilePdf} className='text-off_white'/>
-
-                     <span  className="flex items-center text-[12px] w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{el.filename.slice(0,20)}</span>
-                     <FontAwesomeIcon icon={faMinus} className='text-off_white cursor-pointer' onClick={()=>{ setOpen1(!open1);setData({id:el.id,name:el.filename.slice(0,30)})}}/>
-
-                  </li>
-                 
-                  </div>
-
-               )
-            })}
+            <p className='font-bold'>do you want to delete <span className='text-secoundary_color font-extrabold'>{data?.name}</span></p>
+            <div className='flex gap-3'>
+            <Button onClick={()=>handelDeletePdf(data?.id)} color={"#cf2e2e"} padding='5px'>Delete</Button>
+            <Button onClick={()=>setOpen1(!open1)} color={"#777"} padding='5px'>Cancel</Button>
+            </div>
            
-                 
-            </ul>}
-            
-         </li>
-         <Modal open={open} setOpen={setOpen}>
+            </div>
+
+            </div>
+           </Modal>
+{/* add pdf */}
+     <Modal open={open} setOpen={setOpen}>
         <div className=" flex items-center justify-center py-0 px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
 	
-	<div className="sm:max-w-lg w-full p-1 rounded-xl z-10">
+	   <div className="sm:max-w-lg w-full p-1 rounded-xl z-10">
 		<div className="text-center">
 			<h2 className="mt-3 text-lg sm:text-2xl font-bold text-gray-900">
 				File Upload!
 			</h2>
-		</div>
-        <form className="mt-3 space-y-3" onSubmit={handelPDF}>
+	   	</div>
+         <form className="mt-3 space-y-3" onSubmit={handelPDF}>
                     
                     <div className="grid grid-cols-1 space-y-1">
                                     <label className="text-sm text-center font-bold text-primary_color mb-3 tracking-wide">Attach Document</label>
@@ -167,21 +139,56 @@ const Sidbar = (displaySidebar,setDisplaySidebar) => {
 	            </div>
             </div>
         </Modal>
+        <aside id="default-sidebar" className="fixed top-[80px]  md:top-[78px] lg:top-[84px]  left-0 transition-transform lg:translate-x-0 -translate-x-[110%] z-[40] w-56 sm:w-[286px] lg:w-[360px] h-screen " aria-label="Sidebar">
+        <FontAwesomeIcon onClick={closeSide} icon={faChevronLeft} className='absolute top-[20%] left-[91%]  lg:hidden text-[20px] text-white_color bg-secoundary_color'/>
+   <div className="h-full px-1 sm:px-3 py-4 w-[210px] sm:w-[296px]  overflow-y-auto bg-gray-50 dark:bg-gray-800">
+      <ul className="space-y-2 font-medium">
+         <li>
+            <NavLink end to="/dashboard/employee" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <FontAwesomeIcon icon={faChartPie} />
+               <span className="ms-3 text-[11px] md:text-[14px]">Dashboard</span>
+            </NavLink>
+         </li>
+         <li className='relative'>
+         <NavLink end to="/dashboard/employee/chatbot_emp" className="flex items-center p-3 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <FontAwesomeIcon icon={faWrench} />
+                   
+                  <span className="flex-1  ms-3 text-left rtl:text-right whitespace-nowrap  text-[11px] md:text-[14px]">Emp chatBot files</span>
+                 
+                  </NavLink>
+                  <svg onClick={()=>{setOpenpdf(!openpdf);GetPdf()}}  className="absolute top-[23px] translate-y-[-50%] right-[18px] mr-2 w-3 h-3 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+                  <FontAwesomeIcon icon={faPlus} className='text-white absolute top-[23px] translate-y-[-50%]  right-[5px]' onClick={()=>{setOpen(!open);}}/>
+                  
+                  
+                      
+                  
+         {openpdf &&
+            <ul id="dropdown-example" className="p-2 space-y-2 bg-slate-500/20 rounded-md shadow-sm shadow-white">
+            {Pdf_file_sorted?.map((el)=>{
+               return (
+                  <div key={el.id}>
+                  <li className='flex px-1 justify-center sm:justify-evenly items-center text-[11px] md:text-[14px] border-primary_color/40 border-b-2 border-solid' >
+                  <FontAwesomeIcon icon={faFilePdf} className='text-off_white'/>
 
-        <Modal open={open1} setOpen={setOpen1}>
-            <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
-            <div className='flex flex-col justify-center items-center gap-6'>
+                     <span  className="flex  items-center text-[11px] md:text-[14px] text-nowrap w-full  text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{el.filename.slice(0,20)}</span>
+                     <FontAwesomeIcon icon={faTrash} className='text-off_white cursor-pointer px-1' onClick={()=>{ setOpen1(!open1);setData({id:el.id,name:el.filename.slice(0,30)})}}/>
+                     <FontAwesomeIcon icon={faDownload} onClick={()=>{handelDownload(el?.id)}} className='text-off_white cursor-pointer px-2'/>
+                  </li>
+                 
+                  </div>
 
-            <p className='font-bold'>do you want to delete <span className='text-secoundary_color font-extrabold'>{data?.name}</span></p>
-            <div className='flex gap-3'>
-            <Button onClick={()=>handelDeletePdf(data?.id)} color={"#00529B"} padding='5px'>Delete</Button>
-            <Button onClick={()=>setOpen1(!open1)} color={"#cf2e2e"} padding='5px'>Cancel</Button>
-            </div>
+               )
+            })}
            
-            </div>
+                 
+            </ul>}
+            
+         </li>
+        
 
-            </div>
-           </Modal>
+        
            <li>
             <NavLink to="/dashboard/employee/reservation" className="flex items-center p-2 my-4 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <FontAwesomeIcon icon={faBox} />
