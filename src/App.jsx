@@ -42,6 +42,13 @@ import Manage_airports from './Pages/Employee/Manage_airports/Manage_airports';
 import Read_reservation from './Pages/Employee/Read_reservation/Read_reservation';
 import Profile from './Pages/Profile/Employee/profile';
 import QuestionsPage from './Pages/QandA/QuestionsPage';
+import OurServices from './Pages/OurService/OurServices';
+import SeatSelection from './Pages/OurService/InfoCard/SeatSelection';
+import BusinessClass from './Pages/OurService/InfoCard/BusinessClass';
+import Entertainment from './Pages/OurService/InfoCard/Entertainment';
+import TravelerMagazine from './Pages/OurService/InfoCard/TravelerMagazine';
+import UnaccompaniedMinors from './Pages/OurService/InfoCard/UnaccompaniedMinors';
+
 
 const App = () => {
   const ref=useRef(null);
@@ -79,8 +86,8 @@ const App = () => {
 
 
                     
-                    <Route path="profile" element={role == undefined ?<ProfilePage/>: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
-                    <Route path="questions" element={role == undefined ?<QuestionsPage/>: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
+                    <Route path="profile" element={user != undefined ?<ProfilePage/>: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
+                    <Route path="answer-questions" element={role == undefined ?<QuestionsPage/>: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
 
                     {/* passenger page */}
                     <Route path="flight" element={role == undefined ? <FlightList />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
@@ -101,6 +108,15 @@ const App = () => {
                     <Route path="ceos-letter" element={role == undefined?<ChairMan />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
                     </Route>
 
+                  {/* our service page nested route */}
+                    <Route path="our-services">
+                    <Route index element={role == undefined?<OurServices />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="unaccompanied-minors" element={role == undefined?<UnaccompaniedMinors />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="seat-selection" element={role == undefined?<SeatSelection />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="business-class" element={role == undefined?<BusinessClass />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="inflight-entertainment" element={role == undefined?<Entertainment />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    <Route path="the-traveler-magazine" element={role == undefined?<TravelerMagazine />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
+                    </Route>
 
                     </Route>
 
@@ -114,10 +130,9 @@ const App = () => {
                     <Route path="manage-flights" element={role != 4 && role != undefined ?<Manage_flights/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="manage-airplanes" element={role != 4 && role != undefined ?<Manage_airplanes/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="manage-airports" element={role != 4 && role != undefined ?<Manage_airports/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
-                    <Route path="answer-questions" element={role != 4 && role != undefined ?<Answer_Questions/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
+                    <Route path="answer-questions" element={role != 4 && role != undefined ?<QuestionsPage/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="visa-information" element={role != 4 && role != undefined ?<Visa_information/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     <Route path="profile" element={role != 4 && role != undefined ?<Profile/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
-                    <Route path="questions" element={role != 4 && role != undefined ? <QuestionsPage/>: <Navigate to={role == undefined ? "/":role == 4 ?"/admin_dashboard":null}/>}/>
                     
                     </Route>
 
@@ -131,7 +146,7 @@ const App = () => {
 
                     
                     <Route path="profile" element={role == 4 ? <Profile/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
-                    <Route path="questions" element={role == 4 ? <QuestionsPage/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+                    {/* <Route path="answer-questions" element={role == 4 ? <QuestionsPage/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/> */}
 
                     </Route>
 
