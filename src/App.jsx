@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { BrowserRouter as  Router, Routes,Route, Navigate } from 'react-router-dom';
 import Home from './Pages/Home/Home';
@@ -15,7 +15,7 @@ import OurFleet from './Pages/AboutUs/OurFleet';
 import OurCompany from './Pages/AboutUs/OurCompany';
 import OurResponsibility from './Pages/AboutUs/OurResponsibility';
 import ChairMan from './Pages/AboutUs/ChairMan';
-import Manage_Offer from './Pages/Employee/Components/Manage_Offer';
+import Manage_Offer from './Pages/Employee/Components/Manage_offers/Manage_Offer';
 import Manage_flights from './Pages/Employee/Manage_flights/Manage_flights';
 import Answer_Questions from './Pages/Employee/Components/Answer_Questions';
 import View_history from './Pages/Admin/Components/View_history';
@@ -37,6 +37,7 @@ import Reset_password from './Pages/Reset_Password/Reset_password';
 import { useSelector } from 'react-redux';
 import Verify_email_pass from './Pages/Verify-email/Verify_email_pass';
 import ProfilePage from './Pages/Profile/profile';
+import axios from 'axios';
 import Manage_airplanes from './Pages/Employee/Manage_airplanes/Manage_airplanes';
 import Manage_airports from './Pages/Employee/Manage_airports/Manage_airports';
 import Read_reservation from './Pages/Employee/Read_reservation/Read_reservation';
@@ -54,6 +55,7 @@ const App = () => {
   const ref=useRef(null);
   const {user}=useSelector((state)=>state.auth)
   const role = user?.data?.user?.employee?.roles[0]?.role_id;
+  const [data,setData]=useState(null);
  
   useEffect(()=>{
     window.addEventListener("scroll",()=>{
@@ -65,6 +67,26 @@ const App = () => {
       }
     })
   },[]);
+  console.log("data",data);
+    useEffect(()=>{
+      
+      navigator.geolocation.getCurrentPosition(async(position)=>{
+        const{latitude,longitude}=position.coords;
+        let Url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+        try{
+          const res= await axios.get(Url);
+          setData(res?.data?.address)
+        }
+        catch(err){
+          console.log(err)
+        }
+          
+         
+         
+         
+      })
+        
+      },[]);
 
   
 

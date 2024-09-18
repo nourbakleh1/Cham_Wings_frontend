@@ -629,8 +629,8 @@ const handelAddSchedule=(id)=>{
 
             </div>
            </Modal>
- {/* Vice Modal */}
- <SpeachToText open5={open5} setOpen5={setOpen5} search={search} setSearch={setSearch}/>
+            {/* Vice Modal */}
+            <SpeachToText open5={open5} setOpen5={setOpen5} search={search} setSearch={setSearch}/>
 
     
     <div className='h-auto bg-gradient-to-t  p-2 md:p-8 w-full '>
@@ -641,7 +641,7 @@ const handelAddSchedule=(id)=>{
     <label htmlFor="table-search" className="sr-only">Search</label>
     <div className="relative">
         <div className="shadow-xl shadow-black_color/40 rounded-xl border-[1px] border-solid border-white/30">
-        <Button onClick={()=>{setOpen2(true);}}>  <FontAwesomeIcon icon={faPlus}  className='text-[20px] font-bold text-primary_color/80 pr-2'/>Add flights</Button>
+        <Button onClick={()=>{setOpen2(true);}}>  <FontAwesomeIcon icon={faPlus}  className='text-[20px] font-bold text-primary_color/80 pr-2'/>Add flight</Button>
         </div>
         
         

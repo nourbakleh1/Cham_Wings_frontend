@@ -7,16 +7,17 @@ import Separator from "../Separator/Separator";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/ApiSlices/authSlice";
 import { toast } from "react-toastify";
+import { fetchProfile } from "../../Redux/ApiSlices/profileSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [display, setDispaly] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const role = user?.data?.user?.employee?.roles[0]?.role_id;
-
   const handelNav = () => {
     document.getElementById("navbar-user").classList.toggle("hidden");
   };
+ 
   const handelLogout = () => {
     dispatch(logout())
       .unwrap()
@@ -50,21 +51,31 @@ const Header = () => {
         </Link>
         {user ? (
           <div className=" hidden md:flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+
             <button
               onClick={() => {
                 setDispaly(!display);
               }}
               type="button"
-              className="flex relative text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+              className="flex relative text-sm bg-brown_color/25 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
               id="user-menu-button"
               aria-expanded="false"
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
             >
               <span className="sr-only">Open user menu</span>
+              <span className="block text-sm text-gray-900 dark:text-white my-2 px-3 py-1">
+                    {user?.data?.user?.employee
+                      ? user?.data?.user?.employee?.name
+                      : user?.data?.user?.passenger?.travel_requirement
+                          ?.first_name +
+                        " " +
+                        user?.data?.user?.passenger?.travel_requirement
+                          ?.last_name}
+                  </span>
               <img
                 className="w-7 h-7 sm:w-9 sm:h-9 lg:w-11 lg:h-11 rounded-full bg-white_color"
-                src="/assets/images/user-avatar.png"
+                src={ user?.data?.user?.image ?`http://127.0.0.1:8000/${user?.data?.user?.image}`:"/assets/images/user-avatar.png"}
                 alt="user photo"
               />
               <i className="bi bi-person-circle"></i>

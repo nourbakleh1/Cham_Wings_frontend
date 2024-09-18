@@ -68,6 +68,10 @@ const Slider = () => {
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{el?.price}$</p>
         </div>
         <div className='flex justify-center items-center gap-3'>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.departure_airport}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.arrival_airport}</p>
+        </div>
+        <div className='flex justify-center items-center gap-3'>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>{el?.departure_date}</p>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneArrival} className='px-2 text-[20px] text-secoundary_color' />{el?.arrival_date}</p></div>
       </div>
@@ -88,6 +92,10 @@ const Slider = () => {
       <div className='flex justify-center items-center gap-3'>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faHashtag} />{el?.flight_number}</p>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{el?.price}$</p>
+        </div>
+        <div className='flex justify-center items-center gap-3'>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-wrap'>{el?.departure_airport}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-wrap'>{el?.arrival_airport}</p>
         </div>
         <div className='flex justify-center items-center gap-3'>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>{el?.departure_date}</p>

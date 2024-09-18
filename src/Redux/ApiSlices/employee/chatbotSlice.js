@@ -82,7 +82,21 @@ export const getChat=createAsyncThunk("chatbot/getChat",async(id,ThunkApi)=>{
     {
         return rejectWithValue(error.message);
     }
-})
+});
+
+export const downloadPDF=createAsyncThunk("chatbot/downloadPDF",async(id,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+    try{
+       const res=  await  privateRequest.get(`/api/pdfs/${id}/download`);
+       return res.data
+    }
+    catch(error)
+    {
+        return rejectWithValue(error.message);
+    }
+});
+
+
 const initialState={
     Pdf_file:[],
     Pdf_file_sorted:[],
