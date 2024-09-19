@@ -66,18 +66,6 @@ const FlightList = () => {
     }
   }, [status, flights]);
 
-  useEffect(() => {
-    // console.log("selected Departure Flight:", selectedDeparture);
-    // console.log("selected Arrival Flight:", selectedArrival);
-    // console.log("Selected Departure Date:", selectedDepartureDate);
-    // console.log("Selected Arrival Date:", selectedArrivalDate);
-  }, [
-    selectedDeparture,
-    selectedArrival,
-    selectedDepartureDate,
-    selectedArrivalDate,
-  ]);
-
   const getUniqueDates = (flights) => {
     if (!Array.isArray(flights)) return [];
 
@@ -94,10 +82,12 @@ const FlightList = () => {
 
   const handleFlightSelect = (flight, type, classType) => {
     if (type === "departure_flights") {
+      // Set the latest selected departure flight and clear out previous return flights
       setSelectedDeparture(flight);
       setSelectedDepartureClass(classType);
       setAnimationClass("animate-slide-out");
 
+      // Optionally update return flights based on the selected departure flight
       setTimeout(() => {
         const returnFlights = flights?.return_flights || [];
         const availableReturnDates = getUniqueDates(returnFlights);
@@ -112,6 +102,7 @@ const FlightList = () => {
         }
       }, 500);
     } else {
+      // Set the latest selected arrival flight
       setSelectedArrival(flight);
     }
   };
@@ -141,18 +132,34 @@ const FlightList = () => {
   };
 
   const handleContinue = async () => {
-    const returnFlights = flights?.return_flights || [];
-    if (!selectedDeparture || (returnFlights.length > 0 && !selectedArrival)) {
+    if (
+      !selectedDeparture ||
+      (flights?.return_flights &&
+        flights.return_flights.length > 0 &&
+        !selectedArrival)
+    ) {
       toast.error(
-        "Please select both an Departure and Arrival flight (if available) before continuing."
+        "Please select both a Departure and Arrival flight (if available) before continuing."
       );
       return;
     }
 
-    const flightsToSend = [
-      ...(selectedDeparture ? [selectedDeparture] : []),
-      ...(selectedArrival ? [selectedArrival] : []),
-    ];
+    // Prepare the flight data to be sent
+    const flightsToSend = [];
+
+    if (selectedDeparture) {
+      flightsToSend.push({
+        flightId: selectedDeparture.id,
+        classType: selectedDepartureClass || "economy",
+      });
+    }
+
+    if (selectedArrival) {
+      flightsToSend.push({
+        flightId: selectedArrival.id,
+        classType: selectedDepartureClass || "economy",
+      });
+    }
 
     try {
       await dispatch(sendSelectedFlights(flightsToSend)).unwrap();
