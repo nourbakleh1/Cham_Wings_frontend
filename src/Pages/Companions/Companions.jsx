@@ -22,6 +22,7 @@ const Companions = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showPassengerInfo, setShowPassengerInfo] = useState(false);
+  const [showCompanionInfo, setShowCompanionInfo] = useState(false);
   const [selectedCompanions, setSelectedCompanions] = useState([]);
   const [companiesDetailsData, setCompaniesDetailsData] = useState([]);
 
@@ -38,6 +39,15 @@ const Companions = () => {
       const bookingPreference = flights.booking_preference;
       setShowPassengerInfo(
         bookingPreference === "a" || bookingPreference === "b"
+      );
+    }
+  }, [flights]);
+
+  useEffect(() => {
+    if (flights && flights.booking_preference) {
+      const bookingPreference = flights.booking_preference;
+      setShowCompanionInfo(
+        bookingPreference === "a" || bookingPreference === "c"
       );
     }
   }, [flights]);
@@ -143,22 +153,25 @@ const Companions = () => {
             activeAccordion={activeAccordion}
           />
         )}
-        <h1 className="w-full p-6 md:text-xl xs:text-sm text-left rounded-t-md bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-lg">
-          Your Adults {flights?.adults} and Infants {flights?.infants}
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-          {[...Array(totalCompanions)].map((_, index) => (
-            <CompanionSelect
-              key={index}
-              onChange={(companionData) =>
-                handleCompanionChange(index, companionData)
-              }
-              value={selectedCompanions[index]}
-              selectedCompanions={selectedCompanions}
-            />
-          ))}
-        </div>
-
+        {showCompanionInfo && (
+          <>
+            <h1 className="w-full p-6 md:text-xl xs:text-sm text-left rounded-t-md bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-lg">
+              Your Adults {flights?.adults} and Infants {flights?.infants}
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+              {[...Array(totalCompanions)].map((_, index) => (
+                <CompanionSelect
+                  key={index}
+                  onChange={(companionData) =>
+                    handleCompanionChange(index, companionData)
+                  }
+                  value={selectedCompanions[index]}
+                  selectedCompanions={selectedCompanions}
+                />
+              ))}
+            </div>
+          </>
+        )}
         <div className="flex justify-center mt-8">
           <div className="relative flex justify-center items-center">
             <Button color={"#00529B"} padding="12px" onClick={handleSubmit}>
