@@ -366,9 +366,9 @@ const FlightList = () => {
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
             {selectedDepartureDate}
           </h3>
-          {filteredDepartureFlights.map((flight) => (
+          {filteredDepartureFlights.map((flight, index) => (
             <FlightCard
-              key={`departure-${flight.id}`}
+              key={`departure-${index}`} // Use index if flight.id is undefined
               flight={flight}
               isSelected={
                 selectedDeparture && selectedDeparture.id === flight.id
@@ -396,9 +396,9 @@ const FlightList = () => {
           <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
             {selectedArrivalDate}
           </h3>
-          {filteredArrivalFlights.map((flight) => (
+          {filteredArrivalFlights.map((flight, index) => (
             <FlightCard
-              key={`arrival-${flight.id}`}
+              key={`arrival-${index}`} // Use index if flight.id is undefined
               flight={flight}
               isSelected={selectedArrival && selectedArrival.id === flight.id}
               onSelect={(flight, classType) =>

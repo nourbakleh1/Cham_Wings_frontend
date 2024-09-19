@@ -79,14 +79,14 @@ const flightSlice = createSlice({
     selectFlight: (state, action) => {
       const flight = action.payload;
       // Check if the flight already exists in the array
-      const existingIndex = Object.entries(state.selectedFlights)?.findIndex(
+      const existingIndex = state.selectedFlights?.findIndex(
         (f) => f.flightId === flight.flightId
       );
 
       if (existingIndex === -1) {
         // Flight does not exist, add it
         console.log("Selecting flight:", flight);
-        Object.entries(state.selectedFlights)?.push(flight);
+        state.selectedFlights?.push(flight);
       } else {
         // Flight exists, update its classType
         state.selectedFlights[existingIndex].classType = flight.classType;
