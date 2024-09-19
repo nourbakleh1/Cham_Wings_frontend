@@ -13,6 +13,7 @@ import ManageAirplanesSlice from "./ApiSlices/employee/ManageAirplanesSlice";
 import readReservationSlice from "./ApiSlices/employee/readReservationSlice";
 import sessionStorage from 'redux-persist/lib/storage/session'
 import ManageOffersSlice from "./ApiSlices/employee/ManageOffersSlice";
+import reservationSlice from "./ApiSlices/reservationSlice";
 
 
 const persistAuthConfig = {
@@ -40,7 +41,8 @@ const rootReducer = combineReducers({
   airports:airportSlice,
   airplanes:ManageAirplanesSlice,
   read_reservation:readReservationSlice,
-  offers:ManageOffersSlice
+  offers:ManageOffersSlice,
+  reservation:reservationSlice,
 });
 
 

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightArrowLeft, faCircleCheck, faGlassWater, faPlane, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 
-const Airplane_seats2 = ({selectedSeats2,setSelectedSeats2,setSelectedSeats2_name,selectedSeats2_name}) => {
+const Airplane_seats2 = ({selectedSeats2,setSelectedSeats2,setSelectedSeats2_name,selectedSeats2_name,flight_details_ret}) => {
     const seats=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28];
 
   return (

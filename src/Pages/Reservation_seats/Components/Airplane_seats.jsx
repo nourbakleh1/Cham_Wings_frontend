@@ -4,10 +4,9 @@ import { seats_plan ,seats_plan2} from '../../../dummy_data';
 import { faArrowRightArrowLeft, faCircleCheck, faGlassWater, faPlane, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Airplane_seats = ({selectedSeats1,setSelectedSeats1,setSelectedSeats1_name,selectedSeats1_name}) => {
+const Airplane_seats = ({selectedSeats1,setSelectedSeats1,setSelectedSeats1_name,selectedSeats1_name,flight_details_dep,occupied_seats}) => {
     const seats=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28];
-
-
+  console.log("first",occupied_seats)
 
   return (
     <section className='h-screen mt-[350px] md:mt-[-100px] mb-[650px] '>
