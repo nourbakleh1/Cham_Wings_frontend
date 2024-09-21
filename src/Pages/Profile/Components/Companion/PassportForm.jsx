@@ -24,13 +24,6 @@ const PassportForm = ({
   passengerData,
   setPassengerData,
 }) => {
-  //   const [passengerData, setPassengerData] = useState({
-  //     number: "",
-  //     passport_issued_country: "",
-  //     passport_issued_date: "",
-  //     passport_expiry_date: "",
-  //     passport_image: "",
-  //   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState(null);
@@ -59,26 +52,14 @@ const PassportForm = ({
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setPassengerData((prevData) => ({
+      ...prevData,
+      passport_image: file,
+    }));
 
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        // 5MB size limit
-        console.error("File size exceeds 5MB limit.");
-        return;
-      }
-
-      // Update local state with the file
-      setPassengerData((prevData) => ({
-        ...prevData,
-        passport_image: file, // Storing the file in state
-      }));
-
-      // Create an object URL for preview
       const objectUrl = URL.createObjectURL(file);
       setImagePreview(objectUrl);
-
-      // Clean up object URL when component unmounts or when preview changes
-      return () => URL.revokeObjectURL(objectUrl);
     }
   };
 
@@ -158,7 +139,7 @@ const PassportForm = ({
           flattenedData,
           {
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
             },
           }
         );
@@ -285,6 +266,7 @@ const PassportForm = ({
               isDisabled={!editMode}
               error={errors.passport_image}
             />
+            
           </div>
         </div>
         {editMode && (
