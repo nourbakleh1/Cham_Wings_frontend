@@ -235,7 +235,7 @@ const CompanionSelect = ({ onChange }) => {
         newCompanionData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -315,6 +315,7 @@ const CompanionSelect = ({ onChange }) => {
         setSelectedCompanion={setSelectedCompanion}
         refreshTrigger={refreshTrigger}
         setRefreshTrigger={setRefreshTrigger}
+        imagePreview={imagePreview}
         setImagePreview={setImagePreview}
         editMode={editMode}
         setEditMode={setEditMode}
