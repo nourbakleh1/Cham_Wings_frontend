@@ -173,7 +173,7 @@ const QuestionsPage = () => {
                             : null
                         }
                         onDelete={
-                          role === 5 && q.answer === null
+                          role === undefined && q.answer === null
                             ? () => handleDeleteQuestion(q.faq_id)
                             : null
                         }
