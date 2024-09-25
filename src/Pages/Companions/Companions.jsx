@@ -45,7 +45,7 @@ const Companions = () => {
   useEffect(() => {
     console.log("Dispatching fetchProfile...");
     dispatch(fetchProfile());
-  }, [dispatch]);
+  }, [dispatch,open1]);
 
   useEffect(() => {
     if (flights && flights.booking_preference) {
@@ -92,7 +92,7 @@ const Companions = () => {
       setCompanions(profile.companions || []);
       console.log("Companions data:", profile.companions);
     }
-  }, [profile]);
+  }, [profile,open1]);
 
   const handleAccordionToggle = (section) => {
     setActiveAccordion(activeAccordion === section ? null : section);
@@ -169,6 +169,7 @@ const Companions = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
           {NewArray?.map((_, index) => (
             <CompanionSelect
+            open1={open1}
               key={index}
               onChange={(companionData) =>
                 handleCompanionChange(index, companionData)
@@ -181,14 +182,15 @@ const Companions = () => {
 
         <div className="flex justify-center mt-8">
           <div className="relative flex justify-center items-center gap-2 flex-col md:flex-row">
-          <Button width="130px" color={"#777"} padding="12px" onClick={()=>navigate(-1) }>
-              Back
-            </Button>
-            <Button color={"#836E42"} padding="12px" onClick={()=>setOpen1(true)}>
+          
+            <Button width="130px" color={"#836E42"} padding="5px" onClick={()=>setOpen1(true)}>
                Edit profile
             </Button>
-            <Button color={"#00529B"} padding="12px" onClick={handleSubmit}>
-              Save Changes
+            <Button width="130px" color={"#00529B"} padding="5px" onClick={handleSubmit}>
+              Continue
+            </Button>
+            <Button width="130px" color={"#777"}  padding="5px" onClick={()=>navigate(-1) }>
+              Back
             </Button>
             
             
