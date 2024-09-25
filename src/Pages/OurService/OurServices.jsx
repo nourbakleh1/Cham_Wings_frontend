@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import Headings from "../../Components/Headings/Headings";
@@ -53,6 +53,9 @@ const OurServices = () => {
       (prevIndex) => (prevIndex - 1 + services.length) % services.length
     );
   };
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secoundary_color">

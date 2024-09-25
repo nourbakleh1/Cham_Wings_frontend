@@ -20,7 +20,7 @@ export const SearchOffer=createAsyncThunk("manage_offers/SearchOffer",async(sear
     const {rejectWithValue}=ThunkApi;
 
     try{
-        const res=await privateRequest.get(`/api/offers?search=${search}`);
+        const res=await privateRequest.get(`/api/offers?title=${search}`);
         return res.data
     }
     catch(error){
@@ -107,17 +107,7 @@ export const getallFlightUser=createAsyncThunk("manage_offers/getallFlightUser",
     }
 });
 
-//get user offer
-export const getaOffersUser=createAsyncThunk("manage_offers/getaOffersUser",async(_,ThunkApi)=>{
-    const {rejectWithValue,dispatch}=ThunkApi;
-    try{
-        const res=await privateRequest.get(`/api/getuseroffer?page=${1}`);
-        return res.data
-    }
-    catch(error){
-        return rejectWithValue(error)
-    }
-});
+
 
 const initialState={
     offers:[],
@@ -127,7 +117,6 @@ const initialState={
     SearchOffers:null,
     Flights:null,
     offer_info:null,
-    user_offers:null
     
 }
 
@@ -228,18 +217,7 @@ const ManageOffersSlice=createSlice({
                 state.isLoadingSchedule=false
                 state.error=action.payload
             })
-            .addCase(getaOffersUser.pending,(state,action)=>{
-                state.isLoading=true
-            })
-            .addCase(getaOffersUser.fulfilled,(state,action)=>{
-                state.isLoading=false;
-                state.user_offers=action.payload;
-                
-            })
-            .addCase(getaOffersUser.rejected,(state,action)=>{
-                state.isLoading=false
-                state.error=action.payload
-            })
+            
 
             
 

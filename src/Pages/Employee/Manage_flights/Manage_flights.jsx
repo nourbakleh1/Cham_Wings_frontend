@@ -287,11 +287,11 @@ const handelAddSchedule=(id)=>{
                     </div>
                     <div className='flex flex-col items-center justify-center'>
                     <span className='text-[16px] font-semibold text-secoundary_color_1 border-b-4 border-dotted border-primary_color'>depurture</span>
-                    <Headings element={"p"} color_P='#000'>{flight_info?.data?.arrival_airport.airport_code}</Headings>
+                    <Headings element={"p"} color_P='#000'>{flight_info?.data?.departure_airport?.airport_code}</Headings>
                     </div>
                     <div className='flex flex-col items-center justify-center'>
                     <span className='text-[16px] font-semibold text-secoundary_color_1 border-b-4 border-dotted border-primary_color'>arrival</span>
-                    <Headings element={"p"} color_P='#000'>{flight_info?.data?.departure_airport?.airport_code}</Headings>
+                    <Headings element={"p"} color_P='#000'>{flight_info?.data?.arrival_airport.airport_code}</Headings>
                     </div>
                    <div className="relative">
                     <div className="shadow-xl shadow-black_color/40 rounded-xl border-[1px] border-solid border-white/30">
@@ -470,10 +470,7 @@ const handelAddSchedule=(id)=>{
                 />
             </div>  
             </div>
-            <div className="relative z-0 w-full mb-1 lg:mb-4 group">
-            <input type="text" value={duration} onChange={(e)=>setDuration(e.target.value)}  name="floating_number" id="floating_number" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-            <label htmlFor="floating_number" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Duration</label>
-            </div>
+           
             <div className='flex gap-3 justify-center items-center w-full'>
             <Button onClick={()=>{handelAddSchedule(flight_info?.data?.flight_id)}} color={"#00529B"} padding='5px'>create</Button>
             </div>
@@ -559,10 +556,7 @@ const handelAddSchedule=(id)=>{
                 />
             </div>  
             </div>
-            <div className="relative z-0 w-full mb-1 lg:mb-4 group">
-            <input type="text" value={duration} onChange={(e)=>setDuration(e.target.value)}  name="floating_number" id="floating_number" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-            <label htmlFor="floating_number" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Duration</label>
-            </div>
+            
             <div className='flex gap-3'>
             <Button onClick={()=>{handelAddTimeSpec(data?.id)}} color={"#00529B"} padding='5px'>create</Button>
             </div>

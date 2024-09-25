@@ -108,3 +108,13 @@
 
 
 }
+
+.seat:disabled + label .icon{
+    cursor: not-allowed !important;
+}
+.seat2:disabled + label .icon2{
+    cursor: not-allowed !important;
+}
+.seat2:hover + label .icon2 ,.seat:hover + label .icon{
+    cursor: pointer;
+}

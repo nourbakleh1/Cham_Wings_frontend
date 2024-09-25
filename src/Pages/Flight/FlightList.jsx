@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { sendSelectedFlights } from "../../Redux/ApiSlices/flightSlice.js";
+import { clearSelectedFlights, sendSelectedFlights } from "../../Redux/ApiSlices/flightSlice.js";
 import FlightCard from "./components/FlightCard";
 import { FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import Button from "../../Components/Button/Button.jsx";
 const FlightList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {user}= useSelector((state)=>state.auth);
   const status = useSelector((state) => state.flights.status);
   const flights = useSelector((state) => state.flights.resultSearch);
 
@@ -25,7 +26,12 @@ const FlightList = () => {
   const [departureAirportName, setDepartureAirport] = useState("");
   const [arrivalAirportName, setArrivalAirport] = useState("");
   const [selectedDepartureClass, setSelectedDepartureClass] = useState(null);
-
+  useEffect(()=>{
+    
+      window.scrollTo(0,0);
+    dispatch(clearSelectedFlights());
+   
+  },[])
   useEffect(() => {
     if (status === "idle" && flights?.departure_flights?.length > 0) {
       const departureFlights = flights?.departure_flights || [];
@@ -33,6 +39,7 @@ const FlightList = () => {
       const departureDates = getUniqueDates(departureFlights);
       const returnDates = getUniqueDates(returnFlights);
 
+      
       if (departureFlights.length > 0) {
         setDepartureAirport(departureFlights[0]?.departure_airport_name || "");
       }
@@ -435,18 +442,34 @@ const FlightList = () => {
           </div>
         )}
 
-      {showContinueButton && (
+      
+        <div className="flex justify-center items-start gap-3 flex-col  md:flex-row">
+        
+        
         <div className="mt-4 sm:mt-8 flex justify-center">
-          <Button
-            color={"#00529B"}
+
+         {user &&<Button
+            color={"#777"}
             padding="12px"
-            onClick={handleContinue}
-            width="35%"
+            onClick={()=>navigate(-1)}
+            width="100px"
           >
-            Continue
-          </Button>
+            Back
+          </Button>}
         </div>
-      )}
+            <div className="mt-4 sm:mt-8 flex justify-center">
+
+            {user &&<Button
+              color={"#00529B"}
+              padding="12px"
+              onClick={handleContinue}
+              width="100px"
+            >
+              Continue
+            </Button>}
+            </div>
+        </div>
+      
     </div>
   );
 };

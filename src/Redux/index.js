@@ -27,9 +27,15 @@ const persistFlightConfig = {
   storage:sessionStorage,
   whitelist: ["resultSearch","selectedFlights"],
 };
+const persistReservationConfig = {
+  key: "reservation",
+  storage:sessionStorage,
+  whitelist: ["reservation"],
+};
 
 const persistedAuthReducer = persistReducer(persistAuthConfig, authSlice);
 const persistedFlightReducer = persistReducer(persistFlightConfig, flightSlice);
+const persistedReservationReducer = persistReducer(persistReservationConfig, reservationSlice);
 
 const rootReducer = combineReducers({
   auth: persistedAuthReducer,
@@ -44,7 +50,7 @@ const rootReducer = combineReducers({
   airplanes:ManageAirplanesSlice,
   read_reservation:readReservationSlice,
   offers:ManageOffersSlice,
-  reservation:reservationSlice,
+  reservation:persistedReservationReducer,
 });
 
 

@@ -8,12 +8,16 @@ import CompanionSelect from "./CompanionSelect.jsx";
 import CompaniesDetails from "./components/CompaniesDetails.jsx";
 import Headings from "../../Components/Headings/Headings";
 import Button from "../../Components/Button/Button";
+import LargeModal from "../../Components/Modal/LargeModal.jsx";
+import ProfilePage from "../Profile/profile.jsx";
 
 const Companions = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profile = useSelector((state) => state.profile.profile);
   const flights = useSelector((state) => state.flights.resultSearch);
+
+  const [open1,setOpen1]=useState(false);
 
   const [formData, setFormData] = useState({});
   const [formDataPassport, setFormDataPassport] = useState({});
@@ -22,32 +26,32 @@ const Companions = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showPassengerInfo, setShowPassengerInfo] = useState(false);
-  const [showCompanionInfo, setShowCompanionInfo] = useState(false);
   const [selectedCompanions, setSelectedCompanions] = useState([]);
   const [companiesDetailsData, setCompaniesDetailsData] = useState([]);
 
   // Calculate the number of passengers (adults + infants)
   const totalCompanions = (flights?.adults || 0) + (flights?.infants || 0);
 
+  const NewArray=[];
+  for(let i=0;i<totalCompanions;i++){
+    NewArray.push(i);
+  }
+  useEffect(()=>{
+    if(window.localStorage.getItem("sel_companion")){
+      window.localStorage.removeItem("sel_companion");
+    }
+    window.scrollTo(0,0);
+  },[]);
   useEffect(() => {
     console.log("Dispatching fetchProfile...");
     dispatch(fetchProfile());
-  }, [dispatch]);
+  }, [dispatch,open1]);
 
   useEffect(() => {
     if (flights && flights.booking_preference) {
       const bookingPreference = flights.booking_preference;
       setShowPassengerInfo(
         bookingPreference === "a" || bookingPreference === "b"
-      );
-    }
-  }, [flights]);
-
-  useEffect(() => {
-    if (flights && flights.booking_preference) {
-      const bookingPreference = flights.booking_preference;
-      setShowCompanionInfo(
-        bookingPreference === "a" || bookingPreference === "c"
       );
     }
   }, [flights]);
@@ -88,7 +92,7 @@ const Companions = () => {
       setCompanions(profile.companions || []);
       console.log("Companions data:", profile.companions);
     }
-  }, [profile]);
+  }, [profile,open1]);
 
   const handleAccordionToggle = (section) => {
     setActiveAccordion(activeAccordion === section ? null : section);
@@ -123,7 +127,10 @@ const Companions = () => {
       };
 
       console.log("Submitting payload:", payload);
+      if(payload){
+    window.localStorage.setItem("sel_companion",JSON.stringify(payload))
 
+      }
       // Dispatch the payload to Redux
       dispatch(savePassengerData(payload));
 
@@ -136,6 +143,9 @@ const Companions = () => {
 
   return (
     <div className="bg-gray-200 bg-opacity-50 py-2 min-h-screen flex flex-col">
+    <LargeModal open={open1} setOpen={setOpen1}>
+      <ProfilePage />
+    </LargeModal>
       <div className="flex-grow mx-auto sm:p-2 md:p-2 my-8 bg-white rounded-lg shadow-md w-full max-w-screen-md sm:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
         <h1 className="md:text-3xl xs:text-xl font-bold mb-8 py-4 xs:pt-16 text-center border-b-2 border-gray-300">
           <Headings element={"h1"}>Enter Passenger Details</Headings>
@@ -153,30 +163,37 @@ const Companions = () => {
             activeAccordion={activeAccordion}
           />
         )}
-        {showCompanionInfo && (
-          <>
-            <h1 className="w-full p-6 md:text-xl xs:text-sm text-left rounded-t-md bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-lg">
-              Your Adults {flights?.adults} and Infants {flights?.infants}
-            </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-              {[...Array(totalCompanions)].map((_, index) => (
-                <CompanionSelect
-                  key={index}
-                  onChange={(companionData) =>
-                    handleCompanionChange(index, companionData)
-                  }
-                  value={selectedCompanions[index]}
-                  selectedCompanions={selectedCompanions}
-                />
-              ))}
-            </div>
-          </>
-        )}
+        {NewArray.length != 0 && <><h1 className="w-full p-6 md:text-xl xs:text-sm text-left rounded-t-md bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-lg">
+          Your Adults {flights?.adults} and Infants {flights?.infants}
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+          {NewArray?.map((_, index) => (
+            <CompanionSelect
+            open1={open1}
+              key={index}
+              onChange={(companionData) =>
+                handleCompanionChange(index, companionData)
+              }
+              value={selectedCompanions[index]}
+              selectedCompanions={selectedCompanions}
+            />
+          ))}
+        </div></>}
+
         <div className="flex justify-center mt-8">
-          <div className="relative flex justify-center items-center">
-            <Button color={"#00529B"} padding="12px" onClick={handleSubmit}>
-              Save Changes
+          <div className="relative flex justify-center items-center gap-2 flex-col md:flex-row">
+          
+            <Button width="130px" color={"#836E42"} padding="5px" onClick={()=>setOpen1(true)}>
+               Edit profile
             </Button>
+            <Button width="130px" color={"#00529B"} padding="5px" onClick={handleSubmit}>
+              Continue
+            </Button>
+            <Button width="130px" color={"#777"}  padding="5px" onClick={()=>navigate(-1) }>
+              Back
+            </Button>
+            
+            
           </div>
         </div>
       </div>

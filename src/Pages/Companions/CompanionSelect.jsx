@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { privateRequest } from "../../lib/privateRequest.js";
 
-const CompanionSelect = ({ onChange, value, selectedCompanions }) => {
+const CompanionSelect = ({ onChange, value, selectedCompanions ,open1 }) => {
   const [passenger, setPassenger] = useState(null);
   const [companions, setCompanions] = useState([]);
   const [selectedCompanion, setSelectedCompanion] = useState(value || null);
@@ -31,7 +31,7 @@ const CompanionSelect = ({ onChange, value, selectedCompanions }) => {
     };
 
     fetchCompanions();
-  }, []);
+  }, [open1]);
 
   const handleSelectChange = (e) => {
     const selectedId = parseInt(e.target.value); // Ensure the value is an integer

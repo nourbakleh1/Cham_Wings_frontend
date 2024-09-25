@@ -16,9 +16,11 @@ import { useNavigate } from 'react-router-dom'
 const Search_flight = () => {
     const dispatch=useDispatch();
     const{All_airports}=useSelector(state=>state.airports);
-    const navigate=useNavigate()
+    const navigate=useNavigate();
+  const {resultSearch} = useSelector((state) => state.flights);
+
     
-  
+//   console.log("dskckdkl",resultSearch)
     // state 
     const [startDate, setStartDate] = useState(new Date());
     const [startDate_return, setStartDate_return] = useState(new Date());
@@ -29,6 +31,17 @@ const Search_flight = () => {
     const [departure_airport,setDeparture_airport]=useState(null);
     const [arrival_airport,setArrival_airport]=useState(null);
 
+    useEffect(()=>{
+        if(resultSearch){
+            setBooking_preference(resultSearch?.booking_preference);
+            setTrip_type(resultSearch?.trip_type == "outbound"? 1 : 0);
+            setAdults(resultSearch?.adults);
+            setInfants(resultSearch?.infants);
+            // setDeparture_airport(resultSearch?.departure_flights[0]?.departure_airport_id);
+            // setArrival_airport(resultSearch?.departure_flights[0]?.arrival_airport_id);
+            //xxxxxxxxx ******
+        }
+    },[]);
     useEffect(()=>{
         dispatch(getAirports())
     },[]);
@@ -78,15 +91,15 @@ const Search_flight = () => {
   return (
     <div className='Rota'>
     <form onSubmit={handelSearch}>
-    <section className='h-[930px] opacity-95 lg:h-[400px] xl:h-[370px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1200px] p-5 bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px]  xl:translate-y-[-160px] shadow-black_color/50 shadow-xl '>
+    <section className='h-[1050px] md:h-[650px] opacity-95 lg:h-[750px] xl:h-[370px] w-full sm:w-[550px] md:w-[650px] lg:w-[970px] xl:w-[1200px] p-5 bg-off_white m-auto flex flex-col gap-5 z-[50000000] justify-around translate-y-[-100px]  xl:translate-y-[-160px] shadow-black_color/50 shadow-xl '>
         <div className='border-solid border-b-2 bg-white/50 border-primary_color flex justify-center items-center p-2 rounded-sm '>
         <FontAwesomeIcon icon={faPlane} className='text-secoundary_color px-3 text-[20px] '/>
             <span className='font-bold'>Flights</span>
         </div>
 
-            <div className='flex justify-evenly items-center gap-5  flex-col lg:flex-row'>
+            <div className='flex justify-evenly items-center gap-5  flex-col xl:flex-row'>
 
-            <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col bg-secoundary_color/15 p-2 Rota'>
+            <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col md:flex-row xl:flex-col bg-secoundary_color/15 p-2 Rota'>
             <div className='flex justify-center items-center flex-col  gap-2'>
                 <span className='text-[12px] md:text-[16px] text-primary_color_1   pr-2'>Trip type</span>
                 <select name="roundtrip" defaultValue={"trip"} className='bg-white p-4 text-center text-secoundary_color w-[200px] lg:w-[250px] rounded-2xl text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' value={trip_type} onChange={(e)=>setTrip_type(e.target.value)}>
@@ -111,8 +124,8 @@ const Search_flight = () => {
             </div>
             </div>   
 
-        <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col bg-secoundary_color/10 p-2 Rota'>
-            <div className='flex justify-center items-center flex-col  gap-2'>
+        <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col md:flex-row bg-secoundary_color/10 p-2 Rota'>
+            <div className='flex justify-evenly items-center flex-col md:flex-row xl:flex-col w-full  gap-2'>
 
         
         <div className='flex justify-center items-center flex-col  gap-2'>
@@ -121,6 +134,7 @@ const Search_flight = () => {
                 <option value="from" disabled>from</option>
                     {
                         All_airports?.data?.map((el)=>{
+                            if(el?.airport_id == arrival_airport){return}
                             return <option key={el?.airport_id} value={el?.airport_id}>{el?.airport_code}({el?.airport_name})</option>
                         })
                     }
@@ -131,7 +145,9 @@ const Search_flight = () => {
             <select name="arrival_airport" defaultValue={"to"} className='bg-white p-4 text-center text-secoundary_color w-[200px] lg:w-[250px] rounded-2xl text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' value={arrival_airport} onChange={(e)=>setArrival_airport(e.target.value)}>
                 <option value="to"  disabled>to</option>
                 {
+                
                     All_airports?.data?.map((el)=>{
+                        if(el?.airport_id == departure_airport){return}
                             return <option key={el?.airport_id} value={el?.airport_id}>{el?.airport_code}({el?.airport_name})</option>
                         })
                     }
@@ -144,8 +160,8 @@ const Search_flight = () => {
             </div>
 
                     {/*  */}
-                    <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col bg-primary_color/15 p-2  Rota'>
-                    <div className='flex justify-center items-center flex-col  gap-2'>
+                    <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col md:flex-row  bg-primary_color/15 p-2  Rota'>
+                    <div className='flex justify-evenly items-center flex-col md:flex-row w-full xl:flex-col  gap-2'>
                     <div className='flex justify-center items-center flex-col  gap-2'>
             <span className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Adults</span>
             <select defaultValue={"adults"} className='bg-white p-4 text-center text-secoundary_color w-[200px] lg:w-[250px] rounded-2xl text-[12px] md:text-[16px] font-bold border-primary_color border-solid border-b-2 select_option' disabled={booking_preference == "b"} value={adults} onChange={(e)=>setAdults(e.target.value)}>
@@ -186,13 +202,14 @@ const Search_flight = () => {
 
             </div>
             </div>  
-            <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col bg-primary_color/10 p-2 Rota'>
+            <div className=' flex justify-evenly items-center w-full md:mb-0 mb-[20px] flex-col md:flex-row xl:flex-col bg-primary_color/10 p-2 Rota'>
             
-            <div className='flex justify-center gap-4 items-center  flex-col lg:flex-row'> 
-       <div className='flex items-center gap-3 justify-between   flex-col '>
+            <div className='flex justify-evenly gap-4 items-center flex-col w-full  xl:flex-col'> 
+       <div className='flex items-center gap-3 justify-evenly  flex-col md:flex-row xl:flex-col w-full'>
+        <div className='flex items-center justify-between  flex-col gap-2'>
        <label className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Departure</label>
         <DatePicker
-        className={`mt-1 block w-full border-b-2 outline-none text-center font-bold bg-white z-[1000000000000] text-secoundary_color_1 border-primary_color md:text-[16px] focus:border-indigo-500 focus:ring-0 sm:text-sm p-3 rounded-2xl bg-transparent`}
+        className={`mt-1 block w-[200px] lg:w-[250px]  border-b-2 outline-none text-center font-bold bg-white z-[1000000000000] text-secoundary_color_1 border-primary_color md:text-[16px] focus:border-indigo-500 focus:ring-0 sm:text-sm p-3 md:p-4 rounded-2xl bg-transparent`}
         selected={startDate} 
         onChange={(date) => setStartDate(date)}
         dateFormat="yyyy-MM-dd"
@@ -202,13 +219,16 @@ const Search_flight = () => {
         
         
              />
+             </div>
             
        {
+        
         trip_type =="1" ?
         <>
+        <div className='flex items-center justify-between  flex-col gap-2'>
         <label className='text-[12px] md:text-[16px] text-primary_color_1  pr-2'>Return</label>
         <DatePicker
-        className={`mt-1 block w-full border-b-2 text-center outline-none font-bold bg-white z-[1000000000000] text-secoundary_color_1 md:text-[16px] border-primary_color focus:border-indigo-500 focus:ring-0 sm:text-sm p-3 rounded-2xl bg-transparent`}
+        className={`mt-1 block w-[200px] lg:w-[250px]  border-b-2 text-center outline-none font-bold bg-white z-[1000000000000] text-secoundary_color_1 md:text-[16px] border-primary_color focus:border-indigo-500 focus:ring-0 sm:text-sm p-3 md:p-4 rounded-2xl bg-transparent`}
         selected={startDate_return} 
         onChange={(date) => setStartDate_return(date)}
         dateFormat="yyyy-MM-dd"
@@ -216,8 +236,10 @@ const Search_flight = () => {
         minDate={startDate}
         maxDate={`${startDate?.getFullYear()+1}-${startDate?.getMonth()}-${startDate?.getDate()}`}
         
-             /></>:null
+             /> </div></>:null
+             
        } 
+      
         </div>
        </div>  
       
