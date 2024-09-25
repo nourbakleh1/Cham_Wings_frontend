@@ -22,13 +22,22 @@ const Companions = () => {
   const [activeAccordion, setActiveAccordion] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [showPassengerInfo, setShowPassengerInfo] = useState(false);
-  const [showCompanionInfo, setShowCompanionInfo] = useState(false);
   const [selectedCompanions, setSelectedCompanions] = useState([]);
   const [companiesDetailsData, setCompaniesDetailsData] = useState([]);
 
   // Calculate the number of passengers (adults + infants)
   const totalCompanions = (flights?.adults || 0) + (flights?.infants || 0);
 
+  const NewArray=[];
+  for(let i=0;i<totalCompanions;i++){
+    NewArray.push(i);
+  }
+  useEffect(()=>{
+    if(window.localStorage.getItem("sel_companion")){
+      window.localStorage.removeItem("sel_companion");
+    }
+    window.scrollTo(0,0);
+  },[]);
   useEffect(() => {
     console.log("Dispatching fetchProfile...");
     dispatch(fetchProfile());
@@ -39,15 +48,6 @@ const Companions = () => {
       const bookingPreference = flights.booking_preference;
       setShowPassengerInfo(
         bookingPreference === "a" || bookingPreference === "b"
-      );
-    }
-  }, [flights]);
-
-  useEffect(() => {
-    if (flights && flights.booking_preference) {
-      const bookingPreference = flights.booking_preference;
-      setShowCompanionInfo(
-        bookingPreference === "a" || bookingPreference === "c"
       );
     }
   }, [flights]);
@@ -123,7 +123,10 @@ const Companions = () => {
       };
 
       console.log("Submitting payload:", payload);
+      if(payload){
+    window.localStorage.setItem("sel_companion",JSON.stringify(payload))
 
+      }
       // Dispatch the payload to Redux
       dispatch(savePassengerData(payload));
 
@@ -153,30 +156,31 @@ const Companions = () => {
             activeAccordion={activeAccordion}
           />
         )}
-        {showCompanionInfo && (
-          <>
-            <h1 className="w-full p-6 md:text-xl xs:text-sm text-left rounded-t-md bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-lg">
-              Your Adults {flights?.adults} and Infants {flights?.infants}
-            </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-              {[...Array(totalCompanions)].map((_, index) => (
-                <CompanionSelect
-                  key={index}
-                  onChange={(companionData) =>
-                    handleCompanionChange(index, companionData)
-                  }
-                  value={selectedCompanions[index]}
-                  selectedCompanions={selectedCompanions}
-                />
-              ))}
-            </div>
-          </>
-        )}
+        {NewArray.length != 0 && <><h1 className="w-full p-6 md:text-xl xs:text-sm text-left rounded-t-md bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-lg">
+          Your Adults {flights?.adults} and Infants {flights?.infants}
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+          {NewArray?.map((_, index) => (
+            <CompanionSelect
+              key={index}
+              onChange={(companionData) =>
+                handleCompanionChange(index, companionData)
+              }
+              value={selectedCompanions[index]}
+              selectedCompanions={selectedCompanions}
+            />
+          ))}
+        </div></>}
+
         <div className="flex justify-center mt-8">
-          <div className="relative flex justify-center items-center">
+          <div className="relative flex justify-center items-center gap-3 flex-col md:flex-row">
+          <Button width="130px" color={"#777"} padding="12px" onClick={()=>navigate(-1) }>
+              back
+            </Button>
             <Button color={"#00529B"} padding="12px" onClick={handleSubmit}>
               Save Changes
             </Button>
+            
           </div>
         </div>
       </div>
