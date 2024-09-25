@@ -49,6 +49,7 @@ import BusinessClass from './Pages/OurService/InfoCard/BusinessClass';
 import Entertainment from './Pages/OurService/InfoCard/Entertainment';
 import TravelerMagazine from './Pages/OurService/InfoCard/TravelerMagazine';
 import UnaccompaniedMinors from './Pages/OurService/InfoCard/UnaccompaniedMinors';
+import Manage_policies from './Pages/Employee/Manage_policies/Manage_policies';
 
 
 const App = () => {
@@ -164,6 +165,7 @@ const App = () => {
                     <Route index element={role == 4 ? <Admin/>:<Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
                      <Route path='manage-employees' element={role == 4 ? <Manage_employees/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
                     <Route path='manage-permissions' element={role == 4 ? <Manage_permissions/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
+                    <Route path='manage-policies' element={role == 4 ? <Manage_policies/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
                     <Route path="view-history" element={role == 4 ? <View_history/>: <Navigate to={role == undefined ? "/":"/dashboard/employee"}/>}/>
 
                     
