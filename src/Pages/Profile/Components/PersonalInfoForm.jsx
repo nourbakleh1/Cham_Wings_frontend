@@ -71,8 +71,8 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
         image: profile.image ?? "",
       }));
       setProfileImagePreview(
-        // profile.image ? `${API_BASE_URL}/${profile.image}` : null
-        profile.image ? `${profile.image}` : null
+        profile.image ? `${API_BASE_URL}/${profile.image}` : null
+        // profile.image ? `${profile.image}` : null
       );
     }
   }, [profile]);
@@ -181,14 +181,13 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
         <div className="relative group">
           {profileImagePreview ? (
             <img
-              src={profileImagePreview}
+              src={profileImagePreview} // Use the preview image if available
               alt="Profile"
               className="w-36 h-36 rounded-full shadow-2xl object-cover border-4 border-white group-hover:border-blue-500 transition duration-300 ease-in-out"
             />
           ) : profile?.image ? (
             <img
-              // src={`${API_BASE_URL}/${profile.image}`}
-              src={profile.image}
+              src={`http://127.0.0.1:8000/${profile.image}`} // Use existing profile image
               alt="Profile"
               className="w-36 h-36 rounded-full shadow-2xl object-cover border-4 border-white group-hover:border-blue-500 transition duration-300 ease-in-out"
             />
@@ -197,6 +196,7 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
               Add Photo
             </div>
           )}
+
           {editMode && (
             <>
               <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 ease-in-out">
@@ -205,7 +205,7 @@ const PersonalInfoForm = ({ editMode, toggleEditMode }) => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleProfileImageChange}
+                onChange={handleProfileImageChange} // This function handles file selection
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-full"
               />
             </>
