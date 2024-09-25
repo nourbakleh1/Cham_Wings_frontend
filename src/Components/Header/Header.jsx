@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/ApiSlices/authSlice";
 import { toast } from "react-toastify";
 import { fetchProfile } from "../../Redux/ApiSlices/profileSlice";
+import { clearResultSearch } from "../../Redux/ApiSlices/flightSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ const Header = () => {
       .unwrap()
       .then((res) => {
         navigate("/login", { replace: true });
+        dispatch(clearResultSearch());
+
         if (window.sessionStorage.getItem("id") != null) {
           window.sessionStorage.removeItem("id");
         }
@@ -112,6 +115,17 @@ const Header = () => {
                       {"profile"}
                     </Link>
                   </li>
+                 {role == undefined && <li>
+                    <Link
+                      to="/my_reservations"
+                      onClick={() => {
+                        setDispaly(!display);
+                      }}
+                      className="block px-4 py-2 text-sm shadow-md hover:shadow-secoundary_color text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      My reservations
+                    </Link>
+                  </li>}
                   <li>
                     <Link
                       onClick={() => {
@@ -240,7 +254,7 @@ const Header = () => {
           role == 18 ||
           role == 19 
            ? null : (
-            <ul className="ul flex   flex-col md:font-normal  2xl:font-bold text-[13px]  bg-white_color md:bg-[#0c1524]     p-4 md:p-0 mt-4 border border-gray-100 md:space-x-4 lg:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="ul flex   flex-col md:font-normal  2xl:font-bold text-[11px] lg:text-[13px]  bg-white_color md:bg-[#0c1524]     p-4 md:p-0 mt-4 border border-gray-100 md:space-x-4 lg:space-x-6 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <NavLink
                   onClick={handelNav}
