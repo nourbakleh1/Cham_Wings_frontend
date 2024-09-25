@@ -98,10 +98,38 @@ export const getUserRecommendations=createAsyncThunk("auth/getUserRecommendation
         return rejectWithValue(err)
     }
 })
+//get user offer
+export const getOffersUser=createAsyncThunk("manage_offers/getaOffersUser",async(page,ThunkApi)=>{
+    const {rejectWithValue,dispatch}=ThunkApi;
+    try{
+        const res=await privateRequest.get(`/api/getuseroffer?page=${page}`);
+        return res.data
+    }
+    catch(error){
+        return rejectWithValue(error)
+    }
+});
+
+//get user offer
+export const getOffers_search_User=createAsyncThunk("manage_offers/getOffers_search_User",async(search,ThunkApi)=>{
+    const {rejectWithValue,dispatch}=ThunkApi;
+    try{
+        const res=await privateRequest.get(`/api/getuseroffer?airport_name=${search}`);
+        return res.data
+    }
+    catch(error){
+        return rejectWithValue(error)
+    }
+});
+
+
+
 
 
 const initialState={
-    user:null,isLoading:false,error:null,verify_token:null,recommend:[]
+    user:null,isLoading:false,error:null,verify_token:null,recommend:[],
+    user_offers:null,Search_offers:null,
+
 }
 
 
@@ -181,8 +209,31 @@ const authSlice=createSlice({
             state.isLoading = false;
             state.error=action.payload
         })
-        
-        
+        .addCase(getOffersUser.pending,(state,action)=>{
+            state.isLoading=true
+        })
+        .addCase(getOffersUser.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.user_offers=action.payload;
+            
+        })
+        .addCase(getOffersUser.rejected,(state,action)=>{
+            state.isLoading=false
+            state.error=action.payload
+        })
+        .addCase(getOffers_search_User.pending,(state,action)=>{
+            state.isLoading=true
+        })
+        .addCase(getOffers_search_User.fulfilled,(state,action)=>{
+            state.isLoading=false;
+            state.Search_offers=action.payload;
+            
+        })
+        .addCase(getOffers_search_User.rejected,(state,action)=>{
+            state.isLoading=false
+            state.error=action.payload
+        })
+      
 
     }
 

@@ -62,6 +62,20 @@ export const passengerSlice = createSlice({
     },
   },
 });
+// Search flight from offer
+export const searchFlights_offer = createAsyncThunk(
+  "flights/searchFlights_offer",
+  async (data, ThunkApi) => {
+    const { rejectWithValue } = ThunkApi;
+    try {
+
+      const res = await privateRequest.post("/api/search-reservation", data);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
 
 // Flight slice
 const flightSlice = createSlice({
@@ -75,6 +89,10 @@ const flightSlice = createSlice({
     selectedFlights: [], // This will persist across navigation
   },
   reducers: {
+    // clear result search before reservation
+    clearResultSearch: (state) => {
+      state.resultSearch = [];
+    },
     // Reducer to add or update a flight in the selectedFlights array
     selectFlight: (state, action) => {
       const flight = action.payload;
@@ -132,11 +150,22 @@ const flightSlice = createSlice({
       .addCase(searchFlights.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      .addCase(searchFlights_offer.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(searchFlights_offer.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.resultSearch = action.payload;
+      })
+      .addCase(searchFlights_offer.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
 
 export const { savePassengerData } = passengerSlice.actions;
-export const { selectFlight, deselectFlight, clearSelectedFlights } =
+export const { selectFlight, deselectFlight, clearSelectedFlights,clearResultSearch } =
   flightSlice.actions;
 export default flightSlice.reducer;
