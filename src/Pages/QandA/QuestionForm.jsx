@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { privateRequest } from "../../lib/privateRequest";
 
 const QuestionForm = ({ refreshQuestions }) => {
-  const [question, setQuestion] = useState("");
+  const [question, setQuestion] = useState(""); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!question.trim()) return;
+    if (!question.trim()) return; // If the answer is empty or only spaces, return early and do nothing
 
     try {
       await privateRequest.post("/api/questions", { question });
@@ -18,7 +18,8 @@ const QuestionForm = ({ refreshQuestions }) => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter") {
+      // Prevent the default behavior of the Enter key adding a new line
       e.preventDefault();
       handleSubmit(e);
     }

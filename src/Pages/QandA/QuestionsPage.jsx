@@ -93,7 +93,7 @@ const QuestionsPage = () => {
     }
   };
 
-  // Calculate total pages
+  // Calculate total pages and ceil Round a number up.
   const totalPages = Math.ceil(totalQuestions / perPage);
 
   return (
@@ -133,7 +133,7 @@ const QuestionsPage = () => {
                       </button>
                       <button
                         onClick={() => {
-                          setEditingQuestionId(null);
+                          setEditingQuestionId(null); // Cancel editing by resetting the editingQuestionId null
                           setEditQuestionText("");
                         }}
                         className="ml-2 bg-gray-500 text-white p-2 rounded-lg"
@@ -163,8 +163,10 @@ const QuestionsPage = () => {
                         question={q.question}
                         faq_id={q.faq_id}
                         onEdit={
+                          // Check if employeeIds is empty OR the employee's ID is not in employeeIds to let user edit question
                           (employeeIds.length === 0 ||
                             !employeeIds.includes(q.employee?.employee_id)) &&
+                          // Check if the passenger ID matches the question's passenger ID
                           passengerId === q.passenger_id
                             ? () => {
                                 setEditingQuestionId(q.faq_id);
@@ -192,10 +194,11 @@ const QuestionsPage = () => {
                         Answered by: {q.employee?.name || "Unknown"}
                       </p>
                       <p className="text-gray-600 pr-2 py-2 text-sm">
-                        {q.employee?.created_at
-                          ? `${new Date(
+                        {q.employee?.created_at // Check if 'created_at' exists in 'employee'
+                          ? `${new Date( // Create a new Date object with 'created_at' for Date
                               q.employee.created_at
-                            ).toLocaleDateString("en-GB")} ${new Date(
+                              // Format the date to 'DD/MM/YYYY'
+                            ).toLocaleDateString("en-GB")} ${new Date( // Create another Date object for time
                               q.employee.created_at
                             ).toLocaleTimeString([], {
                               hour: "2-digit",
@@ -254,7 +257,7 @@ const QuestionsPage = () => {
         />
       )}
 
-      {role !== 5 && (
+      {role === undefined && (
         <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg rounded-t-lg p-4 z-50">
           <QuestionForm refreshQuestions={fetchQuestions} />
         </div>

@@ -7,12 +7,12 @@ const Answer = ({ faq_id, refreshQuestions, onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!answer.trim()) return;
+    if (!answer.trim()) return; // If the answer is empty or only spaces, return early and do nothing
 
     try {
       await privateRequest.put(`/api/questions/${faq_id}/answer`, { answer });
-      setAnswer("");
-      refreshQuestions();
+      setAnswer(""); // Clear the input after successful submission
+      refreshQuestions(); // Trigger a refresh to load updated questions after submission
     } catch (error) {
       console.error("Error submitting answer:", error);
     }
@@ -29,17 +29,11 @@ const Answer = ({ faq_id, refreshQuestions, onCancel }) => {
             className="w-full h-32 border-2 border-gray-200 p-4 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition duration-200 ease-in-out resize-none bg-white shadow-inner"
           />
           <div className="absolute bottom-3 right-3 text-gray-400 text-sm">
+          {/* Shows the current length of the answer, limiting to 500 characters */}
             {answer.length}/500
           </div>
         </div>
         <div className="flex justify-end space-x-4">
-          {/* <button
-            type="button"
-            onClick={onCancel}
-            className="px-6 py-3 rounded-lg text-gray-600 hover:bg-gray-100 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-300"
-          >
-            Cancel
-          </button> */}
           <Button
             color={"#A53E47"}
             padding="12px"
@@ -60,7 +54,6 @@ const Answer = ({ faq_id, refreshQuestions, onCancel }) => {
             padding="12px"
             // width="100%"
             // onClick={handleSubmit}
-            // disabled={isSubmitting}
           >
             {"Submit Answer"}
           </Button>
