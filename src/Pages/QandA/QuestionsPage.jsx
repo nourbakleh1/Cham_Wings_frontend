@@ -52,7 +52,7 @@ const QuestionsPage = () => {
 
   useEffect(() => {
     fetchQuestions(); // Initial fetch
-    const intervalId = setInterval(fetchQuestions, 9000); // Refresh every 9 seconds
+    const intervalId = setInterval(fetchQuestions, 2000); // Refresh every 2 seconds
 
     return () => clearInterval(intervalId); // Clean up on unmount
   }, []);
