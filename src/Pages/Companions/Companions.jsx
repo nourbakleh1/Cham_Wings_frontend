@@ -8,12 +8,16 @@ import CompanionSelect from "./CompanionSelect.jsx";
 import CompaniesDetails from "./components/CompaniesDetails.jsx";
 import Headings from "../../Components/Headings/Headings";
 import Button from "../../Components/Button/Button";
+import LargeModal from "../../Components/Modal/LargeModal.jsx";
+import ProfilePage from "../Profile/profile.jsx";
 
 const Companions = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const profile = useSelector((state) => state.profile.profile);
   const flights = useSelector((state) => state.flights.resultSearch);
+
+  const [open1,setOpen1]=useState(false);
 
   const [formData, setFormData] = useState({});
   const [formDataPassport, setFormDataPassport] = useState({});
@@ -139,6 +143,9 @@ const Companions = () => {
 
   return (
     <div className="bg-gray-200 bg-opacity-50 py-2 min-h-screen flex flex-col">
+    <LargeModal open={open1} setOpen={setOpen1}>
+      <ProfilePage />
+    </LargeModal>
       <div className="flex-grow mx-auto sm:p-2 md:p-2 my-8 bg-white rounded-lg shadow-md w-full max-w-screen-md sm:max-w-3xl lg:max-w-4xl xl:max-w-6xl">
         <h1 className="md:text-3xl xs:text-xl font-bold mb-8 py-4 xs:pt-16 text-center border-b-2 border-gray-300">
           <Headings element={"h1"}>Enter Passenger Details</Headings>
@@ -173,13 +180,17 @@ const Companions = () => {
         </div></>}
 
         <div className="flex justify-center mt-8">
-          <div className="relative flex justify-center items-center gap-3 flex-col md:flex-row">
+          <div className="relative flex justify-center items-center gap-2 flex-col md:flex-row">
           <Button width="130px" color={"#777"} padding="12px" onClick={()=>navigate(-1) }>
-              back
+              Back
+            </Button>
+            <Button color={"#836E42"} padding="12px" onClick={()=>setOpen1(true)}>
+               Edit profile
             </Button>
             <Button color={"#00529B"} padding="12px" onClick={handleSubmit}>
               Save Changes
             </Button>
+            
             
           </div>
         </div>
