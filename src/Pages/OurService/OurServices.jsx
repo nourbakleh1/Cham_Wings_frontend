@@ -53,17 +53,17 @@ const OurServices = () => {
       (prevIndex) => (prevIndex - 1 + services.length) % services.length
     );
   };
-  useEffect(()=>{
-    window.scrollTo(0,0);
-  },[]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secoundary_color">
-      <div className="container mx-auto px-4 py-8 md:py-16">
-        <div className="my-6 md:my-12">
+      <div className="container mx-auto px-4 py-8 md:py-10 lg:py-12 max-w-screen-xl">
+        <div className="my-6 md:my-8 lg:my-10">
           <Headings element={"h1"}>Our Services</Headings>
         </div>
-        <div className="relative h-[350px] sm:h-[400px] md:h-[500px] max-w-sm sm:max-w-md md:max-w-4xl mx-auto">
+        <div className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl mx-auto">
           <AnimatePresence custom={direction}>
             <motion.div
               key={currentIndex}
@@ -82,17 +82,17 @@ const OurServices = () => {
               transition={{ duration: 0.5 }}
             >
               <Link to={services[currentIndex].link}>
-                <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden h-full border border-white border-opacity-20">
+                <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-2xl md:rounded-2xl lg:rounded-3xl shadow-2xl overflow-hidden h-full border border-white border-opacity-20">
                   <img
                     src={services[currentIndex].image}
                     alt={services[currentIndex].title}
                     className="w-full h-2/3 md:h-3/4 object-cover"
                   />
-                  <div className="p-4 md:p-8">
-                    <h3 className="text-xl md:text-3xl font-bold text-white">
+                  <div className="p-4 md:p-6 lg:p-6">
+                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white">
                       {services[currentIndex].title}
                     </h3>
-                    <p className="mt-1 md:mt-2 text-sm md:text-lg text-gray-300">
+                    <p className="mt-1 md:mt-2 lg:mt-3 text-xs md:text-sm lg:text-base text-gray-300">
                       {services[currentIndex].p}
                     </p>
                   </div>
@@ -101,20 +101,18 @@ const OurServices = () => {
             </motion.div>
           </AnimatePresence>
         </div>
-        <div className="flex justify-center mt-8 md:mt-12 space-x-4 md:space-x-8">
+        <div className="flex justify-center mt-6 md:mt-8 lg:mt-10 space-x-2 md:space-x-4 lg:space-x-6">
           <Button
             color={"#AE8A3B"}
-            padding="12px"
+            className="w-20 sm:w-24 md:w-28 lg:w-32 px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 text-xs sm:text-sm md:text-base lg:text-lg"
             onClick={prevCard}
-            width="10%"
           >
             Previous
           </Button>
           <Button
             color={"#AE8A3B"}
-            padding="12px"
+            className="w-20 sm:w-24 md:w-28 lg:w-32 px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-3 text-xs sm:text-sm md:text-base lg:text-lg"
             onClick={nextCard}
-            width="10%"
           >
             Next
           </Button>
