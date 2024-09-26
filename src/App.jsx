@@ -52,6 +52,7 @@ import UnaccompaniedMinors from './Pages/OurService/InfoCard/UnaccompaniedMinors
 import Manage_policies from './Pages/Employee/Manage_policies/Manage_policies';
 import Offers from './Pages/Offers/Offers';
 import User_reservations from './Pages/My_reservations/User_reservations';
+import VisaInfo from './Pages/VisaInfo/VisaInfo';
 
 
 const App = () => {
@@ -122,6 +123,7 @@ const App = () => {
                     <Route path="reservation_seats" element={role == undefined?<Reservation_seats />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>} />
                     <Route path="verifyEmail/:email" element={!user ? <verfiyEmail />: <Navigate to={role == 4 ? "/admin_dashboard":role == undefined ?"/":"/dashboard/employee"}/>}/>
                     <Route path="my_reservations" element={role == undefined?<User_reservations />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
+                    <Route path="travel-condition" element={role == undefined?<VisaInfo />: <Navigate to={role == 4 ? "/admin_dashboard":"/dashboard/employee"}/>}/>
 
 
 

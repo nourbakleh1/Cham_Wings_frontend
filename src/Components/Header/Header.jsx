@@ -278,7 +278,7 @@ const Header = () => {
               <li>
                 <NavLink
                   onClick={handelNav}
-                  to="travel"
+                  to="travel-condition"
                   className="block px-0 lg:px-3 py-2  md:text-white_color  rounded hover:bg-gray-100   md:p-0 dark:text-white md:dark:hover:text-blue-500 a dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
                 >
                   TRAVEL CONDITION
