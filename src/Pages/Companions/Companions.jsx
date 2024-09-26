@@ -134,7 +134,7 @@ const Companions = () => {
       // Dispatch the payload to Redux
       dispatch(savePassengerData(payload));
 
-      navigate("/reservation_seats");
+      navigate("/reservation_seats",{replace:true});
     } else {
       console.log("Validation errors:", validationErrors);
       setErrors(validationErrors);
@@ -183,15 +183,13 @@ const Companions = () => {
         <div className="flex justify-center mt-8">
           <div className="relative flex justify-center items-center gap-2 flex-col md:flex-row">
           
-            <Button width="130px" color={"#836E42"} padding="5px" onClick={()=>setOpen1(true)}>
+            <Button width="100px" color={"#836E42"} padding="8px" onClick={()=>setOpen1(true)}>
                Edit profile
             </Button>
-            <Button width="130px" color={"#00529B"} padding="5px" onClick={handleSubmit}>
+            <Button width="100px" color={"#00529B"} padding="8px" onClick={handleSubmit}>
               Continue
             </Button>
-            <Button width="130px" color={"#777"}  padding="5px" onClick={()=>navigate(-1) }>
-              Back
-            </Button>
+            
             
             
           </div>

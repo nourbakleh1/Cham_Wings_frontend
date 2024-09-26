@@ -6,9 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOffersUser } from '../../Redux/ApiSlices/authSlice';
 import Loading2 from '../Loading/Loading2';
 import { useNavigate } from 'react-router-dom';
-// import { getaOffersUser } from '../../Redux/ApiSlices/employee/ManageOffersSlice';
 
-const Offer_list = ({offers}) => {
+const Offer_list = () => {
   const dispatch=useDispatch();
   const navigate = useNavigate();
     const { user_offers,error,isLoading}=useSelector((state)=>state.auth);
