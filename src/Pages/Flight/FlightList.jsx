@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { clearSelectedFlights, sendSelectedFlights } from "../../Redux/ApiSlices/flightSlice.js";
+import {
+  clearSelectedFlights,
+  sendSelectedFlights,
+} from "../../Redux/ApiSlices/flightSlice.js";
 import FlightCard from "./components/FlightCard";
 import { FaPlaneDeparture, FaPlaneArrival } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +15,7 @@ import Button from "../../Components/Button/Button.jsx";
 const FlightList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {user}= useSelector((state)=>state.auth);
+  const { user } = useSelector((state) => state.auth);
   const status = useSelector((state) => state.flights.status);
   const flights = useSelector((state) => state.flights.resultSearch);
 
@@ -26,12 +29,13 @@ const FlightList = () => {
   const [departureAirportName, setDepartureAirport] = useState("");
   const [arrivalAirportName, setArrivalAirport] = useState("");
   const [selectedDepartureClass, setSelectedDepartureClass] = useState(null);
-  useEffect(()=>{
-    
-      window.scrollTo(0,0);
+
+  // Effect to clear selected flights and scroll to top on component
+  useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(clearSelectedFlights());
-   
-  },[])
+  }, []);
+
   useEffect(() => {
     if (status === "idle" && flights?.departure_flights?.length > 0) {
       const departureFlights = flights?.departure_flights || [];
@@ -39,7 +43,7 @@ const FlightList = () => {
       const departureDates = getUniqueDates(departureFlights);
       const returnDates = getUniqueDates(returnFlights);
 
-      
+      // Set the departure and arrival airport names based on available flights
       if (departureFlights.length > 0) {
         setDepartureAirport(departureFlights[0]?.departure_airport_name || "");
       }
@@ -47,10 +51,12 @@ const FlightList = () => {
         setArrivalAirport(returnFlights[0]?.arrival_airport_name || "");
       }
 
+      // Set the first available departure flight and date
+      // Date
       if (departureDates.length > 0) {
         const firstDate = departureDates[0];
         setSelectedDepartureDate(firstDate);
-
+        // Flight
         const firstAvailableDepartureFlight = departureFlights.find(
           (flight) => flight?.departure_date === firstDate
         );
@@ -59,6 +65,7 @@ const FlightList = () => {
         }
       }
 
+      // Set the first available return flight and date
       if (returnDates.length > 0) {
         const firstDate = returnDates[0];
         setSelectedArrivalDate(firstDate);
@@ -73,6 +80,7 @@ const FlightList = () => {
     }
   }, [status, flights]);
 
+  // Function to get unique departure dates from flights
   const getUniqueDates = (flights) => {
     if (!Array.isArray(flights)) return [];
 
@@ -94,7 +102,7 @@ const FlightList = () => {
       setSelectedDepartureClass(classType);
       setAnimationClass("animate-slide-out");
 
-      // Optionally update return flights based on the selected departure flight
+      // Update return flights based on selected departure flight
       setTimeout(() => {
         const returnFlights = flights?.return_flights || [];
         const availableReturnDates = getUniqueDates(returnFlights);
@@ -117,10 +125,12 @@ const FlightList = () => {
   const handleDepartureDateClick = (date) => {
     setSelectedDepartureDate(date);
 
+    // Filter flights by selected date
     const newDepartureFlights = flights?.departure_flights?.filter(
       (flight) => flight?.departure_date === date
     );
 
+    // Set the first available departure flight
     if (!selectedDeparture && newDepartureFlights.length > 0) {
       setSelectedDeparture(newDepartureFlights[0]);
     }
@@ -133,12 +143,14 @@ const FlightList = () => {
       (flight) => flight?.departure_date === date
     );
 
+    // Set the first available arrival flight
     if (!selectedArrival && newArrivalFlights.length > 0) {
       setSelectedArrival(newArrivalFlights[0]);
     }
   };
 
   const handleContinue = async () => {
+    // Validate that both departure and arrival flights are selected
     if (
       !selectedDeparture ||
       (flights?.return_flights &&
@@ -169,22 +181,26 @@ const FlightList = () => {
     }
 
     try {
+      // Dispatch action to send selected flights
       await dispatch(sendSelectedFlights(flightsToSend)).unwrap();
-      navigate("/reservation",{replace:true});
+      navigate("/reservation", { replace: true });
     } catch (error) {
       toast.error("Error sending flight selection. Please try again.");
     }
   };
 
+  // Filter departure and return flights based on selected dates
   const departureFlights = flights?.departure_flights || [];
   const returnFlights = flights?.return_flights || [];
 
+  // Filter based on selected departure date
   const filteredDepartureFlights = selectedDepartureDate
     ? departureFlights.filter(
         (flight) => flight?.departure_date === selectedDepartureDate
       )
     : departureFlights;
 
+  // Filter based on selected arrival date
   const filteredArrivalFlights = selectedArrivalDate
     ? returnFlights.filter(
         (flight) => flight?.departure_date === selectedArrivalDate
@@ -442,34 +458,32 @@ const FlightList = () => {
           </div>
         )}
 
-      
-        <div className="flex justify-center items-start gap-3 flex-col  md:flex-row">
-        
-        
+      <div className="flex justify-center items-start gap-3 flex-col  md:flex-row">
         <div className="mt-4 sm:mt-8 flex justify-center">
-
-         {user &&<Button
-            color={"#777"}
-            padding="8px"
-            onClick={()=>navigate(-1)}
-            width="100px"
-          >
-            Back
-          </Button>}
+          {user && (
+            <Button
+              color={"#777"}
+              padding="8px"
+              onClick={() => navigate(-1)}
+              width="100px"
+            >
+              Back
+            </Button>
+          )}
         </div>
-            <div className="mt-4 sm:mt-8 flex justify-center">
-
-            {user &&<Button
+        <div className="mt-4 sm:mt-8 flex justify-center">
+          {user && (
+            <Button
               color={"#00529B"}
               padding="8px"
               onClick={handleContinue}
               width="100px"
             >
               Continue
-            </Button>}
-            </div>
+            </Button>
+          )}
         </div>
-      
+      </div>
     </div>
   );
 };
