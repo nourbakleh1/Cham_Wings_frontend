@@ -170,7 +170,7 @@ const FlightList = () => {
 
     try {
       await dispatch(sendSelectedFlights(flightsToSend)).unwrap();
-      navigate("/reservation");
+      navigate("/reservation",{replace:true});
     } catch (error) {
       toast.error("Error sending flight selection. Please try again.");
     }
@@ -450,7 +450,7 @@ const FlightList = () => {
 
          {user &&<Button
             color={"#777"}
-            padding="12px"
+            padding="8px"
             onClick={()=>navigate(-1)}
             width="100px"
           >
@@ -461,7 +461,7 @@ const FlightList = () => {
 
             {user &&<Button
               color={"#00529B"}
-              padding="12px"
+              padding="8px"
               onClick={handleContinue}
               width="100px"
             >

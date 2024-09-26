@@ -80,7 +80,7 @@ const Chatbot_emp = () => {
       }
       setIsLoading(false)
       setNewchat((prev)=>{
-        document.getElementById("bottom")?.classList?.add("translate-y-[300px]");
+        document.getElementById("bottom")?.classList?.add("translate-y-[200px]");
         return [...prev,{input:<div className='shad1 selection:text-white'>{input_text}</div>,output:
        
         <div className='shad selection:text-white'><ReactTyped
@@ -129,7 +129,7 @@ const Chatbot_emp = () => {
     <div className='relative flex flex-col justify-start items-start mt-[72px] h-[calc(100vh-71px)] w-full bg-[#000]/90 lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
 
     <div className='w-[70%] mx-auto flex justify-center items-center text-[20px] gap-3  p-3'>
-      <p className='text-primary_color font-bold text-[13px] lg:text-[20px]  p-3'>ChamAi</p>
+      <p className='text-primary_color font-bold text-[13px] lg:text-[20px]  p-3'>ChamAI</p>
       <img className='h-[20px] lg:h-[30px] rounded-[50%]' src='/assets/images/logo_small.png'/>
     </div>
     {
@@ -232,14 +232,14 @@ const Chatbot_emp = () => {
     <div className='w-[70%] mx-auto bg-transparent absolute bottom-[2%] left-[15%]'>
     <div className='animate__myself flex items-center justify-between relative gap-5 bg-black/10 px-5 py-2 rounded-[50px]'>
    
-      <input id="search" type='text' required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full  resize-none  h-[30px] sm:h-[40px] bg-transparent border-none outline-none p-0 sm:p-2 text-[12px] md:text-[18px] text-white placeholder:text-[10px]'  placeholder='Enter a prompt here'/>
+      <input id="search" type='text' required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full  resize-none  h-[30px] sm:h-[40px] bg-transparent border-none outline-none p-0 sm:p-2 text-[12px] text-white md:text-[18px] text-whiteplaceholder:text-[10px] placeholder:md:text-[15px]'  placeholder='Enter a prompt here'/>
       <div>
       <button type='submit'><FontAwesomeIcon icon={faLocationArrow}  className='text-white absolute right-[10px] bottom-[5px] translate-y-[-50%] text-[20px] sm:text-[25px] w-[35px] border-transparent rotate-45'/></button>
       </div>
      
     </div>
     <p className='text-[13px] text-gray_color text-center mt-3'>
-    ChamAi may display inaccurate info, including about people, so double-check its responses.
+    ChamAI may display inaccurate info, including about people, so double-check its responses.
     </p>
     </div>
     </form>

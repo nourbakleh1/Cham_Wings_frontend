@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import "../Reservation_seats.css"
-import { seats_plan } from '../../../dummy_data';
+
 import { faArrowRightArrowLeft, faCircleCheck, faGlassWater, faPlane, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-const Airplane_seats = ({selectedSeats1,setSelectedSeats1,setSelectedSeats1_name,selectedSeats1_name,flight_details_dep,occupied_going_seats}) => {
+
+const Airplane_seats = ({selectedSeats1,setSelectedSeats1,setSelectedSeats1_name,selectedSeats1_name,flight_details_dep,occupied_going_seats,seats_plan,setSeats_plan}) => {
     const seats=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28];
   const {resultSearch} = useSelector((state) => state.flights);
     

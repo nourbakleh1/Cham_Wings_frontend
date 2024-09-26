@@ -88,10 +88,10 @@ export const resetPassword=createAsyncThunk("auth/resetPassword",async(data,Thun
         return rejectWithValue(error)
     }
 });
-export const getUserRecommendations=createAsyncThunk("auth/getUserRecommendations",async(id,ThunkApi)=>{
+export const getUserRecommendations=createAsyncThunk("auth/getUserRecommendations",async(data,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
     try{
-        const res=await privateRequest.get(`/api/recommendations/${id}`);
+        const res=await privateRequest.get(`/api/recommendations/${data.id}/${data.country}`);
         return res.data
     }
     catch(err){
@@ -102,7 +102,7 @@ export const getUserRecommendations=createAsyncThunk("auth/getUserRecommendation
 export const getOffersUser=createAsyncThunk("manage_offers/getaOffersUser",async(page,ThunkApi)=>{
     const {rejectWithValue,dispatch}=ThunkApi;
     try{
-        const res=await privateRequest.get(`/api/getuseroffer?page=${page}`);
+        const res=await publicRequest.get(`/api/getuseroffer?page=${page}`);
         return res.data
     }
     catch(error){
@@ -114,7 +114,7 @@ export const getOffersUser=createAsyncThunk("manage_offers/getaOffersUser",async
 export const getOffers_search_User=createAsyncThunk("manage_offers/getOffers_search_User",async(search,ThunkApi)=>{
     const {rejectWithValue,dispatch}=ThunkApi;
     try{
-        const res=await privateRequest.get(`/api/getuseroffer?airport_name=${search}`);
+        const res=await publicRequest.get(`/api/getuseroffer?airport_name=${search}`);
         return res.data
     }
     catch(error){
@@ -128,7 +128,7 @@ export const getOffers_search_User=createAsyncThunk("manage_offers/getOffers_sea
 
 const initialState={
     user:null,isLoading:false,error:null,verify_token:null,recommend:[],
-    user_offers:null,Search_offers:null,
+    user_offers:null,Search_offers:null,location:null,
 
 }
 
@@ -137,7 +137,9 @@ const authSlice=createSlice({
     name:"auth",
     initialState,
     reducers:{
-
+        setLocation:(state,action)=>{
+            state.location= action.payload;
+        }
     },
     extraReducers:(builder)=>{
         builder
@@ -239,5 +241,5 @@ const authSlice=createSlice({
 
     
 });
-
+export const {setLocation} =authSlice.actions;
 export default authSlice.reducer;

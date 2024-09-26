@@ -9,17 +9,20 @@ import "./Responsibilty.css"
 import Headings from '../../../Components/Headings/Headings';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserRecommendations } from '../../../Redux/ApiSlices/authSlice';
-import { faFaceSmileBeam, faHashtag, faPlaneArrival, faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faFaceSmileBeam, faHashtag, faPlaneArrival, faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const Slider = () => {
-    const {user,recommend,error,isLoading}=useSelector(state=>state.auth);
+    const {user,recommend,error,isLoading,location}=useSelector(state=>state.auth);
     
+    const country="Syria";
+    console.log("location",location);
     const dispatch=useDispatch();
 
     useEffect(()=>{
-      dispatch(getUserRecommendations(user?.data?.user?.user_id))
+      const data={id:user?.data?.user?.passenger?.passenger_id,country:country}
+      dispatch(getUserRecommendations(data))
     },[]); 
       const pagination = {
         clickable: true,
@@ -42,14 +45,14 @@ const Slider = () => {
    <Swiper
         effect={'coverflow'}
         grabCursor={true}
-        spaceBetween={100}
+        spaceBetween={200}
         centeredSlides={true}
         autoHeight={true}
         slidesPerView={3}
           coverflowEffect={{
           rotate: 0,
           stretch: 20,
-          depth: 700,
+          depth: 900,
           modifier: 1,
           slideShadows: true,
         }}
@@ -58,22 +61,22 @@ const Slider = () => {
         className="mySwiper hidden xl:flex lg:flex-col"
       >
   {recommend?.recommendations?.map((el,index) => (
-    <SwiperSlide key={index} className='relative bg-black/15 lg:!w-[320px] xl:!w-[370px] 2xl:!w-[450px] flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
+    <SwiperSlide key={index} className='relative bg-black/15 flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
     <p className='bg-secoundary_color/90 text-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{"Economy"}</p>
 
-     <img src={`http://127.0.0.1:8000${el?.image}`}  className='w-full'/>
-      <div className='flex  flex-col w-full'>
+     <img src={`http://127.0.0.1:8000${el?.image}`}  className='w-full h-[200px]'/>
+      <div className='flex  flex-col w-full bg-white'>
       <div className='flex justify-center items-center gap-3'>
-        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faHashtag} />{el?.flight_number}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{el?.arrival_country}</p>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{el?.price}$</p>
         </div>
         <div className='flex justify-center items-center gap-3'>
-        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.departure_airport}</p>
-        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.arrival_airport}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.arrival_city}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.weight_allowed}</p>
         </div>
         <div className='flex justify-center items-center gap-3'>
-        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>{el?.departure_date}</p>
-        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneArrival} className='px-2 text-[20px] text-secoundary_color' />{el?.arrival_date}</p></div>
+        <p className=' text-secoundary_color_1 bg-white text-center  text-[12px] w-full  py-1 '><FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>{el?.departure_datetime}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full   py-4 '><FontAwesomeIcon icon={faClock} className='px-2 text-[20px] text-secoundary_color'/>{el?.duration}</p></div>
       </div>
     </SwiperSlide>
   ))}
@@ -87,19 +90,19 @@ const Slider = () => {
     <div key={index} className='relative bg-black/15 !w-[180px] sm:!w-[220px] md:!w-[280px]  flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
     <p className='bg-secoundary_color/90 text-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{"Economy"}</p>
 
-      <img src={`http://127.0.0.1:8000${el?.image}`}  className='w-full'/>
-      <div className='flex  flex-col w-full'>
+      <img src={`http://127.0.0.1:8000${el?.image}`}  className='w-full h-[200px]'/>
+      <div className='flex  flex-col w-full bg-white'>
       <div className='flex justify-center items-center gap-3'>
-        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faHashtag} />{el?.flight_number}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>To {el?.arrival_country}</p>
         <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{el?.price}$</p>
         </div>
         <div className='flex justify-center items-center gap-3'>
-        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-wrap'>{el?.departure_airport}</p>
-        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-wrap'>{el?.arrival_airport}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.arrival_city}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full border-b-2 border-solid border-primary_color py-1 text-nowrap'>{el?.weight_allowed}</p>
         </div>
         <div className='flex justify-center items-center gap-3'>
-        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[20px] text-secoundary_color'/>{el?.departure_date}</p>
-        <p className=' text-secoundary_color_1 bg-white text-center w-full border-b-2 border-solid border-primary_color py-1 '><FontAwesomeIcon icon={faPlaneArrival} className='px-2 text-[20px] text-secoundary_color' />{el?.arrival_date}</p></div>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full  py-1 '><FontAwesomeIcon icon={faPlaneDeparture} className='px-2 text-[17px] md:text-[20px] text-secoundary_color'/>{el?.departure_datetime}</p>
+        <p className=' text-secoundary_color_1 bg-white text-center text-[12px] w-full  py-4 '><FontAwesomeIcon icon={faClock} className='px-2 text-[17px] md:text-[20px] text-secoundary_color'/>{el?.duration}</p></div>
       </div>
     </div>
   ))

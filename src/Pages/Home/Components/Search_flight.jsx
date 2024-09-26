@@ -2,7 +2,6 @@ import { faArrowRightArrowLeft, faCalendarDays, faPlane, faPlaneArrival, faPlane
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
 import Button from '../../../Components/Button/Button'
-import { airport } from '../../../dummy_data'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Responsibilty.css"

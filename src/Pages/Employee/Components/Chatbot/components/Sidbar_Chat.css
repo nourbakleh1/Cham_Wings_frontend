@@ -101,8 +101,9 @@ textarea::-webkit-scrollbar{
     }
 }
 #result p::selection{
-    background-color: #00529B !important;
+    background-color: #00539b90 !important;
 }
 .leatest::-webkit-scrollbar{
     width: 0px !important;
+
 }

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { usePrevious } from '../../Hooks/usePrevious';
-import { getReservation_user } from '../../Redux/ApiSlices/reservationSlice';
-import { faMicrophone, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { cancel_Reservation, getReservation_user } from '../../Redux/ApiSlices/reservationSlice';
+import { faEye, faMicrophone, faMoneyCheckDollar, faPenToSquare, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Headings from '../../Components/Headings/Headings';
 import Loading1 from '../../Components/Loading/Loading1';
 import Loading3 from '../../Components/Loading/Loading3';
 import CustomPagination from '../../Components/Pagination/CustomPagination';
+import { toast } from 'react-toastify';
+import Modal from '../../Components/Modal/Modal';
+import Button from '../../Components/Button/Button';
 
 const User_reservations = () => {
     const dispatch=useDispatch();
@@ -16,7 +19,12 @@ const User_reservations = () => {
     const [search,setSearch]=useState("");
     const prev= usePrevious(search);
     const [open5,setOpen5]=useState(false);
+    const [open2,setOpen2]=useState(false);
 
+    //helper data
+    const [data,setData]=useState(null);
+
+    // console.log("my_reservations",my_reservations)
     useEffect(()=>{
         window.scrollTo(0,0);
   
@@ -53,11 +61,32 @@ const User_reservations = () => {
         })
       },[page]);
 
-
+      const handelDeleteReservation=(id)=>{
+        dispatch(cancel_Reservation(id)).unwrap().then((res)=>{
+                return toast.success(res?.success);
+        }).catch((rej)=>{
+            return toast.error(rej?.response?.data?.message)
+        })
+      }
     
   return (
     <div className='mt-[77px] lg:mt-[82px] '>
        <div className="flex items-center justify-between  flex-column  p-4 flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4  bg-black/20">
+        {/* cancel reservation */}
+        <Modal open2={open2} setOpen2={setOpen2}>
+            <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
+            <div className='flex flex-col justify-center items-center gap-6'>
+
+            <p className='font-bold text-gray_color'>do you want to cancel <span className='font-extrabold text-secoundary_color/80'>{data?.date}</span></p>
+            <div className='flex gap-3'>
+            <Button onClick={()=>handelDeleteReservation(data?.id)} color={"#cf2e2e"} padding='5px'>Delete</Button>
+            <Button onClick={()=>setOpen2(!open2)} color={"#777"} padding='5px'>cancel</Button>
+            </div>
+           
+            </div>
+
+            </div>
+           </Modal>
 
        <div className='text-left'>
         <Headings element={"h1"} color='#ae8a3b'>my reservations</Headings>
@@ -110,14 +139,15 @@ const User_reservations = () => {
     
     {isLoading ? <tr> <td className=' p-5  rounded-xl z-[99999]  '></td><td className=' sm:block p-5  rounded-xl z-[99999]  '> </td><td className=' rounded-xl z-[99999] px-6 py-5 text-center align-middle'> 
        </td><td className=' rounded-xl z-[99999] px-6 py-5 text-center align-middle'> <div className="ps-3">
-         <div className="text-base mr-5"> 
+         <div className="text-base mr-5 mb-60"> 
          <Loading1/>
-          </div></div>
+          </div>
+          </div>
        </td></tr>:
-        my_reservations?.data?.data?.map((reserv)=>{
+        my_reservations?.data?.data?.map((reserv,idx)=>{
             return (
                 <tr key={reserv?.reservation_id} className="bg-white_color/80 border-b  border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-200">
-        <th scope="row" className="flex items-center px-6 py-12 text-secoundary_color ">
+        <th scope="row" className="flex items-center px-6 py-12 text-primary_color_1 ">
             <div className="ps-4 text-center  align-middle">
                 <div className="text-[13px] font-semibold">{new Date(reserv?.created_at).toLocaleString()}</div>
                 
@@ -133,9 +163,15 @@ const User_reservations = () => {
         <td className="px-6 py-2 ">
         <div className="ps-3 ">
          <div className="text-[14px] text-primary_color_1 cursor-default w-[200px] flex-wrap flex justify-start items-center gap-3">
-         {reserv?.seats?.map((seat)=>{
+        {
+            reserv?.seats?.length !=0 && <button   className="font-bold text-[20px] m-2 text-secoundary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
+         <FontAwesomeIcon icon={faPenToSquare} />
+            
+           </button>
+        } 
+         {reserv?.seats?.map((seat,idx)=>{
         return (
-            <div key={seat?.seat_id} className="text-[14px] text-gray_color font-bold border-b-2 border-primary_color border-dotted rounded-lg ">
+            <div key={idx} className="text-[14px] text-gray_color font-bold border-b-2 border-primary_color border-dotted rounded-lg ">
           <span className='text-secoundary_color_1/80 font-semibold'>{seat?.row_number}{seat?.seat_number}</span>
           </div>
         )
@@ -163,7 +199,12 @@ const User_reservations = () => {
         <td className="px-6 py-2">
         <div className="ps-3">
          <div className="text-[14px] text-primary_color_1 cursor-default"> 
-          {reserv?.have_companions == "" ? "No":"Yes"}
+         {reserv?.have_companions != null && 
+            <button   className="font-bold text-[20px] m-2 text-secoundary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
+         <FontAwesomeIcon icon={faEye} />
+            
+           </button>}
+          {reserv?.have_companions == null ? "No":"Yes"}
           </div>
         </div>
         </td>
@@ -176,17 +217,17 @@ const User_reservations = () => {
             </div>
         </td>
         <td className=" text-center  align-middle">
-           {
-            ( reserv?.deleted_at == null ?<button   className="font-bold text-[22px] m-2 text-red_color/80 disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
+        {reserv?.status == "Confirmed"  && <button  onClick={()=>{setOpen2(true);setData({id:reserv?.reservation_id,date:reserv?.reservation_date})}} className="font-bold text-[22px] m-2 text-red_color/80 disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
             <FontAwesomeIcon icon={faTrashCan} />
-            </button>:
-            <button  className="font-bold text-[22px] text-green_color/80  m-2  hover:underline">
-            <FontAwesomeIcon icon={faReply} />
+            </button>}
+           {(reserv?.status == "Pending" && reserv?.seats.length != 0) &&<button   className="font-bold text-[25px] m-2 text-primary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
+            <FontAwesomeIcon icon={faMoneyCheckDollar} />
+           </button>} 
 
-            {/* onClick={()=>{setOpen2(true);setData({id:reserv?.reservation_id,number:reserv?.reservation_date})}}
+            {/* 
             onClick={()=>{setOpen1(true);setData({id:reserv?.reservation_id,number:reserv?.reservation_date})}} */}
-            </button>)
-           } 
+            
+           
         </td>
     </tr>
             )

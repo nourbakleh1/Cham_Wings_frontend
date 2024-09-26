@@ -85,7 +85,17 @@ export const get_Passengers_for_reservation=createAsyncThunk("reservation/get_Pa
     catch(err){
         return rejectWithValue(err)
     }
-})
+});
+export const cancel_Reservation=createAsyncThunk("reservation/cancel_Reservation",async(id,ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+    try{
+        const res=await privateRequest.get(`/api/cancel-reservation/${id}`);
+        return res.data
+    }
+    catch(err){
+        return rejectWithValue(err)
+    }
+});
 const initialState={
     occupied_going_seats:[],
     occupied_return_seats:[],
@@ -180,6 +190,16 @@ const reservationSlice=createSlice({
                 state.reservation_pass=action.payload;
             })
             .addCase(get_Passengers_for_reservation.rejected,(state,action)=>{
+                state.isLoading=false;
+                state.error=action.payload;
+            })
+            .addCase(cancel_Reservation.pending,(state)=>{
+                state.isLoading=true;
+            })
+            .addCase(cancel_Reservation.fulfilled,(state,)=>{
+                state.isLoading=false;
+            })
+            .addCase(cancel_Reservation.rejected,(state,action)=>{
                 state.isLoading=false;
                 state.error=action.payload;
             })

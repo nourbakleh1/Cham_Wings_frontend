@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import "./Reservation_seats.css"
-import { seats_plan ,seats_plan2} from '../../dummy_data';
 import { faArrowRightArrowLeft, faArrowsTurnToDots, faCircleCheck, faGlassWater, faPlane, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Headings from '../../Components/Headings/Headings';
@@ -12,7 +11,9 @@ import { Add_Reservation, Add_Seats_TO_Reservation, clear_reservation, get_going
 import { clearResultSearch } from '../../Redux/ApiSlices/flightSlice';
 import Modal from "../../Components/Modal/Modal";
 import {  toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
+import useAirplane_seats from '../../Hooks/useAirplane_seats';
+
 
 
 const Reservation_seats = () => {
@@ -20,6 +21,7 @@ const Reservation_seats = () => {
   const dispatch=useDispatch();
   const {occupied_going_seats,occupied_return_seats,reservation}=useSelector(state=>state.reservation);
   const {selectedFlights,resultSearch} = useSelector((state) => state.flights);
+  const {seats_plan,seats_plan2,setSeats_plan,setSeats_plan2} = useAirplane_seats();
 
   let count_Seats=resultSearch?.booking_preference == "a" ? resultSearch?.adults + 1 :resultSearch?.booking_preference == "b" ? 1 : resultSearch?.adults;
 
@@ -111,8 +113,8 @@ const Reservation_seats = () => {
       
     },[]);
     
-    console.log("converted_com",converted_com);
-    console.log("converted_inf",converted_inf);
+    // console.log("converted_com",converted_com);
+    // console.log("converted_inf",converted_inf);
     
 
     const handelSelectedSeat=(e)=>{
@@ -177,15 +179,18 @@ const Reservation_seats = () => {
       const data={outbound_seats,return_seats,id,round_trip};
 
       dispatch(Add_Seats_TO_Reservation(data)).unwrap().then((res)=>{
-        // dispatch(clearResultSearch());
-        setOpen(true);
-        setSelectedSeats1([]);
-        setSelectedSeats2([]);
+        
+        dispatch(Payment(reservation?.data?.reservation_id)).unwrap().then((res)=>{
+          window.location.replace(`${res?.url}`);
+         dispatch(clearResultSearch());
+         dispatch(clear_reservation());
+       }).catch((rej)=>{
+        return toast.error(rej?.response?.data?.errors);
+       });
         return toast.success(res?.success);
         
       }).catch((rej)=>{
-        setSelectedSeats1([])
-        setSelectedSeats2([])
+        
         return toast.error(rej?.response?.data?.errors);
       });
     }
@@ -195,35 +200,7 @@ const Reservation_seats = () => {
       <ToastContainer theme="colored" position="top-center"/>
 
       <div className='flex flex-col md:flex-row justify-between xl:justify-around items-center'>
-        <Modal open={open} setOpen={setOpen}>
-        <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
-           
-           <div className='flex flex-col justify-center items-center gap-1'>
-           <div className='border-b-2 border-solid border-primary_color w-fit mx-auto mb-3'>
-            <Headings element={"h3"} color='#AE8A3B' >Reservation confirmation</Headings>
-            </div>
-         
-            <div className='flex justify-center items-center p-6'>
-            <p className='font-bold text-gray_color'>Your reservation must be confirmed within an  <span className='font-extrabold text-secoundary_color/80'>hour</span></p>
-            </div>
-          
-           <div className='flex gap-3'>
-           <Button onClick={()=>dispatch(Payment(reservation?.data?.reservation_id)).unwrap().then((res)=>{
-              window.open(`${res?.url}`,"_blank");
-              navigate("/my_reservations",{replace:true});
-             dispatch(clearResultSearch());
-             dispatch(clear_reservation());
-           }).catch((rej)=>{
-            return toast.error(rej?.response?.data?.errors);
-           })}  color={"#00529B"} padding='5px'>Confirm</Button>
-           <Button onClick={()=>navigate("/my_reservations",{replace:true})} color={"#777"} padding='6px'>Later</Button>
-
-           </div>
-          
-           </div>
-
-           </div>
-        </Modal>
+       
       <div className='p-5 mt-[100px]'>
     <div className=' flex items-center gap-2 pb-6'>
       <Headings element={"h3"} color='#000'>{changeSectors?`${departure_flight_selected?.departure_airport_code} to ${departure_flight_selected?.arrival_airport_code}`
@@ -304,8 +281,8 @@ const Reservation_seats = () => {
       </div>
 
       {
-        changeSectors?<Airplane_seats occupied_going_seats={occupied_going_seats} flight_details_dep={flight_details_dep} selectedSeats1={selectedSeats1} setSelectedSeats1={setSelectedSeats1} selectedSeats1_name={selectedSeats1_name} setSelectedSeats1_name={setSelectedSeats1_name} />:
-        <Airplane_seats2 occupied_return_seats={occupied_return_seats} flight_details_ret={flight_details_ret} selectedSeats2={selectedSeats2} setSelectedSeats2={setSelectedSeats2} selectedSeats2_name={selectedSeats2_name} setSelectedSeats2_name={setSelectedSeats2_name}/>
+        changeSectors?<Airplane_seats seats_plan={seats_plan} setSeats_plan={setSeats_plan} occupied_going_seats={occupied_going_seats} flight_details_dep={flight_details_dep} selectedSeats1={selectedSeats1} setSelectedSeats1={setSelectedSeats1} selectedSeats1_name={selectedSeats1_name} setSelectedSeats1_name={setSelectedSeats1_name} />:
+        <Airplane_seats2 seats_plan2={seats_plan2} setSeats_plan2={setSeats_plan2} occupied_return_seats={occupied_return_seats}  flight_details_ret={flight_details_ret} selectedSeats2={selectedSeats2} setSelectedSeats2={setSelectedSeats2} selectedSeats2_name={selectedSeats2_name} setSelectedSeats2_name={setSelectedSeats2_name}/>
         
       }
       

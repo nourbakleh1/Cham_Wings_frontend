@@ -52,6 +52,7 @@ import UnaccompaniedMinors from './Pages/OurService/InfoCard/UnaccompaniedMinors
 import Manage_policies from './Pages/Employee/Manage_policies/Manage_policies';
 import Offers from './Pages/Offers/Offers';
 import User_reservations from './Pages/My_reservations/User_reservations';
+import { setLocation } from './Redux/ApiSlices/authSlice';
 import VisaInfo from './Pages/VisaInfo/VisaInfo';
 
 
@@ -71,7 +72,6 @@ const App = () => {
       }
     })
   },[]);
-  console.log("data",data);
     useEffect(()=>{
       
       navigator.geolocation.getCurrentPosition(async(position)=>{
@@ -79,7 +79,8 @@ const App = () => {
         let Url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
         try{
           const res= await axios.get(Url);
-          setData(res?.data?.address)
+          setData(res?.data?.address?.country);
+          setLocation(res?.data?.address?.country)
         }
         catch(err){
           console.log(err)
