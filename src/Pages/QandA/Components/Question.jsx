@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import ConfirmDeleteModal from "./ConfirmDeleteModal";
-import { privateRequest } from "../../lib/privateRequest";
+import { privateRequest } from "../../../lib/privateRequest";
 
 const Question = ({ question, faq_id, onEdit, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
