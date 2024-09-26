@@ -16,7 +16,7 @@ const QuestionsPage = () => {
   const [employeeIds, setEmployeeIds] = useState([]);
   const [page, setPage] = useState(1); // Track current page
   const [totalQuestions, setTotalQuestions] = useState(0); // Total number of questions
-  const perPage = 10; // Set the number of questions per page
+  const perPage = 15; // Set the number of questions per page
 
   const { user } = useSelector((state) => state.auth);
   const role = user?.data?.user?.employee?.roles[0]?.role_id;
@@ -92,7 +92,7 @@ const QuestionsPage = () => {
       setError("Failed to delete question");
     }
   };
-  console.log("dkvk",role)
+
   // Calculate total pages and ceil Round a number up.
   const totalPages = Math.ceil(totalQuestions / perPage);
 
