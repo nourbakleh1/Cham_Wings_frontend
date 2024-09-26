@@ -56,7 +56,7 @@ const Sidbar_Chat = ({setNewchat,setSearch,handelChat,change_view,view}) => {
     <div>
     
     {!showSidbar && <><p className='text-gray_color my-6'>What is recent ...</p>
-    <ul className='leatest flex justify-start items-center w-full flex-col gap-3 h-[280px] overflow-y-scroll '>
+    <ul className='leatest flex justify-start items-center w-full flex-col gap-3 h-[300px] overflow-y-scroll '>
         {
             threads?.map((thread)=>{
               return  <li key={thread.thread_id} className='flex bg-secoundary_color_1/20 rounded-lg shadow-sm shadow-primary_color mx-2 p-0 sm:p-1 justify-center gap-0 sm:gap-1 items-center flex-col sm:flex-row' onClick={()=>{handelChat(thread.thread_id);setShowSidbar(!showSidbar);handel_sideWidth()}}>
@@ -75,8 +75,9 @@ const Sidbar_Chat = ({setNewchat,setSearch,handelChat,change_view,view}) => {
 
     </div>}
     <div className='translate-y-20 sm:translate-y-10'>
-    <FontAwesomeIcon icon={faCircleQuestion} className='text-[12px] sm:text-[20px]    bg-secoundary_color_1/50 p-2  rounded-2xl   text-white_color hover:text-primary_color'/>
-    {!showSidbar &&<p>Help</p>}
+    {showSidbar &&<p>
+        <FontAwesomeIcon icon={faCircleQuestion} className='text-[12px] sm:text-[20px]    bg-secoundary_color_1/50 p-2  rounded-2xl   text-white_color hover:text-primary_color'/>
+        </p>}
     </div>
     </aside>
   )

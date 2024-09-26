@@ -3,20 +3,23 @@ import Hero from '../../Components/Hero/Hero'
 import Who_are_we from './Components/Who_are_we'
 import Separator from '../../Components/Separator/Separator'
 import Offer_list from '../../Components/Offers/Offer_list'
-import {offers} from "../../dummy_data.js"
 import Our_responsibilty from './Components/Our_responsibilty.jsx'
 import Search_flight from './Components/Search_flight.jsx'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Slider from './Components/Slider.jsx'
+import { clear_reservation } from '../../Redux/ApiSlices/reservationSlice.js'
 
 
 
 
 const Home = () => {
   const {user}=useSelector(state=>state.auth);
+  const dispatch = useDispatch();
+  
  
   useEffect(()=>{
     window.scrollTo(0,0);
+    dispatch(clear_reservation());
   },[]);
   
   return (
@@ -26,7 +29,7 @@ const Home = () => {
       {user &&<Slider/>}
       <Who_are_we/>
       <Separator type={"spikes"} Background_color={"#e8e8e8"}/>
-      <Offer_list offers={offers}/>
+      <Offer_list/>
       <Separator type={"curved"} Background_color='#fff' ></Separator>
       <Our_responsibilty/>
 

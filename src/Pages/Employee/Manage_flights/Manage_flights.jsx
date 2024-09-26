@@ -144,7 +144,6 @@ const GetFlight_info=(id)=>{
 // schedule state
 const [departure_date,setDeparture_date]=useState(null);
 const [arrival_date,setArrival_date]=useState(null);
-const [duration,setDuration]=useState(null);
 const [departure_times,setDeparture_times]=useState(null);
 const [arrival_times,setArrival_times]=useState(null);
 
@@ -155,9 +154,6 @@ const handelAddSchedule=(id)=>{
     }
     if(arrival_date == null){
         return toast.error("Arrival date is required")
-    }
-    if(duration == null){
-        return toast.error("Duration is required")
     }
     if(departure_times == null){
         return toast.error("Departure times is required")
@@ -175,7 +171,7 @@ const handelAddSchedule=(id)=>{
     arrival_times_array?.push(change1);
     
     const data={
-        arrival_date:useDateFormat(arrival_date),departure_date:useDateFormat(departure_date),duration,departure_times:departure_times_array,
+        arrival_date:useDateFormat(arrival_date),departure_date:useDateFormat(departure_date),departure_times:departure_times_array,
         arrival_times:arrival_times_array
     }
    
@@ -188,7 +184,6 @@ const handelAddSchedule=(id)=>{
         setOpen4(!open4);
         setDeparture_date(null);
         setArrival_date(null);
-        setDuration(null);
         setDeparture_times(null);
         setArrival_times(null);
         dispatch(getSchedule(id));
@@ -241,18 +236,15 @@ const handelAddSchedule=(id)=>{
             if(arrival_times == null){
                 return toast.error("Arrival times is required")
             }
-            if(duration == null){
-                return toast.error("Duration is required")
-            }
+            
             const data={
-                departure_time:useTimeFormat(departure_times),arrival_time:useTimeFormat(arrival_times),duration
+                departure_time:useTimeFormat(departure_times),arrival_time:useTimeFormat(arrival_times)
             }
             const time={data,id}
             dispatch(AddTimesTospecficDay(time)).unwrap().then((res)=>{
                 setOpen8(!open8);
                 setArrival_times(null);
                 setDeparture_times(null);
-                setDuration(null);
                 dispatch(getSchedule(flight_info?.data?.flight_id));
                 return toast.success(res?.success)
             }).catch((rej)=>{
