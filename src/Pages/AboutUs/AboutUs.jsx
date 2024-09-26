@@ -26,7 +26,7 @@ const cardsData = [
     imageUrl: "assets/images/AboutUs/service.svg",
     alternateImages: ["assets/images/AboutUs/service1.svg"],
     title: "OUR SERVICES",
-    link: "/about-us/our-services",
+    link: "/our-services",
   },
   {
     imageUrl: "assets/images/AboutUs/responsibilty.svg",

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { privateRequest } from "../../lib/privateRequest";
-import Button from "../../Components/Button/Button";
+import { privateRequest } from "../../../lib/privateRequest";
+import Button from "../../../Components/Button/Button";
 
 const Answer = ({ faq_id, refreshQuestions, onCancel }) => {
   const [answer, setAnswer] = useState("");

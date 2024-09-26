@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { privateRequest } from "../../lib/privateRequest";
+import { privateRequest } from "../../../lib/privateRequest";
 
 const QuestionForm = ({ refreshQuestions }) => {
   const [question, setQuestion] = useState(""); 

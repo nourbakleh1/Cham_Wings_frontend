@@ -36,7 +36,7 @@ export const updateProfile = createAsyncThunk(
   async ({ profile, profileImage }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
-      // Append all profile fields
+      // Add all profile fields
       for (const key in profile) {
         if (profile.hasOwnProperty(key)) {
           formData.append(key, profile[key]);
@@ -76,7 +76,7 @@ export const updateEmpProfile = createAsyncThunk(
   async ({ profile, profileImage }, { rejectWithValue }) => {
     try {
       const formData = new FormData();
-      // Append all profile fields
+      // Add all profile fields
       for (const key in profile) {
         if (profile.hasOwnProperty(key)) {
           formData.append(key, profile[key]);

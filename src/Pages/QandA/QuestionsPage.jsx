@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Question from "./Question";
-import Answer from "./Answer";
-import QuestionForm from "./QuestionForm";
+import Question from ".//Components/Question";
+import Answer from ".//Components/Answer";
+import QuestionForm from ".//Components/QuestionForm";
 import { privateRequest } from "../../lib/privateRequest";
 import Headings from "../../Components/Headings/Headings";
 import Pagination from "../../../src/Components/Pagination/Pagination";
