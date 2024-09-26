@@ -1,6 +1,5 @@
 import React from 'react'
 import "../Reservation_seats.css"
-import { seats_plan2} from '../../../dummy_data';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightArrowLeft, faCircleCheck, faGlassWater, faPlane, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 
-const Airplane_seats2 = ({selectedSeats2,setSelectedSeats2,setSelectedSeats2_name,selectedSeats2_name,occupied_return_seats,flight_details_ret}) => {
+const Airplane_seats2 = ({selectedSeats2,setSelectedSeats2,setSelectedSeats2_name,selectedSeats2_name,occupied_return_seats,flight_details_ret,seats_plan2,setSeats_plan2}) => {
     const seats=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28];
     const {resultSearch} = useSelector((state) => state.flights);
     
@@ -57,8 +56,8 @@ const Airplane_seats2 = ({selectedSeats2,setSelectedSeats2,setSelectedSeats2_nam
 
         <input type='checkbox' id={`seat ${idx}`} checked={el.selected == 1}  disabled={el.checked == 1 ? true :false || class_Type != el.class_id} className={`seat2 hidden `} onChange={()=>setSelectedSeats2(()=>
         {
-          
             
+              
             if(selectedSeats2?.includes(el.id)){
              
             let y=selectedSeats2_name?.filter((element)=>{
@@ -68,10 +67,15 @@ const Airplane_seats2 = ({selectedSeats2,setSelectedSeats2,setSelectedSeats2_nam
             el.selected= 0
           return el.id != item;
          })
-         
+         if(selectedSeats2 == undefined)
+         {
+          setSelectedSeats2([])
+          setSelectedSeats2_name([])
+         }
+         else{
          setSelectedSeats2(x)
          setSelectedSeats2_name(y)
-          }
+          }}
          
              
         else{
@@ -82,9 +86,9 @@ const Airplane_seats2 = ({selectedSeats2,setSelectedSeats2,setSelectedSeats2_nam
           setSelectedSeats2_name((prev)=>[...prev,el.seat_number])
           return [...selectedSeats2,el.id] }
           else{
-            setSelectedSeats2(selectedSeats2);
-            return toast.warning(`You cannot choose more than ${count_Seats} seats`);
             
+            setSelectedSeats2(selectedSeats2);
+        
           }
 
         }
