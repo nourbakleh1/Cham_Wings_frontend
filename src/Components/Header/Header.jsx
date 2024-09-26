@@ -14,6 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [display, setDispaly] = useState(false);
   const { user } = useSelector((state) => state.auth);
+  const { profile } = useSelector((state) => state.profile);
   const role = user?.data?.user?.employee?.roles[0]?.role_id;
   const handelNav = () => {
     document.getElementById("navbar-user").classList.toggle("hidden");
@@ -78,7 +79,7 @@ const Header = () => {
                   </span>
               <img
                 className="w-7 h-7 sm:w-9 sm:h-9 lg:w-11 lg:h-11 rounded-full bg-white_color"
-                src={ user?.data?.user?.image ?`http://127.0.0.1:8000/${user?.data?.user?.image}`:"/assets/images/user-avatar.png"}
+                src={ profile?.image ?`http://127.0.0.1:8000/${profile?.image}`:"/assets/images/user-avatar.png"}
                 alt="user photo"
               />
               <i className="bi bi-person-circle"></i>
