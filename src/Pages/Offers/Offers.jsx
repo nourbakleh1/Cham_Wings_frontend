@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import Loading2 from '../../Components/Loading/Loading2';
 import Loading3 from '../../Components/Loading/Loading3';
 import SpeachToText from '../../Components/Voice_Modal/SpeachToText';
+import { clear_reservation } from '../../Redux/ApiSlices/reservationSlice';
 
 const Offers = () => {
     const dispatch=useDispatch();
@@ -25,6 +26,7 @@ const Offers = () => {
    
     useEffect(()=>{
       window.scrollTo(0,0);
+      dispatch(clear_reservation());
 
         if(window.sessionStorage.getItem("page")){
           let pageSaved=JSON.parse(window.sessionStorage.getItem("page"))

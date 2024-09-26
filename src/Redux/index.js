@@ -20,7 +20,7 @@ import policySlice from "./ApiSlices/employee/policySlice";
 const persistAuthConfig = {
   key: "auth",
   storage,
-  whitelist: ["user"],
+  whitelist: ["user","location"],
 };
 const persistFlightConfig = {
   key: "flight",
