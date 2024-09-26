@@ -20,7 +20,7 @@ const QuestionsPage = () => {
 
   const { user } = useSelector((state) => state.auth);
   const role = user?.data?.user?.employee?.roles[0]?.role_id;
-  const passengerId = user?.data?.user?.passenger?.passenger_id;
+  const passengerId = user?.data?.user?.passenger?.passenger_id; 
 
   const fetchQuestions = async () => {
     try {
@@ -92,12 +92,14 @@ const QuestionsPage = () => {
       setError("Failed to delete question");
     }
   };
-
+  console.log("dkvk",role)
   // Calculate total pages and ceil Round a number up.
   const totalPages = Math.ceil(totalQuestions / perPage);
 
   return (
-    <div className="container mx-auto p-8 pl-20 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen relative">
+    <div className={role != undefined  && "lg:w-[calc(100%-296px)] ml-0 sm:ml-auto"}>
+    <div className="container p-8 mx-auto pl-10 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen relative">
+     
       {error && (
         <p className="text-red-600 text-center mb-6 font-medium">{error}</p>
       )}
@@ -215,7 +217,7 @@ const QuestionsPage = () => {
                     onCancel={() => setReplyingTo(null)}
                   />
                 ) : (
-                  role === 5 && (
+                  (role == 18  || role == 5)  && (
                     <button
                       onClick={() => setReplyingTo(q.faq_id)}
                       className="flex items-center text-blue-600 hover:text-blue-800 transition duration-200"
@@ -262,6 +264,7 @@ const QuestionsPage = () => {
           <QuestionForm refreshQuestions={fetchQuestions} />
         </div>
       )}
+    </div>
     </div>
   );
 };
