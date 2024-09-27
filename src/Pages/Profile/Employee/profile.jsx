@@ -4,11 +4,14 @@ import { privateRequest } from "../../../lib/privateRequest.js";
 import Toast from "../Toast/Toast.jsx";
 import "../ProfilePage.css";
 import Headings from "../../../Components/Headings/Headings.jsx";
+import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(null);
+  const { user } = useSelector((state) => state.auth);
+  const role = user?.data?.user?.employee?.roles[0]?.role_id;
 
   useEffect(() => {
     setTimeout(() => {
@@ -21,6 +24,7 @@ const ProfilePage = () => {
   };
 
   return (
+    <div className={role != undefined  && "lg:w-[calc(100%-296px)] ml-0 sm:ml-auto"}>
     <div className="bg-gray-200 bg-opacity-50 py-2">
       {loading ? (
         <div className="flex items-center justify-center min-h-screen">
@@ -60,6 +64,7 @@ const ProfilePage = () => {
           )}
         </div>
       )}
+    </div>
     </div>
   );
 };
