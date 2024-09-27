@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { usePrevious } from '../../Hooks/usePrevious';
-import { cancel_Reservation, getReservation_user } from '../../Redux/ApiSlices/reservationSlice';
+import { cancel_Reservation, getReservation_user, Payment } from '../../Redux/ApiSlices/reservationSlice';
 import { faEye, faMicrophone, faMoneyCheckDollar, faPenToSquare, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Headings from '../../Components/Headings/Headings';
@@ -67,6 +67,13 @@ const User_reservations = () => {
         }).catch((rej)=>{
             return toast.error(rej?.response?.data?.message)
         })
+      }
+      const handelPayment=(id)=>{
+        dispatch(Payment(id)).unwrap().then((res)=>{
+            window.location.replace(`${res?.url}`);
+         }).catch((rej)=>{
+          return toast.error(rej?.response?.data?.errors);
+         });
       }
     
   return (
@@ -213,19 +220,19 @@ const User_reservations = () => {
     
         <td className="px-6 py-2">
             <div className="flex items-center">
-            {reserv?.status == "Confirmed" ?<> <div className="h-2.5 w-2.5 rounded-full bg-green-400 me-2"></div> Confirmed</>:reserv?.status == "Pending"?<><div className="h-2.5 w-2.5 rounded-full bg-gray-500 me-2"></div> Pending</>:reserv?.status == "Canceled" ?<><div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Canceled</>:<><div className="h-2.5 w-2.5 rounded-full bg-black/50 me-2"></div> Ended</>}
+            {reserv?.status == "Confirmed" ?<> <div className="h-2.5 w-2.5 rounded-full bg-green-400 me-2"></div> Confirmed</>:reserv?.status == "Pending"?<><div className="h-2.5 w-2.5 rounded-full bg-gray-400 me-2"></div> Pending</>:reserv?.status == "Canceled" ?<><div className="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Canceled</>:<><div className="h-2.5 w-2.5 rounded-full bg-black/80 me-2"></div> Ended</>}
             </div>
         </td>
         <td className=" text-center  align-middle">
         {reserv?.status == "Confirmed"  && <button  onClick={()=>{setOpen2(true);setData({id:reserv?.reservation_id,date:reserv?.reservation_date})}} className="font-bold text-[22px] m-2 text-red_color/80 disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
             <FontAwesomeIcon icon={faTrashCan} />
             </button>}
-           {(reserv?.status == "Pending" && reserv?.seats.length != 0) &&<button   className="font-bold text-[25px] m-2 text-primary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
+           {(reserv?.status == "Pending" && reserv?.seats.length != 0) &&<button onClick={()=>{ handelPayment(reserv?.reservation_id)}}   className="font-bold text-[25px] m-2 text-primary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
             <FontAwesomeIcon icon={faMoneyCheckDollar} />
            </button>} 
 
-            {/* 
-            onClick={()=>{setOpen1(true);setData({id:reserv?.reservation_id,number:reserv?.reservation_date})}} */}
+             
+            
             
            
         </td>

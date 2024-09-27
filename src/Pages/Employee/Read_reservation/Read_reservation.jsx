@@ -96,7 +96,7 @@ const handelDeleteReservation=(id)=>{
 
   
   return  <div className='relative flex flex-col justify-start items-start mt-[78px] lg:mt-[85px] h-auto w-full  lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
-        {/* delete flight */}
+        {/* delete reservation */}
           <Modal open={open1} setOpen={setOpen1}>
             <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
             <div className='flex flex-col justify-center items-center gap-6'>
@@ -111,7 +111,7 @@ const handelDeleteReservation=(id)=>{
 
             </div>
            </Modal>
-           {/* activate flight */}
+           {/* activate reservation */}
            <Modal open={open2} setOpen={setOpen2}>
             <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
             <div className='flex flex-col justify-center items-center gap-6'>
