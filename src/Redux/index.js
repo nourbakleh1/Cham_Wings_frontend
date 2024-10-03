@@ -30,7 +30,7 @@ const persistFlightConfig = {
 const persistReservationConfig = {
   key: "reservation",
   storage:sessionStorage,
-  whitelist: ["reservation"],
+  whitelist: ["reservation","visa"],
 };
 
 const persistedAuthReducer = persistReducer(persistAuthConfig, authSlice);

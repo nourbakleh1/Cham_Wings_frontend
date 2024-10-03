@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { usePrevious } from '../../Hooks/usePrevious';
-import { cancel_Reservation, getReservation_user, Payment } from '../../Redux/ApiSlices/reservationSlice';
-import { faEye, faMicrophone, faMoneyCheckDollar, faPenToSquare, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { cancel_Reservation, get_Passengers_for_reservation, getReservation_user, Payment } from '../../Redux/ApiSlices/reservationSlice';
+import { faEnvelopeOpenText, faEye, faMicrophone, faMoneyCheckDollar, faPenToSquare, faReply, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Headings from '../../Components/Headings/Headings';
 import Loading1 from '../../Components/Loading/Loading1';
@@ -11,15 +10,19 @@ import CustomPagination from '../../Components/Pagination/CustomPagination';
 import { toast } from 'react-toastify';
 import Modal from '../../Components/Modal/Modal';
 import Button from '../../Components/Button/Button';
+import LargeModal from '../../Components/Modal/LargeModal';
+import Loading4 from '../../Components/Loading/Loading4';
 
 const User_reservations = () => {
     const dispatch=useDispatch();
-    const {my_reservations,error,isLoading}=useSelector((state)=>state.reservation);
+    const {my_reservations,error,isLoading,isLoading_payment,reservation_pass}=useSelector((state)=>state.reservation);
+  const { user } = useSelector((state) => state.auth);
+
     const [page,setPage]=useState(1);
     const [search,setSearch]=useState("");
-    const prev= usePrevious(search);
     const [open5,setOpen5]=useState(false);
     const [open2,setOpen2]=useState(false);
+    const [open4,setOpen4]=useState(false);
 
     //helper data
     const [data,setData]=useState(null);
@@ -36,23 +39,10 @@ const User_reservations = () => {
             if(window.sessionStorage.getItem("page")){
                 window.sessionStorage.removeItem("page")
             }
-            setSearch("")
           }
         },[]);
 
-        // useEffect(()=>{
-        //     const debounce=setTimeout(() => {
-        //         if(prev != search)
-        //         {
-        //             dispatch(getOffers_search_User(search))
-        //         }
-        //     }, 1500);
-        //     return ()=>{
-        //         clearTimeout(debounce)
-        //     }
-        // },[search]);
-
-         // while refresh page
+        
        useEffect(()=>{
         dispatch(getReservation_user(page)).unwrap().then((res)=>{
             window.sessionStorage.setItem("page",JSON.stringify(page))
@@ -63,6 +53,8 @@ const User_reservations = () => {
 
       const handelDeleteReservation=(id)=>{
         dispatch(cancel_Reservation(id)).unwrap().then((res)=>{
+              dispatch( getReservation_user(page));
+              setOpen2(false);
                 return toast.success(res?.success);
         }).catch((rej)=>{
             return toast.error(rej?.response?.data?.message)
@@ -75,12 +67,236 @@ const User_reservations = () => {
           return toast.error(rej?.response?.data?.errors);
          });
       }
-    
+      const getPASS=(id)=>{
+        dispatch(get_Passengers_for_reservation(id));
+      }
+    console.log(data)
+    console.log(reservation_pass)
   return (
     <div className='mt-[77px] lg:mt-[82px] '>
-       <div className="flex items-center justify-between  flex-column  p-4 flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4  bg-black/20">
+       {!isLoading_payment  ? <div className='flex justify-center items-center py-5'><Loading4/></div> : <div className="flex items-center justify-between  flex-column  p-4 flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4  bg-black/20">
+       {/* tickets */}
+       <LargeModal open={open4} setOpen={setOpen4}>
+            <Headings element={"h1"}>View tickets</Headings>
+
+            {
+                data?.info?.is_traveling == 1 && <div className='bg-black_color/50 pb-4 border-b-4 border-solid border-black'>
+            <div className='flex justify-center items-center pt-3'>
+            <img
+            src="/assets/images/logo_wings.png"
+            className="h-8 sm:h-[38px]  lg:h-[42px] "
+            alt="Logo"
+          />
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-12'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Reservation date :</p><span className='text-off_white/60'>{new Date(data?.info?.created_at).toLocaleString()}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Reservation :</p><span className='text-off_white/60'>{data?.info?.status}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Reservation number :</p><span className='text-off_white/60'>{data?.info?.reservation_id}c</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Trip type :</p><span className='text-off_white/60'>{data?.info?.round_trip == 0 ?"one Way":"round trip"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Departure terminal :</p><span className='text-off_white/60'>{data?.info?.flight?.departure_terminal}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Arrival terminal :</p><span className='text-off_white/60'>{data?.info?.flight.arrival_terminal}</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Flight number :</p><span className='text-off_white/60'>{data?.info?.flight?.flight_number}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Miles :</p><span className='text-off_white/60'>{data?.info?.flight?.miles}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Price :</p><span className='text-off_white/60'>{data?.info?.flight.price}</span>
+            </div>
+            </div>
+
+            <p className=' ml-[2%] mt-5 border-b-4 border-b-secoundary_color border-dashed w-fit text-white font-extrabold'>Personal information</p>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Name :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.title}.{user?.data?.user?.passenger?.travel_requirement?.first_name} {user?.data?.user?.passenger?.travel_requirement?.last_name}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Age :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.age || "null"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Gender :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.gender || "null"}</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Country :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.country_of_residence}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>City :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.city  || "null"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Address :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.address || "null"}</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Date of birth :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.date_of_birth || "null"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Nationality :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.nationality || "null" }</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Mobile during travel :</p><span className='text-off_white/60'>{user?.data?.user?.passenger?.travel_requirement?.mobile_during_travel || "null"}</span>
+            </div>
+            </div>
+            <p className=' ml-[2%] mt-5 border-b-4 border-secoundary_color border-dashed w-fit text-white_color font-extrabold'>Personal contact</p>
+
+            <div className='flex justify-between items-center gap-5 px-5 mt-6'>
+            <div className='flex justify-center items-center  gap-1'>
+                <p className='text-white_color font-semibold'>Email :</p><span className='text-off_white/60'>{user?.data?.user?.email || "null"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Phone :</p><span className='text-off_white/60'>{user?.data?.user?.phone || "null" }</span>
+            </div>
+            
+            </div>
+            <p className=' ml-[2%] mt-5 border-b-4 border-secoundary_color border-dashed w-fit text-white_color font-extrabold'>information contact</p>
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Country :</p><span className='text-off_white/60'>Syria</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>City :</p><span className='text-off_white/60'>Damascus</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Mobile :</p><span className='text-off_white/60'>+963 (11)2244086</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Email :</p><span className='text-off_white/60'>cs@chamwings.com</span>
+            </div>
+            </div>
+
+            </div>
+            }
+            {
+                reservation_pass?.data?.adults?.map((pass)=>{
+                    return   data?.info?.is_traveling == 1 && <div key={pass?.companion_id} className='bg-black_color/50 pb-4 border-b-4 border-solid border-black'>
+            <div className='flex justify-center items-center pt-3'>
+            <img
+            src="/assets/images/logo_wings.png"
+            className="h-8 sm:h-[38px]  lg:h-[42px] "
+            alt="Logo"
+          />
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-12'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Reservation date :</p><span className='text-off_white/60'>{new Date(data?.info?.created_at).toLocaleString()}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Reservation :</p><span className='text-off_white/60'>{data?.info?.status}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Reservation number :</p><span className='text-off_white/60'>{data?.info?.reservation_id}c</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Trip type :</p><span className='text-off_white/60'>{data?.info?.round_trip == 0 ?"one Way":"round trip"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Departure terminal :</p><span className='text-off_white/60'>{data?.info?.flight?.departure_terminal}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Arrival terminal :</p><span className='text-off_white/60'>{data?.info?.flight.arrival_terminal}</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Flight number :</p><span className='text-off_white/60'>{data?.info?.flight?.flight_number}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Miles :</p><span className='text-off_white/60'>{data?.info?.flight?.miles}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Price :</p><span className='text-off_white/60'>{data?.info?.flight.price}</span>
+            </div>
+            </div>
+
+            <p className=' ml-[2%] mt-5 border-b-4 border-b-secoundary_color border-dashed w-fit text-white font-extrabold'>Personal information</p>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Name :</p><span className='text-off_white/60'>{pass?.travel_requirement?.title}.{pass?.travel_requirement?.first_name} {pass?.passenger?.travel_requirement?.last_name}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Age :</p><span className='text-off_white/60'>{pass?.travel_requirement?.age || "null"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Gender :</p><span className='text-off_white/60'>{pass?.travel_requirement?.gender || "null"}</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Country :</p><span className='text-off_white/60'>{pass?.travel_requirement?.country_of_residence}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>City :</p><span className='text-off_white/60'>{pass?.travel_requirement?.city  || "null"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Address :</p><span className='text-off_white/60'>{pass?.travel_requirement?.address || "null"}</span>
+            </div>
+            </div>
+
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Date of birth :</p><span className='text-off_white/60'>{pass?.travel_requirement?.date_of_birth || "null"}</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Nationality :</p><span className='text-off_white/60'>{pass?.travel_requirement?.nationality || "null" }</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Mobile during travel :</p><span className='text-off_white/60'>{pass?.travel_requirement?.mobile_during_travel || "null"}</span>
+            </div>
+            </div>
+            <p className=' ml-[2%] mt-5 border-b-4 border-secoundary_color border-dashed w-fit text-white_color font-extrabold'>information contact</p>
+            <div className='flex justify-between items-center px-5 mt-6'>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>Country :</p><span className='text-off_white/60'>Syria</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'>City :</p><span className='text-off_white/60'>Damascus</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Mobile :</p><span className='text-off_white/60'>+963 (11)2244086</span>
+            </div>
+            <div className='flex justify-center items-center gap-1'>
+                <p className='text-white_color font-semibold'> Email :</p><span className='text-off_white/60'>cs@chamwings.com</span>
+            </div>
+            </div>
+
+            </div>
+                })
+            }
+       </LargeModal>
         {/* cancel reservation */}
-        <Modal open2={open2} setOpen2={setOpen2}>
+        <Modal open={open2} setOpen={setOpen2}>
             <div className=" flex items-center justify-center py-[40px] px-4 sm:px-3 lg:px-2 bg-white_color bg-no-repeat bg-cover">
             <div className='flex flex-col justify-center items-center gap-6'>
 
@@ -95,28 +311,19 @@ const User_reservations = () => {
             </div>
            </Modal>
 
-       <div className='text-left'>
-        <Headings element={"h1"} color='#ae8a3b'>my reservations</Headings>
+       <div className='flex justify-center items-center m-auto h-[150px]'>
+        <Headings element={"h1"} color='#ae8a3b'>my reservations</Headings> 
         </div>
         <label htmlFor="table-search" className="sr-only">Search</label>
-        <div className="relative flex justify-center items-center">
-            <div className="absolute  inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg className="w-5 h-5 text-primary_color" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg>
-            </div>
-            <input type="text" id="table-search-users" value={search} onChange={(e)=>setSearch(e.target.value)} className="block p-2 ps-10 text-lg shadow-xl border-r-0 shadow-black_color/40 text-white_color border border-gray-300 rounded-l-lg w-[180px] sm:w-[200px] lg:w-80 bg-black/5 focus:ring-blue-500 focus:border-blue-500   placeholder:text-secoundary_color dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for reservation"/>
-            <FontAwesomeIcon icon={faMicrophone} onClick={()=>setOpen5(true)}  className='text-white/90  bg-primary_color/70 w-[20px] h-[44.4px]  lg:h-[44px] px-1 shadow-xl rounded-r-lg border-[0.5px] border-l-0 border-gray-300 shadow-black_color/40'/>
-        </div>
-       </div>
+        
+       </div>}
 
        <div className="relative overflow-x-auto  sm:px-4 bg-black/20 shadow-2xl shadow-black_color/50  lg:rounded-b-lg">
     
 
-<table className="w-full text-sm text-left rtl:text-right text-gray-900 relative">
-    <thead className="text-xs text-primary_color uppercase  bg-secoundary_color_1 ">
+     <table className="w-full text-sm text-left rtl:text-right text-gray-900 relative">
+      <thead className="text-xs text-primary_color uppercase  bg-secoundary_color_1 ">
         <tr>
-            
             <th scope="col" className="px-6 py-3">
                 Reservation date
             </th>
@@ -142,7 +349,7 @@ const User_reservations = () => {
     </thead>
     
    
-    {search.trim() == "" ? <tbody>
+    <tbody>
     
     {isLoading ? <tr> <td className=' p-5  rounded-xl z-[99999]  '></td><td className=' sm:block p-5  rounded-xl z-[99999]  '> </td><td className=' rounded-xl z-[99999] px-6 py-5 text-center align-middle'> 
        </td><td className=' rounded-xl z-[99999] px-6 py-5 text-center align-middle'> <div className="ps-3">
@@ -170,12 +377,7 @@ const User_reservations = () => {
         <td className="px-6 py-2 ">
         <div className="ps-3 ">
          <div className="text-[14px] text-primary_color_1 cursor-default w-[200px] flex-wrap flex justify-start items-center gap-3">
-        {
-            reserv?.seats?.length !=0 && <button   className="font-bold text-[20px] m-2 text-secoundary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
-         <FontAwesomeIcon icon={faPenToSquare} />
-            
-           </button>
-        } 
+        
          {reserv?.seats?.map((seat,idx)=>{
         return (
             <div key={idx} className="text-[14px] text-gray_color font-bold border-b-2 border-primary_color border-dotted rounded-lg ">
@@ -205,12 +407,7 @@ const User_reservations = () => {
         </td>
         <td className="px-6 py-2">
         <div className="ps-3">
-         <div className="text-[14px] text-primary_color_1 cursor-default"> 
-         {reserv?.have_companions != null && 
-            <button   className="font-bold text-[20px] m-2 text-secoundary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
-         <FontAwesomeIcon icon={faEye} />
-            
-           </button>}
+         <div className="text-[14px] text-primary_color_1 cursor-default">
           {reserv?.have_companions == null ? "No":"Yes"}
           </div>
         </div>
@@ -230,9 +427,11 @@ const User_reservations = () => {
            {(reserv?.status == "Pending" && reserv?.seats.length != 0) &&<button onClick={()=>{ handelPayment(reserv?.reservation_id)}}   className="font-bold text-[25px] m-2 text-primary_color/80  disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
             <FontAwesomeIcon icon={faMoneyCheckDollar} />
            </button>} 
+           {reserv?.status == "Confirmed"  && <button  onClick={()=>{setOpen4(true);getPASS(reserv?.reservation_id);setData({info:reserv})}} className="font-bold text-[24px] m-2 text-secoundary_color/80 disabled:text-gray_color disabled:cursor-not-allowed   hover:underline">
+            <FontAwesomeIcon icon={faEnvelopeOpenText} />
+            </button>}
 
              
-            
             
            
         </td>
@@ -240,9 +439,11 @@ const User_reservations = () => {
             )
         })
     }    
-</tbody>:null}    
+</tbody>   
+
+
 </table>
-<div>
+<div className='pb-32'>
     {
         search.trim() == "" ? <CustomPagination isLoading={isLoading} page={page} setPage={setPage} totalElement={my_reservations?.data?.total} perPage={15}/>:null
     }

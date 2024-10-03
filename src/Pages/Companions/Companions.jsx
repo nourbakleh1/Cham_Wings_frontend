@@ -10,6 +10,8 @@ import Headings from "../../Components/Headings/Headings";
 import Button from "../../Components/Button/Button";
 import LargeModal from "../../Components/Modal/LargeModal.jsx";
 import ProfilePage from "../Profile/profile.jsx";
+import { get_visa_spec} from "../../Redux/ApiSlices/reservationSlice.js";
+import { publicRequest } from "../../lib/publicRequest.js";
 
 const Companions = () => {
   const dispatch = useDispatch();
@@ -28,6 +30,15 @@ const Companions = () => {
   const [showPassengerInfo, setShowPassengerInfo] = useState(false);
   const [selectedCompanions, setSelectedCompanions] = useState([]);
   const [companiesDetailsData, setCompaniesDetailsData] = useState([]);
+
+  useEffect(() => {
+     dispatch(get_visa_spec({dep_code:flights?.departure_flights[0]?.departure_airport_code,arr_code:flights?.departure_flights[0]?.arrival_airport_code}));
+    
+      
+      
+       
+     
+  }, []);
 
   // Calculate the number of passengers (adults + infants)
   const totalCompanions = (flights?.adults || 0) + (flights?.infants || 0);

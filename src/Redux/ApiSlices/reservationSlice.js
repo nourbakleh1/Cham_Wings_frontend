@@ -1,19 +1,21 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { privateRequest } from "../../lib/privateRequest";
+import { publicRequest } from "../../lib/publicRequest";
 
 
 
 
-export const getReservation_user=createAsyncThunk("reservation/getReservation_user",async(_,ThunkApi)=>{
+export const getReservation_user=createAsyncThunk("reservation/getReservation_user",async(id,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
     try{
-        const res=await privateRequest.get(`/api/reservations`);
+        const res=await privateRequest.get(`/api/reservations?page=${id}`);
         return res.data
     }
     catch(err){
         return rejectWithValue(err)
     }
 })
+
 
 
 export const get_going_Occupied_seats=createAsyncThunk("reservation/get_going_Occupied_seats",async(id,ThunkApi)=>{
@@ -89,8 +91,19 @@ export const get_Passengers_for_reservation=createAsyncThunk("reservation/get_Pa
 export const cancel_Reservation=createAsyncThunk("reservation/cancel_Reservation",async(id,ThunkApi)=>{
     const {rejectWithValue}=ThunkApi;
     try{
-        const res=await privateRequest.get(`/api/cancel-reservation/${id}`);
+        const res=await privateRequest.post(`/api/cancel-reservation/${id}`);
         return res.data
+    }
+    catch(err){
+        return rejectWithValue(err)
+    }
+});
+export const get_visa_spec=createAsyncThunk("reservation/get_visa_spec",async({dep_code,arr_code},ThunkApi)=>{
+    const {rejectWithValue}=ThunkApi;
+    try{
+        const {data}=await publicRequest.get(`/api/getallvisa?page=${1}`);
+
+        return {data,arr_code,dep_code}
     }
     catch(err){
         return rejectWithValue(err)
@@ -100,10 +113,12 @@ const initialState={
     occupied_going_seats:[],
     occupied_return_seats:[],
     isLoading:true,
+    isLoading_payment:true,
     error:null,
     reservation:null,
     my_reservations:null,
     reservation_pass:null,
+    visa:null
 }
 const reservationSlice=createSlice({
     name:"reservation",
@@ -111,7 +126,8 @@ const reservationSlice=createSlice({
     reducers:{
         clear_reservation:(state)=>{
             state.reservation= null
-        }
+        },
+        
 
     },
     extraReducers:
@@ -161,8 +177,8 @@ const reservationSlice=createSlice({
                 state.isLoading=false;
                 state.error=action.payload;
             })
-            .addCase(Payment.pending,(state)=>{
-                state.isLoading=true;
+            .addCase(Payment.pending,(state,action)=>{
+                state.isLoading_payment=false;
             })
             .addCase(Payment.fulfilled,(state,action)=>{
                 state.isLoading=false;
@@ -182,9 +198,7 @@ const reservationSlice=createSlice({
                 state.isLoading=false;
                 state.error=action.payload;
             })
-            .addCase(get_Passengers_for_reservation.pending,(state)=>{
-                state.isLoading=true;
-            })
+           
             .addCase(get_Passengers_for_reservation.fulfilled,(state,action)=>{
                 state.isLoading=false;
                 state.reservation_pass=action.payload;
@@ -193,13 +207,23 @@ const reservationSlice=createSlice({
                 state.isLoading=false;
                 state.error=action.payload;
             })
-            .addCase(cancel_Reservation.pending,(state)=>{
-                state.isLoading=true;
-            })
-            .addCase(cancel_Reservation.fulfilled,(state,)=>{
+            .addCase(cancel_Reservation.fulfilled,(state,action)=>{
                 state.isLoading=false;
             })
             .addCase(cancel_Reservation.rejected,(state,action)=>{
+                state.isLoading=false;
+                state.error=action.payload;
+            })
+            .addCase(get_visa_spec.fulfilled,(state,action)=>{
+                state.isLoading=false;
+                const {arr_code,dep_code,data} = action.payload;
+                state.visa=data?.data?.data?.find((el)=>{
+                    return ( dep_code == el?.departure_airport?.airport_code &
+                            arr_code == el?.arrival_airport?.airport_code)
+                })
+
+            })
+            .addCase(get_visa_spec.rejected,(state,action)=>{
                 state.isLoading=false;
                 state.error=action.payload;
             })

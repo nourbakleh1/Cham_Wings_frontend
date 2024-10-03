@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import "./Reservation_seats.css"
-import { faArrowRightArrowLeft, faArrowsTurnToDots, faCircleCheck, faGlassWater, faPlane, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightArrowLeft, faArrowRightLong, faArrowsTurnToDots, faCircleCheck, faGlassWater, faPlane, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Headings from '../../Components/Headings/Headings';
 import Button from '../../Components/Button/Button';
@@ -13,16 +13,20 @@ import Modal from "../../Components/Modal/Modal";
 import {  toast, ToastContainer } from 'react-toastify';
 import {useNavigate } from 'react-router-dom';
 import useAirplane_seats from '../../Hooks/useAirplane_seats';
+import Loading4 from '../../Components/Loading/Loading4';
+import { publicRequest } from '../../lib/publicRequest';
 
 
 
 const Reservation_seats = () => {
   const navigate=useNavigate();
   const dispatch=useDispatch();
-  const {occupied_going_seats,occupied_return_seats,reservation}=useSelector(state=>state.reservation);
+  const {occupied_going_seats,occupied_return_seats,reservation,isLoading_payment,visa}=useSelector(state=>state.reservation);
   const {selectedFlights,resultSearch} = useSelector((state) => state.flights);
   const {seats_plan,seats_plan2,setSeats_plan,setSeats_plan2} = useAirplane_seats();
-
+  
+  const [open2,setOpen2]=useState(false);
+  
   let count_Seats=resultSearch?.booking_preference == "a" ? resultSearch?.adults + 1 :resultSearch?.booking_preference == "b" ? 1 : resultSearch?.adults;
 
   
@@ -33,6 +37,7 @@ const Reservation_seats = () => {
 
   useEffect(()=>{
     window.scrollTo(0,0);
+    setOpen2(true);
     setSelectedSeats1([])
     setSelectedSeats1_name([])
     setSelectedSeats2([])
@@ -199,7 +204,28 @@ const Reservation_seats = () => {
     <>
       <ToastContainer theme="colored" position="top-center"/>
 
-      <div className='flex flex-col md:flex-row justify-between xl:justify-around items-center'>
+      <div className='flex flex-col md:flex-row justify-between xl:justify-around items-center relative'>
+      <Modal open={open2} setOpen={setOpen2}>
+      <div className='flex flex-col mx-5'>
+
+      
+      <Headings element={"h2"} color='#000'>visa info</Headings>
+      <div className='flex justify-center items-center gap-5 text-primary_color_1 bg-black_color/15  mb-1 rounded-xl p-2 font-extrabold py-5'>
+        <p>{visa?.departure_airport?.airport_code || "null"}</p>
+        <FontAwesomeIcon icon={faArrowRightLong} />
+        <p>{visa?.arrival_airport?.airport_code || "null"}</p>
+
+      </div>
+      <div className='px-3 py-5 text-secoundary_color leading-relaxed font-bold p-5 mb-2 '>
+      {visa?.visa_and_residence || "null"}
+      </div>
+      <div className='flex justify-center items-center mb-3'>
+      
+      <Button onClick={()=>{setOpen2(false)}} color={"#777"} padding='10px'>Agree</Button>
+      </div>
+
+      </div>
+      </Modal>
        
       <div className='p-5 mt-[100px]'>
     <div className=' flex items-center gap-2 pb-6'>
@@ -237,7 +263,8 @@ const Reservation_seats = () => {
       </div>
 
 
-      <div className='p-0 sm:p-5 shadow-lg shadow-primary_color z-[100] relative'>
+      {!isLoading_payment ? <Loading4/>:
+        <div className='p-0 sm:p-5 shadow-lg shadow-primary_color z-[100] relative'>
         <div className='flex justify-between p-3 items-center  text-secoundary_color'>
           <span>Selected seats names</span>
           <FontAwesomeIcon icon={faArrowsTurnToDots}  className='text-[20px] ml-2 '/>
@@ -275,7 +302,8 @@ const Reservation_seats = () => {
         </div>
         {return_flight_selected &&<FontAwesomeIcon icon={faArrowsTurnToDots}  onClick={()=>setChangeSectors(!changeSectors)} className='text-[30px] block sm:hidden rounded-2xl shadow-lg shadow-secoundary_color ml-2 text-white p-3 bg-primary_color absolute bottom-[-100px] right-[40%]'/>
         }
-      </div>
+      </div>}
+      
 
       
       </div>
