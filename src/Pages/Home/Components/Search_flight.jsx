@@ -34,7 +34,7 @@ const Search_flight = () => {
         if(resultSearch){
             setBooking_preference(resultSearch?.booking_preference);
             setTrip_type(resultSearch?.trip_type == "outbound"? 1 : 0);
-            setAdults(resultSearch?.adults+1);
+            // setAdults(resultSearch?.adults+1);
             setInfants(resultSearch?.infants);
             // setDeparture_airport(resultSearch?.departure_flights[0]?.departure_airport_id);
             // setArrival_airport(resultSearch?.departure_flights[0]?.arrival_airport_id);

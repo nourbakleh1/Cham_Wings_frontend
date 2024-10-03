@@ -112,8 +112,8 @@ const QuestionsPage = () => {
           <span className="text-blue-500">Cham Wings Team</span> will Answer
           you.
         </h1>
-        {questions.length > 0
-          ? questions.map((q) => (
+        {questions?.length > 0
+          ? questions?.map((q) => (
               <div
                 key={q.faq_id}
                 className="bg-white p-6 shadow-lg rounded-xl transition duration-300 hover:shadow-xl"
@@ -147,8 +147,8 @@ const QuestionsPage = () => {
                     <div>
                       <div className="flex justify-between items-center">
                         <p className="text-gray-600 pl-2 py-2 text-sm">
-                          Asked by: {q.passenger.travel_requirement.first_name}{" "}
-                          {q.passenger.travel_requirement.last_name}
+                          Asked by: {q?.passenger?.travel_requirement?.first_name}{" "}
+                          {q?.passenger?.travel_requirement?.last_name}
                         </p>
                         <p className="text-gray-600 pr-2 py-2 text-sm">
                           {q.created_at

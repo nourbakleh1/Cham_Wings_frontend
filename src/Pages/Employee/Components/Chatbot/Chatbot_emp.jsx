@@ -27,7 +27,7 @@ const Chatbot_emp = () => {
 
      <div className='flex justify-start items-center gap-3'>
         <img className='h-[30px] rounded-[50%]' src='/assets/images/user-avatar.png'/>
-        <p className='text-[16px] text-[#e8e8e8]/80 selection:text-white'>{referance.current?.value}</p>
+        <p className='text-[16px] text-[#000]/80 selection:text-white'>{referance.current?.value}</p>
       </div>
      
      <div className='flex justify-start mt-[50px] gap-5 items-start w-full  mb-[50px] flex-col sm:flex-row' >
@@ -81,9 +81,9 @@ const Chatbot_emp = () => {
       setIsLoading(false)
       setNewchat((prev)=>{
         document.getElementById("bottom")?.classList?.add("translate-y-[200px]");
-        return [...prev,{input:<div className='shad1 selection:text-white'>{input_text}</div>,output:
+        return [...prev,{input:<div className='text-black selection:text-white'>{input_text}</div>,output:
        
-        <div className='shad selection:text-white'><ReactTyped
+        <div className='text-black selection:text-white'><ReactTyped
           strings={[res?.answer]}
           typeSpeed={7}
           showCursor={false}
@@ -126,7 +126,7 @@ const Chatbot_emp = () => {
   
   return (
     <div className='flex justify-between items-center'>
-    <div className='relative flex flex-col justify-start items-start mt-[72px] h-[calc(100vh-71px)] w-full bg-[#000]/90 lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
+    <div className='relative flex flex-col justify-start items-start mt-[72px] h-[calc(100vh-71px)] w-full bg-off_white/10 lg:w-[calc(100%-296px)] ml-0 sm:ml-auto'>
 
     <div className='w-[70%] mx-auto flex justify-center items-center text-[20px] gap-3  p-3'>
       <p className='text-primary_color font-bold text-[13px] lg:text-[20px]  p-3'>ChamAI</p>
@@ -134,30 +134,30 @@ const Chatbot_emp = () => {
     </div>
     {
       view ?<><section className='w-[70%] mx-auto'>
-    <div className='my-[50px] text-[20px] sm:text-[30px] md:text-[30px] lg:text-[40px] xl:text-[50px] text-[#c4c7c5] p-0 2xl:p-5'>
+    <div className='my-[30px] text-[20px] sm:text-[22px] md:text-[25px] lg:text-[35px] xl:text-[45px] text-[#c4c7c5] p-0 2xl:p-5'>
       <p className='animate__myself'>
-        <span className=" multe">Hello, {user?.data?.user?.employee.name}</span>
+        <span className="multe">Welcome to ChamAI</span>
       </p>
-      <p className='animate__myself'>How can i help you today?</p>
+      <p className='animate__myself'>I am here to help you ...</p>
     </div>
     </section>
 
     <div className='cards w-[70%] mx-auto flex    justify-center text-[11px] gap-5    items-center text-white_color'>
-      <div className='card bg-brown_color/50 p-2 m-2 sm:m-0 h-[100px] md:h-[150px]  flex flex-col justify-between items-start animate__myself cursor-pointer' onClick={()=>setInput_text(oneCard)}>
-        <p>Help me find the latest trends</p>
-        <FontAwesomeIcon icon={faCompass} className='bg-black p-1 rounded-xl'/>
+      <div className='card bg-secoundary_color/50 p-2 shadow-xl shadow-primary_color/40 text-center m-2 sm:m-0 h-[100px] md:h-[150px] rounded-full  flex flex-col justify-between items-start animate__myself cursor-pointer' onClick={()=>setInput_text(oneCard)}>
+        <p className='mt-5 mx-2'>Help me find the latest trends</p>
+        <FontAwesomeIcon icon={faCompass} className='bg-black/20 p-1 m-5 rounded-xl'/>
       </div>
-      <div className='card bg-brown_color/50 p-2 h-[150px]  flex-col justify-between hidden md:flex items-start animate__myself cursor-pointer' onClick={()=>setInput_text(twoCard)}>
-        <p>Create an image & bedtime story</p>
-        <FontAwesomeIcon icon={faPenToSquare} className='bg-black p-1 rounded-xl'/>
+      <div className='card bg-secoundary_color/50 p-2 shadow-xl shadow-primary_color/40 h-[150px] text-center flex-col justify-between rounded-full hidden md:flex items-start animate__myself cursor-pointer' onClick={()=>setInput_text(twoCard)}>
+        <p className='mt-5 mx-2'>Create an image & bedtime story</p>
+        <FontAwesomeIcon icon={faPenToSquare} className='bg-black/20 p-1 m-5 rounded-xl'/>
       </div>
-      <div className='card bg-brown_color/50 p-2 h-[150px]  flex-col justify-between items-start hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(threeCard)}>
-        <p>Find flights and weather for an upcoming trip</p>
-        <FontAwesomeIcon icon={faPlaneUp} className='bg-black p-1 rounded-xl'/>
+      <div className='card bg-secoundary_color/50 p-2 h-[150px] text-center shadow-xl shadow-primary_color/40  flex-col justify-between rounded-full items-start hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(threeCard)}>
+        <p className='mt-5 mx-2'>Find flights and weather for an upcoming trip</p>
+        <FontAwesomeIcon icon={faPlaneUp} className='bg-black/20 p-1 m-5 rounded-xl'/>
       </div>
-      <div className='card bg-brown_color/50 p-2   flex-col justify-between items-start h-[150px] hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(fourCard)}>
-        <p>Suggest a Python library to solve a problem</p>
-        <FontAwesomeIcon icon={faCode} className='bg-black p-1 rounded-xl '/>
+      <div className='card bg-secoundary_color/50 p-2 text-center align-middle shadow-xl shadow-primary_color/40   flex-col justify-between items-start rounded-full h-[150px] hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(fourCard)}>
+        <p className='mt-5 mx-2'>Suggest a Python library to solve a problem</p>
+        <FontAwesomeIcon icon={faCode} className='bg-black/20 p-1 m-5 rounded-xl '/>
       </div>
 
     </div>
@@ -174,9 +174,9 @@ const Chatbot_emp = () => {
        { chat?.map((el,idx)=>{
           return(<div key={idx}>
             <div  >
-      <div className='flex justify-start items-center gap-3'>
+      <div className='flex justify-start items-center gap-3 text-black'>
         {el?.input_text ? <img className='h-[30px] rounded-[50%]' src='/assets/images/user-avatar.png'/> : null}
-        <p className='text-[16px] shad1 text-[#e8e8e8]/80 selection:text-white'>{el?.input_text}</p>
+        <p className='text-[16px]  text-[#000]/80 selection:text-white'>{el?.input_text}</p>
       </div>
 
       <div className='flex justify-start mt-[50px] gap-5 items-start w-full  mb-[50px] flex-col sm:flex-row'>
@@ -186,7 +186,7 @@ const Chatbot_emp = () => {
         
        
      
-    <div className=" w-[90%] flex shad  justify-start text-[16px] gap-5  flex-col items-start leading-relaxed font-bold text-[#e8e8e8]/80">
+    <div className=" w-[90%] flex   justify-start text-[16px] gap-5  flex-col items-start leading-relaxed font-bold text-[#000]/80">
         <p className='selection:text-white'>{el?.response_text}</p>
     </div>
     </div>
@@ -200,7 +200,7 @@ const Chatbot_emp = () => {
             <div  >
       <div className='flex justify-start items-center gap-3'>
         {el?.input ? <img className='h-[30px] rounded-[50%]' src='/assets/images/user-avatar.png'/> : null}
-        <p className='text-[16px] shad1 text-[#e8e8e8]/80 selection:text-white'>{el?.input}</p>
+        <p className='text-[16px]  text-[#000]/80 selection:text-white'>{el?.input}</p>
       </div>
 
       <div className='flex justify-start mt-[50px] gap-5 items-start w-full  mb-[50px] flex-col sm:flex-row'>
@@ -210,7 +210,7 @@ const Chatbot_emp = () => {
         
        
      
-    <div className=" w-[90%] flex shad  justify-start text-[16px] gap-5  flex-col items-start leading-relaxed font-bold text-[#e8e8e8]/80">
+    <div className=" w-[90%] flex   justify-start text-[16px] gap-5  flex-col items-start leading-relaxed font-bold text-[#000]/80">
         <p className='selection:text-white'>{el?.output}</p>
     </div>
     </div>
@@ -230,9 +230,9 @@ const Chatbot_emp = () => {
     
     <form onSubmit={handelstate}>
     <div className='w-[70%] mx-auto bg-transparent absolute bottom-[2%] left-[15%]'>
-    <div className='animate__myself flex items-center justify-between relative gap-5 bg-black/10 px-5 py-2 rounded-[50px]'>
+    <div className='animate__myself flex items-center justify-between relative gap-5 bg-black/40 px-5 py-2 rounded-[50px]'>
    
-      <input id="search" type='text' required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full  resize-none  h-[30px] sm:h-[40px] bg-transparent border-none outline-none p-0 sm:p-2 text-[12px] text-white md:text-[18px] text-whiteplaceholder:text-[10px] placeholder:md:text-[15px]'  placeholder='Enter a prompt here'/>
+      <input id="search" type='text' required ref={referance} value={input_text} onChange={(e)=>setInput_text(e.target.value)}  className='rubberBand w-full  resize-none  h-[30px] sm:h-[40px] bg-transparent border-none outline-none p-0 sm:p-2 text-[12px] text-white md:text-[18px] text-whiteplaceholder:text-[10px] placeholder:md:text-[12px] placeholder:text-white'  placeholder='Enter your question here ...'/>
       <div>
       <button type='submit'><FontAwesomeIcon icon={faLocationArrow}  className='text-white absolute right-[10px] bottom-[5px] translate-y-[-50%] text-[20px] sm:text-[25px] w-[35px] border-transparent rotate-45'/></button>
       </div>

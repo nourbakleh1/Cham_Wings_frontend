@@ -44,10 +44,10 @@ textarea::-webkit-scrollbar{
     border-radius: 4px;
     border: none;
     background-color: #e8e8e8;
-    background: linear-gradient(to right,#AE8A3B,#00529B,#AE8A3B,#00529B);
+    background: linear-gradient(to right,#ddad46,#0871cc,#ddad46);
     background-size: 800px 50px;
     height: 18px;
-    animation: load 2s ease-in-out  infinite ;
+    animation: load 1s ease-in-out  infinite ;
 }
 .loader hr:not(:last-child){
     width: 100%;
@@ -91,7 +91,7 @@ textarea::-webkit-scrollbar{
     -webkit-text-fill-color: transparent;
 }
 
-@keyframes changeColor {
+@keyframes changColor {
     from{
         background-position: -800px;
     }

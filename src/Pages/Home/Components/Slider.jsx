@@ -21,6 +21,24 @@ const Slider = () => {
     const dispatch=useDispatch();
 
     useEffect(()=>{
+      
+      navigator.geolocation.getCurrentPosition(async(position)=>{
+        const{latitude,longitude}=position.coords;
+        let Url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+        try{
+          const res= await axios.get(Url);
+          // setData(res?.data?.address?.country);
+          // setLocation(res?.data?.address?.country)
+        }
+        catch(err){
+          console.log(err)
+        }
+          
+         
+      })
+        
+      },[]);
+    useEffect(()=>{
       const data={id:user?.data?.user?.passenger?.passenger_id,country:country}
       dispatch(getUserRecommendations(data))
     },[]); 

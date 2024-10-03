@@ -233,10 +233,10 @@ const chartData4 = {
           <LineChart chartData={chartData1}/>
 
           </div>
-          {/* <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px]  shadow-lg rounded-lg p-3 shadow-primary_color_1'>
+          <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px]  shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <BarChart chartData={chartData2}/>
 
-          </div> */}
+          </div>
           <div className='w-[210px] sm:w-[270px] md:w-[300px]  shadow-lg rounded-lg p-3 shadow-primary_color_1'>
           <PolarAreaChart chartData={chartData3}/>
 
