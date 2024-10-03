@@ -56,7 +56,7 @@ const Offer_item = ({offer}) => {
     <>
         <section className='overflow-hidden shadow-black shadow-2xl basis-[380px] gap-20 bg-white_color z-10 rounded-2xl hover:shadow-2xl transition-all delay-200'>
         <div className='parent-img relative'>
-        <img className='imageOffer h-full  w-full   z-10' src={`http://127.0.0.1:8000/${offer?.image}`} title={`${offer?.title}\n\n${offer?.description}`}/>
+        <img className='imageOffer h-[320px] object-cover  w-full   z-10' src={`http://127.0.0.1:8000/${offer?.image}`} title={`${offer?.title}\n\n${offer?.description}`}/>
         <div className='absolute top-0 left-[50%] translate-x-[-50%] flex justify-center items-center bg-black/30'>
           <p className='text-white pl-1  pr-5'>#{offer?.flight?.flight_number}</p>
 

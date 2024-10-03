@@ -27,7 +27,6 @@ import Layouts_dashboard from './Components/Layouts/Layouts_dashboard';
 import Layouts_admin_dash from './Components/Layouts/Layouts_admin_dash';
 import FlightList from './Pages/Flight/FlightList';
 import ContactUs from './Pages/ContactUs/ContactUs';
-import Chatbot_user from './Components/Chatbot_user/Chatbot_user'; 
 import Reservation_seats from './Pages/Reservation_seats/Reservation_seats';
 import { ToastContainer } from 'react-toastify';
 import Chatbot_emp from './Pages/Employee/Components/Chatbot/Chatbot_emp';
@@ -60,7 +59,7 @@ const App = () => {
   const ref=useRef(null);
   const {user}=useSelector((state)=>state.auth)
   const role = user?.data?.user?.employee?.roles[0]?.role_id;
-  const [data,setData]=useState(null);
+  
  
   useEffect(()=>{
     window.addEventListener("scroll",()=>{
@@ -72,26 +71,7 @@ const App = () => {
       }
     })
   },[]);
-    useEffect(()=>{
-      
-      navigator.geolocation.getCurrentPosition(async(position)=>{
-        const{latitude,longitude}=position.coords;
-        let Url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-        try{
-          const res= await axios.get(Url);
-          setData(res?.data?.address?.country);
-          setLocation(res?.data?.address?.country)
-        }
-        catch(err){
-          console.log(err)
-        }
-          
-         
-         
-         
-      })
-        
-      },[]);
+   
 
   
 

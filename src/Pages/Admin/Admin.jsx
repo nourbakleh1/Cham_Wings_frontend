@@ -165,10 +165,10 @@ datasets: [
           <LineChart chartData={chartData1}/>
 
           </div>
-          {/* <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px]  shadow-lg rounded-lg p-1 shadow-secoundary_color/80'>
+          <div className='w-[210px] sm:w-[270px] sm:flex sm:justify-center sm:items-center md:w-[300px]  shadow-lg rounded-lg p-1 shadow-secoundary_color/80'>
           <BarChart chartData={chartData2}/>
 
-          </div> */}
+          </div>
           <div className='w-[210px] sm:w-[270px] md:w-[300px]  shadow-lg rounded-lg p-1 shadow-secoundary_color/80'>
           <PolarAreaChart chartData={chartData3}/>
 
