@@ -54,11 +54,10 @@ const Offers = () => {
 
     // while refresh page
     useEffect(()=>{
-    dispatch(getOffersUser(page)).unwrap().then((res)=>{
-        window.sessionStorage.setItem("page",JSON.stringify(page))
-    }).catch((rej)=>{
-        return toast.error(rej?.response?.data?.message);
-    })
+    const promise=dispatch(getOffersUser(page));
+    return ()=>{
+      promise.abort();
+    }
   },[page]);
 
   return (
@@ -86,7 +85,7 @@ const Offers = () => {
         <div className='flex justify-center gap-8 md:gap-12 items-center flex-wrap p-5'>
         
                 {search.trim() == ""  ?
-                   isLoading ?<div className='h-[50vh]'><Loading1/></div> : user_offers?.data?.data.map((offer)=>{
+                   isLoading ?<div className='h-[50vh]'><Loading1/></div> : user_offers?.data?.data?.data.map((offer)=>{
                         return <Offer_item key={offer.offer_id} offer={offer}/>
                         
                     }):null
@@ -106,7 +105,7 @@ const Offers = () => {
         </div>
         <div className='pt-16 lg:pl-24'>
         {
-            search.trim() == "" ? <CustomPagination isLoading={isLoading} page={page} setPage={setPage} totalElement={user_offers?.data?.total} perPage={15}/>:null
+            search.trim() == "" ? <CustomPagination isLoading={isLoading} page={page} setPage={setPage} totalElement={user_offers?.data?.data?.total} perPage={15}/>:null
         }
            
         </div>

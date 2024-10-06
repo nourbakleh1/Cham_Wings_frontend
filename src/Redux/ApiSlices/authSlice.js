@@ -101,9 +101,15 @@ export const getUserRecommendations=createAsyncThunk("auth/getUserRecommendation
 //get user offer
 export const getOffersUser=createAsyncThunk("manage_offers/getaOffersUser",async(page,ThunkApi)=>{
     const {rejectWithValue,dispatch}=ThunkApi;
+    const controller=new AbortController();
+        ThunkApi.signal.addEventListener("abort",()=>{
+            controller.abort();
+        });
     try{
-        const res=await publicRequest.get(`/api/getuseroffer?page=${page}`);
-        return res.data
+        const res=await publicRequest.get(`/api/getuseroffer?page=${page}`,{
+            signal:controller.signal
+        });
+        return res
     }
     catch(error){
         return rejectWithValue(error)
