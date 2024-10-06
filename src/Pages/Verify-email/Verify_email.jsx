@@ -34,7 +34,7 @@ const Verify_email = () => {
     }
   return (
     <div className="flex flex-col lg:flex-row min-h-[68vh] overflow-hidden ">
-  <div className="lg:w-1/2 bg-secoundary_color text-center min-h-[68vh] py-32 px-6 md:px-40 flex gap-5  flex-col justify-center">
+  <div className="lg:w-1/2 bg-[#00529B] text-center min-h-[68vh] py-32 px-6 md:px-40 flex gap-5  flex-col justify-center">
         
         <Headings element={"h2"} color='#fff' >Verify Email</Headings>
         <Headings element={"p"}>please check your email</Headings>

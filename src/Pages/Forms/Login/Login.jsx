@@ -7,6 +7,7 @@ import "../Register/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../Redux/ApiSlices/authSlice";
 import { toast } from "react-toastify";
+import "./login.css"
 
 const Login = () => {
   const dispatch=useDispatch();
@@ -56,7 +57,7 @@ const Login = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      <div className="h-dvh md:w-full lg:w-1/2 bg-secoundary_color py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
+      <div className="h-dvh md:w-full lg:w-1/2 bg-[#00529B] py-32 px-6 md:px-24 space-y-1.5 flex flex-col justify-center">
         <h1 className="xs:text-2xl md:text-3xl font-bold text-white md:mb-6 sm:mb-6 xs:pb-4 md:pb-0">
           Login to Cham Wings
         </h1>
@@ -117,7 +118,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full md:w-1/3 disabled:cursor-wait bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out `}
+                className={`w-full md:w-1/3 disabled:cursor-wait bg-[#00529B] hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out `}
                 
               >
                 Login
@@ -135,7 +136,7 @@ const Login = () => {
       </div>
 
       {/* Right Side - Logo */}
-      <div className="lg:w-1/2 justify-center items-center hidden sm:block bg-center bg-login-image bg-no-repeat bg-gray-300"></div>
+      <div className="lg:w-1/2 justify-center items-center hidden sm:block bg-center login-image bg-no-repeat bg-gray-300"></div>
     </div>
   );
 };

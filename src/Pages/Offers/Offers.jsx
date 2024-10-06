@@ -86,7 +86,7 @@ const Offers = () => {
         <div className='flex justify-center gap-8 md:gap-12 items-center flex-wrap p-5'>
         
                 {search.trim() == ""  ?
-                   isLoading ?<Loading1/> : user_offers?.data?.data.map((offer)=>{
+                   isLoading ?<div className='h-[50vh]'><Loading1/></div> : user_offers?.data?.data.map((offer)=>{
                         return <Offer_item key={offer.offer_id} offer={offer}/>
                         
                     }):null

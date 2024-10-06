@@ -31,10 +31,7 @@ export default {
         green_color: "#00d084",
         off_white:"#e8e8e8e8"
       },
-      backgroundImage: {
-        "register-image": "url('/assets/images/register.svg')",
-        "login-image": "url('/assets/images/login.svg')",
-      },
+     
     },
   },
 

@@ -102,3 +102,6 @@
 #country ul::-webkit-scrollbar {
   width: 0px !important;
 }
+.register-image{
+  background-image: url('/assets/images/register.svg');
+}

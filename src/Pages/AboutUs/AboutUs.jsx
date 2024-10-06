@@ -48,7 +48,7 @@ const AboutUs = () => {
     window.scrollTo(0,0);
   },[]);
   return (
-    <div className="bg-secondary_color min-h-screen xs:py-16 md:py-24 bg-secoundary_color">
+    <div className="bg-secondary_color min-h-screen xs:py-16 md:py-24 bg-[#00529B]">
       <div className="flex justify-center items-center w-full xs:py-12 md:py-8 px-4">
         <div className="w-full max-w-7xl bg-secondary_color md:mt-2 lg:mt-8">
           <Headings element={"h1"}>About Us</Headings>

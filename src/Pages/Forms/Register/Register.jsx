@@ -78,7 +78,7 @@ const RegisterPage = () => {
       navigate(`/verify-email/${email}`,{replace:true});
       return toast.success(res.success)
     }).catch((rej)=>{
-      return toast.error(rej?.response?.data?.message)
+      return toast.error(rej?.response?.data?.errors)
     })
     // const validationErrors = validate(formValues);
     // if (Object.keys(validationErrors).length > 0) {
@@ -122,7 +122,7 @@ const RegisterPage = () => {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen overflow-hidden">
-      <div className="lg:w-1/2 bg-secoundary_color py-32 px-6 md:px-24 flex flex-col justify-center">
+      <div className="lg:w-1/2 bg-[#00529B] py-32 px-6 md:px-24 flex flex-col justify-center">
         <h1 className="md:text-3xl xs:text-2xl font-bold text-white mb-6 text-center">
           Join Cham Wings
         </h1>
@@ -331,7 +331,7 @@ const RegisterPage = () => {
             isLoading ?<div className="bg-white w-fit mx-auto rounded-lg flex justify-center items-center"><Loading2/></div>
             :<button
             type="submit"
-            className={`w-full lg:w-full xl:w-auto bg-secoundary_color hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
+            className={`w-full lg:w-full xl:w-auto bg-[#00529B] hover:bg-secoundary_color_1 text-white border-2 border-white xs:px-4 xs:py-1 md:px-8 md:py-2 rounded-lg shadow-md transition duration-300 ease-in-out ${
               isSubmitting ? "opacity-50 cursor-not-allowed" : "hover:shadow-lg"
             }`}
             disabled={isSubmitting}
@@ -358,7 +358,7 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      <div className="lg:w-1/2 justify-center items-center hidden sm:block bg-center bg-register-image bg-no-repeat bg-gray-300"></div>
+      <div className="lg:w-1/2 justify-center items-center hidden sm:block bg-center register-image bg-no-repeat bg-gray-300"></div>
     </div>
   );
 };
