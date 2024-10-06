@@ -59,7 +59,7 @@ useEffect(()=>{
       {
           dispatch(SearchForReservation(search))
       }
-  }, 1500);
+  }, 700);
   return ()=>{
       clearTimeout(debounce)
   }

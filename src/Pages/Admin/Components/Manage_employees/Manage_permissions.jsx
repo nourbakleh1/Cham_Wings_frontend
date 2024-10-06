@@ -85,7 +85,7 @@ const Manage_permissions = () => {
             {
                 dispatch(SearchEmployees(search))
             }
-        }, 1500);
+        }, 700);
         return ()=>{
             clearTimeout(debounce)
         }

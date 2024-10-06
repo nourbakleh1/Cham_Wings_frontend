@@ -242,7 +242,7 @@ const User_reservations = () => {
 
             <div className='flex justify-between items-center px-5 mt-6'>
             <div className='flex justify-center items-center gap-1'>
-                <p className='text-white_color font-semibold'>Name :</p><span className='text-off_white/60'>{pass?.travel_requirement?.title}.{pass?.travel_requirement?.first_name} {pass?.passenger?.travel_requirement?.last_name}</span>
+                <p className='text-white_color font-semibold'>Name :</p><span className='text-off_white/60'>{pass?.travel_requirement?.title}.{pass?.travel_requirement?.first_name} {pass?.travel_requirement?.last_name}</span>
             </div>
             <div className='flex justify-center items-center gap-1'>
                 <p className='text-white_color font-semibold'>Age :</p><span className='text-off_white/60'>{pass?.travel_requirement?.age || "null"}</span>

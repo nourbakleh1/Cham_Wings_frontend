@@ -66,7 +66,7 @@ const Manage_Offer = () => {
           {
               dispatch(SearchOffer(search))
           }
-      }, 1500);
+      }, 700);
       return ()=>{
           clearTimeout(debounce)
       }

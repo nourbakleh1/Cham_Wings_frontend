@@ -38,7 +38,7 @@ const View_history = () => {
         {
             dispatch(getLogs_search(search))
         }
-    }, 1500);
+    }, 700);
     return ()=>{
         clearTimeout(debounce)
     }

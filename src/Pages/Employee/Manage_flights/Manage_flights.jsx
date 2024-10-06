@@ -94,7 +94,7 @@ const Manage_flights = () => {
         {
             dispatch(Searchflight(search))
         }
-    }, 1500);
+    }, 700);
     return ()=>{
         clearTimeout(debounce)
     }

@@ -46,7 +46,7 @@ const Offers = () => {
             {
                 dispatch(getOffers_search_User(search))
             }
-        }, 1500);
+        }, 700);
         return ()=>{
             clearTimeout(debounce)
         }

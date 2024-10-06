@@ -11,37 +11,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserRecommendations } from '../../../Redux/ApiSlices/authSlice';
 import { faClock, faFaceSmileBeam, faHashtag, faPlaneArrival, faPlaneDeparture } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import usegetRecommendation from '../../../Hooks/useGetRecommendation';
 
 
 const Slider = () => {
-    const {user,recommend,error,isLoading,location}=useSelector(state=>state.auth);
+    const {user}=useSelector(state=>state.auth);
     
     const country="Syria";
-    console.log("location",location);
-    const dispatch=useDispatch();
 
-    useEffect(()=>{
+    // useEffect(()=>{
       
-      navigator.geolocation.getCurrentPosition(async(position)=>{
-        const{latitude,longitude}=position.coords;
-        let Url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
-        try{
-          const res= await axios.get(Url);
-          // setData(res?.data?.address?.country);
-          // setLocation(res?.data?.address?.country)
-        }
-        catch(err){
-          console.log(err)
-        }
+    //   navigator.geolocation.getCurrentPosition(async(position)=>{
+    //     const{latitude,longitude}=position.coords;
+    //     let Url=`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`;
+    //     try{
+    //       const res= await axios.get(Url);
+    //       // setData(res?.data?.address?.country);
+    //       // setLocation(res?.data?.address?.country)
+    //     }
+    //     catch(err){
+    //       console.log(err)
+    //     }
           
          
-      })
+    //   })
         
-      },[]);
-    useEffect(()=>{
+    //   },[]);
       const data={id:user?.data?.user?.passenger?.passenger_id,country:country}
-      dispatch(getUserRecommendations(data))
-    },[]); 
+   
+
+    const {isError,isLoading,data:recommend}=usegetRecommendation(data);
+    console.log(recommend)
       const pagination = {
         clickable: true,
         renderBullet: function (index, className) {
@@ -78,7 +78,7 @@ const Slider = () => {
         modules={[EffectCoverflow, Pagination]}
         className="mySwiper hidden xl:flex lg:flex-col"
       >
-  {recommend?.recommendations?.map((el,index) => (
+  {recommend?.data?.recommendations?.map((el,index) => (
     <SwiperSlide key={index} className='relative bg-black/15 flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
     <p className='bg-secoundary_color/90 text-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{"Economy"}</p>
 
@@ -104,7 +104,7 @@ const Slider = () => {
   isLoading ? <div className="flex justify-center xl:hidden items-center w-full"><Loading4/></div>:
   <div className='flex w-[80%] mx-auto justify-evenly xl:hidden  gap-5 items-center flex-wrap  p-2'>
       {
-        recommend?.recommendations?.map((el,index) => (
+        recommend?.data?.recommendations?.map((el,index) => (
     <div key={index} className='relative bg-black/15 !w-[180px] sm:!w-[220px] md:!w-[280px]  flex flex-col justify-center items-center shadow-xl shadow-secoundary_color'>
     <p className='bg-secoundary_color/90 text-white text-center w-full border-b-2 border-solid border-primary_color py-1 '>{"Economy"}</p>
 

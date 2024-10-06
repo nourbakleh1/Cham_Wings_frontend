@@ -83,7 +83,7 @@ const Manage_employees = () => {
             {
                 dispatch(SearchEmployees(search))
             }
-        }, 1500);
+        }, 700);
         return ()=>{
             clearTimeout(debounce)
             
