@@ -143,19 +143,19 @@ const Chatbot_emp = () => {
     </section>
 
     <div className='cards w-[70%] mx-auto flex    justify-center text-[11px] gap-5    items-center text-white_color'>
-      <div className='card bg-secoundary_color/50 p-2 shadow-xl shadow-primary_color/40 text-center m-2 sm:m-0 h-[100px] md:h-[150px] rounded-full  flex flex-col justify-between items-start animate__myself cursor-pointer' onClick={()=>setInput_text(oneCard)}>
+      <div className='card bg-secoundary_color/50  p-2 w-[200px] shadow-xl shadow-primary_color/40 text-center m-2 sm:m-0 h-auto md:h-[150px] rounded-full  flex flex-col justify-between items-start animate__myself cursor-pointer' onClick={()=>setInput_text(oneCard)}>
         <p className='mt-5 mx-2'>Help me find the latest trends</p>
         <FontAwesomeIcon icon={faCompass} className='bg-black/20 p-1 m-5 rounded-xl'/>
       </div>
-      <div className='card bg-secoundary_color/50 p-2 shadow-xl shadow-primary_color/40 h-[150px] text-center flex-col justify-between rounded-full hidden md:flex items-start animate__myself cursor-pointer' onClick={()=>setInput_text(twoCard)}>
+      <div className='card bg-secoundary_color/50 p-2 w-[200px] shadow-xl shadow-primary_color/40 h-[150px] text-center flex-col justify-between rounded-full hidden md:flex items-start animate__myself cursor-pointer' onClick={()=>setInput_text(twoCard)}>
         <p className='mt-5 mx-2'>Create an image & bedtime story</p>
         <FontAwesomeIcon icon={faPenToSquare} className='bg-black/20 p-1 m-5 rounded-xl'/>
       </div>
-      <div className='card bg-secoundary_color/50 p-2 h-[150px] text-center shadow-xl shadow-primary_color/40  flex-col justify-between rounded-full items-start hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(threeCard)}>
+      <div className='card bg-secoundary_color/50 p-2 w-[200px] h-[150px] text-center shadow-xl shadow-primary_color/40  flex-col justify-between rounded-full items-start hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(threeCard)}>
         <p className='mt-5 mx-2'>Find flights and weather for an upcoming trip</p>
         <FontAwesomeIcon icon={faPlaneUp} className='bg-black/20 p-1 m-5 rounded-xl'/>
       </div>
-      <div className='card bg-secoundary_color/50 p-2 text-center align-middle shadow-xl shadow-primary_color/40   flex-col justify-between items-start rounded-full h-[150px] hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(fourCard)}>
+      <div className='card bg-secoundary_color/50 p-2 w-[200px] text-center align-middle shadow-xl shadow-primary_color/40   flex-col justify-between items-start rounded-full h-[150px] hidden md:flex animate__myself cursor-pointer' onClick={()=>setInput_text(fourCard)}>
         <p className='mt-5 mx-2'>Suggest a Python library to solve a problem</p>
         <FontAwesomeIcon icon={faCode} className='bg-black/20 p-1 m-5 rounded-xl '/>
       </div>
